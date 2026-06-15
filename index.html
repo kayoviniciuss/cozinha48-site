@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0D0C09">
+<title>Cozinha 48 — Estúdio de Lives e Sets na Cozinha</title>
+<meta name="description" content="Cozinha 48: estúdio de gravação e lives de sets de música eletrônica dentro de uma cozinha. Enquanto o set rola, um prato nasce ao lado do DJ.">
+<link rel="icon" type="image/png" href="logo.png">
+
+<!-- ============================================================
+     COZINHA 48 — site de página única
+     Identidade visual baseada na logo: fundo preto carvão +
+     degradê de fogo (vermelho → laranja → amarelo) + itálico.
+     COMO EDITAR: procure pelos comentários "EDITE AQUI"
+     IMPORTANTE: o arquivo logo.png precisa ficar na mesma
+     pasta que este index.html.
+     ============================================================ -->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --carvao:#0D0C09;         /* preto do fundo (como o da logo) */
+  --grelha:#1B1812;         /* linha da grade no fundo */
+  --carbono:#16130E;        /* fundo dos cartões */
+  --borda:#2B2619;          /* contorno dos cartões */
+  --creme:#F6EFE0;          /* texto claro */
+  --pimenta:#E8380D;        /* vermelho da logo */
+  --brasa:#FF7A1A;          /* laranja do meio do degradê */
+  --mostarda:#FFB40C;       /* amarelo da logo */
+  --inox:#97907F;           /* cinza quente p/ textos de apoio */
+  --fogo:linear-gradient(100deg, #E8380D 0%, #FF7A1A 52%, #FFB40C 100%);
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+
+body{
+  font-family:'Archivo',sans-serif;
+  color:var(--creme);
+  background-color:var(--carvao);
+  /* grade de azulejo, agora em versão cozinha à noite */
+  background-image:
+    linear-gradient(var(--grelha) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grelha) 1px, transparent 1px);
+  background-size:72px 72px;
+  line-height:1.6;
+}
+
+h1,h2,h3{font-family:'Anton',sans-serif;font-weight:400;line-height:1.05;letter-spacing:.01em}
+.mono{font-family:'Space Mono',monospace}
+a{color:inherit}
+img{max-width:100%;display:block}
+:focus-visible{outline:3px solid var(--mostarda);outline-offset:3px}
+::selection{background:var(--pimenta);color:var(--creme)}
+
+.container{max-width:1100px;margin:0 auto;padding:0 24px}
+
+/* título com degradê de fogo, inclinado como o lettering da logo */
+.fogo-titulo{
+  font-style:italic;text-transform:uppercase;
+  background:var(--fogo);
+  -webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent;color:transparent;
+  filter:drop-shadow(3px 3px 0 #000);
+  padding-right:.08em; /* o itálico corta a última letra sem isso */
+}
+
+/* ---------- BARRA DE NAVEGAÇÃO ---------- */
+header{
+  position:sticky;top:0;z-index:50;
+  background:rgba(13,12,9,.92);backdrop-filter:blur(6px);
+  border-bottom:3px solid transparent;
+  border-image:var(--fogo) 1;
+}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:10px 24px;max-width:1100px;margin:0 auto;gap:16px}
+.logo{display:flex;align-items:center;text-decoration:none}
+.logo img{height:62px;width:auto}
+@media(max-width:560px){.logo img{height:48px}}
+.nav ul{display:flex;gap:6px;list-style:none;flex-wrap:wrap}
+.nav ul a{
+  text-decoration:none;font-family:'Space Mono',monospace;font-size:.8rem;
+  text-transform:uppercase;letter-spacing:.08em;color:var(--creme);
+  padding:8px 12px;border:1px solid transparent;transition:all .15s;
+}
+.nav ul a:hover{border-color:var(--pimenta);color:var(--mostarda)}
+
+/* ---------- HERO ---------- */
+.hero{padding:90px 0 70px;text-align:left;position:relative;overflow:hidden}
+.hero .container{position:relative}
+.eyebrow{
+  font-family:'Space Mono',monospace;font-size:.8rem;letter-spacing:.15em;
+  text-transform:uppercase;color:var(--mostarda);margin-bottom:18px;display:block;
+}
+.hero h1{font-size:clamp(3rem,9vw,7rem)}
+.hero p.sub{max-width:560px;font-size:1.15rem;margin-top:26px;color:#CFC7B4}
+.hero-acoes{margin-top:36px;display:flex;gap:14px;flex-wrap:wrap}
+.btn{
+  display:inline-block;text-decoration:none;font-family:'Space Mono',monospace;
+  font-size:.85rem;text-transform:uppercase;letter-spacing:.08em;
+  padding:14px 26px;border:2px solid var(--creme);color:var(--creme);transition:all .15s;
+}
+.btn-cheio{background:var(--fogo);color:#0D0C09;border-color:transparent;font-weight:700}
+.btn-cheio:hover{filter:brightness(1.12);transform:translateY(-2px)}
+.btn-vazio:hover{border-color:var(--mostarda);color:var(--mostarda)}
+
+/* fita "ao vivo" girando no canto do hero */
+.selo{
+  position:absolute;right:24px;top:10px;width:130px;height:130px;
+  display:none;align-items:center;justify-content:center;
+}
+@media(min-width:820px){.selo{display:flex}}
+.selo svg{width:100%;height:100%;animation:girar 14s linear infinite}
+@media(prefers-reduced-motion:reduce){.selo svg{animation:none}}
+@keyframes girar{to{transform:rotate(360deg)}}
+
+/* faixa de letreiro — agora é a chama atravessando a página */
+/* faixa inclinada SEM rotacionar o elemento: a faixa é reta e recortada
+   em diagonal (clip-path), que o navegador desenha com bordas lisas.
+   Só o texto gira 1 grau pra acompanhar. */
+.letreiro{
+  --inclina:0.873vw; /* equivale a 1 grau de inclinação */
+  background:var(--fogo);color:#0D0C09;
+  overflow:hidden;white-space:nowrap;
+  height:calc(46px + 2*var(--inclina));
+  display:flex;align-items:center;
+  clip-path:polygon(
+    0    calc(50% - 23px + var(--inclina)),
+    100% calc(50% - 23px - var(--inclina)),
+    100% calc(50% + 23px - var(--inclina)),
+    0    calc(50% + 23px + var(--inclina))
+  );
+}
+.letreiro-trilho{display:inline-block;animation:rolar 22s linear infinite;font-family:'Space Mono',monospace;font-size:.85rem;text-transform:uppercase;letter-spacing:.12em;font-weight:700;transform:rotate(-1deg)}
+@media(prefers-reduced-motion:reduce){.letreiro-trilho{animation:none}}
+.letreiro-trilho span{margin:0 28px}
+.letreiro-trilho .pip{color:#0D0C09}
+@keyframes rolar{from{transform:translateX(0) rotate(-1deg)}to{transform:translateX(-50%) rotate(-1deg)}}
+
+/* ---------- SEÇÕES ---------- */
+section{padding:84px 0}
+.sec-titulo{display:flex;align-items:baseline;gap:18px;margin-bottom:44px;flex-wrap:wrap}
+.sec-titulo h2{font-size:clamp(2rem,5vw,3.4rem)}
+.sec-titulo .tag{
+  font-family:'Space Mono',monospace;font-size:.75rem;text-transform:uppercase;
+  letter-spacing:.12em;background:var(--fogo);color:#0D0C09;font-weight:700;
+  padding:4px 10px;transform:rotate(-1.5deg);
+}
+
+/* QUEM SOMOS */
+#quem-somos .grade{display:grid;gap:40px;grid-template-columns:1fr;align-items:start}
+@media(min-width:820px){#quem-somos .grade{grid-template-columns:1.2fr .8fr}}
+#quem-somos p{margin-bottom:18px;font-size:1.05rem;color:#CFC7B4}
+.receita{
+  background:var(--carbono);border:2px solid var(--borda);
+  box-shadow:6px 6px 0 var(--pimenta);padding:28px;
+}
+.receita h3{font-size:1.1rem;text-transform:uppercase;border-bottom:2px dashed var(--borda);padding-bottom:10px;margin-bottom:14px;color:var(--mostarda)}
+.receita ul{list-style:none}
+.receita li{
+  font-family:'Space Mono',monospace;font-size:.85rem;padding:8px 0;
+  border-bottom:1px dotted var(--borda);display:flex;justify-content:space-between;gap:12px;
+}
+.receita li b{color:var(--brasa)}
+
+/* ARTISTAS — cards estilo comanda, versão noturna, em carrossel */
+.carrossel{position:relative}
+.comandas{
+  display:flex;gap:24px;overflow-x:auto;
+  padding:34px 2px 38px; /* folga pra comanda do meio crescer sem cortar */
+  -webkit-overflow-scrolling:touch;
+  scrollbar-width:none; /* o carrossel anda sozinho, sem barra */
+}
+.comandas::-webkit-scrollbar{display:none}
+.comanda{flex:0 0 270px;will-change:transform}
+.arraste{
+  font-family:'Space Mono',monospace;font-size:.72rem;color:var(--inox);
+  text-transform:uppercase;letter-spacing:.1em;margin-top:6px;
+}
+@media(min-width:820px){.arraste{display:none}}
+.comanda{
+  background:var(--carbono);border:1px solid var(--borda);padding:0 0 18px;
+  box-shadow:0 10px 18px rgba(0,0,0,.5);
+  position:relative;transition:box-shadow .2s;
+}
+.comanda:hover{box-shadow:0 14px 24px rgba(232,56,13,.3)}
+/* picote no topo da comanda */
+.comanda::before{
+  content:"";display:block;height:10px;
+  background:radial-gradient(circle at 6px -2px, transparent 6px, var(--carvao) 6px);
+  background-size:14px 10px;background-repeat:repeat-x;
+}
+.comanda-topo{
+  font-family:'Space Mono',monospace;font-size:.7rem;text-transform:uppercase;
+  letter-spacing:.1em;color:var(--inox);
+  display:flex;justify-content:space-between;padding:14px 18px 8px;
+  border-bottom:2px dashed var(--borda);
+}
+.foto-moldura{position:relative;border-bottom:2px dashed var(--borda);overflow:hidden}
+.comanda .foto-artista{
+  width:100%;aspect-ratio:7/8;object-fit:cover;display:block;
+  /* acabamento leve e igual pra todas, sem tirar a cor */
+  filter:contrast(1.05) saturate(1.05);
+}
+/* sombra na base, pra foto "assentar" na comanda do mesmo jeito em todas */
+.foto-moldura::after{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(to top, rgba(13,12,9,.55), transparent 38%);
+}
+.comanda .links .chama{
+  background:var(--fogo);color:#0D0C09;border-color:transparent;font-weight:700;
+}
+.comanda .links .chama:hover{filter:brightness(1.12)}
+.comanda h3{font-size:1.5rem;text-transform:uppercase;font-style:italic;padding:14px 18px 4px}
+.comanda .estilo{font-family:'Space Mono',monospace;font-size:.78rem;color:var(--brasa);padding:0 18px 10px;text-transform:uppercase;letter-spacing:.06em}
+.comanda p{font-size:.9rem;color:#B6AE9C;padding:0 18px 14px}
+.comanda .links{padding:0 18px;display:flex;gap:10px;flex-wrap:wrap}
+.comanda .links a{
+  font-family:'Space Mono',monospace;font-size:.72rem;text-transform:uppercase;
+  text-decoration:none;border:1px solid var(--inox);padding:5px 10px;transition:all .15s;
+}
+.comanda .links a:hover{background:var(--fogo);color:#0D0C09;border-color:transparent;font-weight:700}
+
+/* GRAVAÇÕES — um tom acima do fundo, com a grade avermelhada */
+#gravacoes{background:#12100B;
+  background-image:
+    linear-gradient(#221A10 1px, transparent 1px),
+    linear-gradient(90deg, #221A10 1px, transparent 1px);
+  background-size:72px 72px;
+  border-top:1px solid var(--borda);border-bottom:1px solid var(--borda);
+}
+.moldura{
+  position:relative;width:100%;aspect-ratio:16/9;
+  border:2px solid var(--borda);box-shadow:8px 8px 0 var(--pimenta);
+  background:#000;
+}
+.moldura iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.player-principal{max-width:880px;margin:0 auto 14px}
+.player-legenda{
+  max-width:880px;margin:0 auto 48px;font-family:'Space Mono',monospace;
+  font-size:.75rem;color:var(--mostarda);text-transform:uppercase;letter-spacing:.08em;
+  padding-top:18px;
+}
+.videos-grade{display:grid;gap:24px;grid-template-columns:repeat(auto-fill,minmax(220px,1fr))}
+.thumb{
+  background:var(--carbono);border:1px solid var(--borda);padding:0;cursor:pointer;
+  color:var(--creme);text-align:left;font-family:'Archivo',sans-serif;
+  transition:transform .15s, box-shadow .15s;display:flex;flex-direction:column;
+}
+.thumb:hover{transform:translateY(-4px);box-shadow:6px 6px 0 var(--pimenta)}
+.thumb img{width:100%;aspect-ratio:16/9;object-fit:cover;border-bottom:1px solid var(--borda)}
+.thumb .t-info{padding:12px 14px 16px}
+.thumb .t-titulo{font-size:.92rem;font-weight:700;line-height:1.35;display:block}
+.thumb .t-data{font-family:'Space Mono',monospace;font-size:.7rem;color:var(--mostarda);text-transform:uppercase;letter-spacing:.08em;margin-top:8px;display:block}
+.carregando,.erro-videos{font-family:'Space Mono',monospace;font-size:.85rem;color:var(--inox);grid-column:1/-1}
+.aviso-local{
+  position:absolute;inset:0;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:14px;text-align:center;
+  padding:28px;background:#16130E;color:var(--creme);
+}
+.aviso-local strong{font-family:'Anton',sans-serif;font-size:1.3rem;text-transform:uppercase;letter-spacing:.02em;font-style:italic;color:var(--mostarda)}
+.aviso-local p{font-family:'Space Mono',monospace;font-size:.8rem;color:#B6AE9C;max-width:480px}
+.aviso-local a{color:var(--mostarda)}
+.canal{margin-top:48px;text-align:center}
+.canal .btn:hover{border-color:var(--mostarda);color:var(--mostarda)}
+
+/* LOJA */
+.produtos{display:grid;gap:28px;grid-template-columns:repeat(auto-fill,minmax(230px,1fr))}
+.produto{
+  background:var(--carbono);border:2px solid var(--borda);
+  display:flex;flex-direction:column;transition:box-shadow .15s,transform .15s;
+}
+.produto:hover{box-shadow:6px 6px 0 var(--mostarda);transform:translateY(-3px)}
+.produto .foto{
+  aspect-ratio:1/1;
+  background:repeating-linear-gradient(45deg,#16130E,#16130E 12px,#1C1812 12px,#1C1812 24px);
+  display:flex;align-items:center;justify-content:center;
+  border-bottom:2px solid var(--borda);
+  font-family:'Anton',sans-serif;font-style:italic;font-size:2.6rem;color:#332D20;
+}
+.produto .info{padding:16px 18px 20px;display:flex;flex-direction:column;gap:8px;flex:1}
+.produto h3{font-size:1.1rem;text-transform:uppercase}
+.produto .preco{font-family:'Space Mono',monospace;color:var(--mostarda);font-weight:700}
+.produto .btn{margin-top:auto;text-align:center;font-size:.75rem;padding:10px 14px}
+.aviso-loja{
+  margin-top:36px;font-family:'Space Mono',monospace;font-size:.8rem;color:var(--inox);
+  border-left:4px solid var(--mostarda);padding-left:14px;max-width:640px;
+}
+
+/* RODAPÉ */
+footer{background:#0A0907;color:var(--creme);padding:54px 0 40px;border-top:3px solid transparent;border-image:var(--fogo) 1}
+footer .grade{display:grid;gap:30px;grid-template-columns:1fr}
+@media(min-width:720px){footer .grade{grid-template-columns:2fr 1fr 1fr}}
+footer .logo-rodape{height:96px;width:auto;margin-bottom:14px}
+footer h3{font-size:1.2rem;text-transform:uppercase;margin-bottom:12px;font-style:italic}
+footer a{color:var(--mostarda);text-decoration:none}
+footer a:hover{color:var(--brasa)}
+footer ul{list-style:none}
+footer li{padding:4px 0;font-size:.92rem}
+.copy{margin-top:40px;font-family:'Space Mono',monospace;font-size:.72rem;color:var(--inox);text-transform:uppercase;letter-spacing:.1em}
+
+.social-icones{display:flex;gap:16px;align-items:center;margin-top:4px}
+.social-icones a{
+  color:var(--mostarda);display:inline-flex;
+  width:44px;height:44px;align-items:center;justify-content:center;
+  border:2px solid var(--borda);border-radius:10px;
+  transition:transform .15s,border-color .15s,color .15s;
+}
+.social-icones a:hover{color:var(--brasa);border-color:var(--brasa);transform:translateY(-3px)}
+
+/* ---------- AJUSTES DE UX PARA CELULAR ---------- */
+/* ao tocar num link do menu, o título da seção não fica escondido
+   atrás da barra fixa do topo */
+section{scroll-margin-top:92px}
+
+@media(max-width:700px){
+  section{scroll-margin-top:122px}
+
+  /* menu: logo em cima, links numa fileira deslizável embaixo,
+     com área de toque maior */
+  .nav{flex-wrap:wrap;justify-content:center;padding:10px 12px 4px;gap:2px}
+  .nav ul{
+    width:100%;flex-wrap:nowrap;justify-content:flex-start;
+    overflow-x:auto;-webkit-overflow-scrolling:touch;
+    scrollbar-width:none;padding:2px 4px 8px;
+  }
+  .nav ul::-webkit-scrollbar{display:none}
+  .nav ul a{padding:10px 12px;white-space:nowrap}
+
+  /* respiros mais compactos: menos rolagem até o conteúdo */
+  .hero{padding:52px 0 46px}
+  section{padding:54px 0}
+  .sec-titulo{margin-bottom:28px}
+
+  /* botões do topo ocupam a largura toda: alvo de toque generoso */
+  .hero-acoes{flex-direction:column;align-items:stretch}
+  .hero-acoes .btn{text-align:center}
+
+  /* carrossel: mostra um card inteiro + um pedaço do próximo,
+     o convite visual de que dá pra deslizar */
+  .comandas{gap:16px}
+  .comanda{flex:0 0 76vw;max-width:280px}
+
+  /* botões da loja com altura confortável pro dedo */
+  .produto .btn{padding:13px 14px}
+}
+
+</style>
+</head>
+<body>
+
+<!-- ================= MENU ================= -->
+<header>
+  <nav class="nav" aria-label="Menu principal">
+    <a class="logo" href="#topo"><img src="logo.png" alt="Cozinha 48"></a>
+    <ul>
+      <li><a href="#quem-somos">Quem Somos</a></li>
+      <li><a href="#artistas">Artistas</a></li>
+      <li><a href="#gravacoes">Gravações</a></li>
+      <li><a href="#loja">Loja</a></li>
+      <li><a href="conta.html" style="color:var(--mostarda)">Conta</a></li>
+    </ul>
+  </nav>
+</header>
+
+<!-- ================= HERO ================= -->
+<section class="hero" id="topo">
+  <div class="container">
+    <span class="eyebrow">Estúdio · Label · Cozinha — Presidente Prudente, SP</span>
+    <h1 class="fogo-titulo">Preparado em<br>fogo baixo.<br>E grave alto.</h1>
+    <p class="sub">A Cozinha 48 é um estúdio de lives e gravações de sets de música eletrônica montado dentro de uma cozinha de verdade. Enquanto o DJ toca, um cozinheiro prepara um prato ao lado da pickup — fogo, fumaça e grave na mesma bancada.</p>
+    <div class="hero-acoes">
+      <a class="btn btn-cheio" href="#gravacoes">Assistir aos sets</a>
+      <a class="btn btn-vazio" href="#artistas">Conhecer a label</a>
+    </div>
+  </div>
+  <div class="selo" aria-hidden="true">
+    <svg viewBox="0 0 130 130">
+      <defs><path id="circulo" d="M65,65 m-48,0 a48,48 0 1,1 96,0 a48,48 0 1,1 -96,0"/></defs>
+      <circle cx="65" cy="65" r="56" fill="none" stroke="#FFB40C" stroke-width="2"/>
+      <text font-family="Space Mono, monospace" font-size="13" letter-spacing="3" fill="#F6EFE0">
+        <textPath href="#circulo">AO VIVO · DA COZINHA · AO VIVO · DA COZINHA ·</textPath>
+      </text>
+      <circle cx="65" cy="65" r="8" fill="#E8380D"/>
+    </svg>
+  </div>
+</section>
+
+<!-- letreiro -->
+<div class="letreiro" aria-hidden="true">
+  <div class="letreiro-trilho">
+    <span>House</span><span class="pip">●</span><span>Techno</span><span class="pip">●</span><span>Disco</span><span class="pip">●</span><span>Brasilidades</span><span class="pip">●</span><span>Um prato por set</span><span class="pip">●</span>
+    <span>House</span><span class="pip">●</span><span>Techno</span><span class="pip">●</span><span>Disco</span><span class="pip">●</span><span>Brasilidades</span><span class="pip">●</span><span>Um prato por set</span><span class="pip">●</span>
+  </div>
+</div>
+
+<!-- ================= QUEM SOMOS ================= -->
+<section id="quem-somos">
+  <div class="container">
+    <div class="sec-titulo">
+      <h2 class="fogo-titulo">Quem Somos</h2>
+      <span class="tag">A casa</span>
+    </div>
+    <div class="grade">
+      <div>
+        <!-- ===== EDITE AQUI: texto de apresentação do projeto ===== -->
+        <p>A Cozinha 48 é um hub criativo que conecta música eletrônica, gastronomia e audiovisual. Nascemos de uma ideia simples: transformar uma cozinha de verdade em palco, onde DJs e chefs dividem o mesmo espaço — enquanto o set rola, um prato nasce ao lado da pickup.</p>
+        <p>Mais que entretenimento, somos um ecossistema de apoio a artistas locais: identidade visual, gestão de redes, produção de conteúdo e agenda de shows. Também levamos a Cozinha pra bares, restaurantes e eventos, em colabs que valorizam o público e os parceiros.</p>
+        <p>Pra quem sonha em entrar no mundo da música, criamos a 48 Academy, nossa escola de DJs do básico ao avançado. E no Podcast Cozinha 48, reunimos DJs, chefs e convidados em conversas sobre bastidores e inspirações. Tudo gravado e publicado no nosso canal do YouTube.</p>
+      </div>
+      <aside class="receita" aria-label="Resumo do formato">
+        <h3>Modo de preparo</h3>
+        <ul>
+          <!-- ===== EDITE AQUI: os "ingredientes" do projeto ===== -->
+          <li><span>01 — DJ convidado</span><b>1 un.</b></li>
+          <li><span>02 — Cozinheiro ao lado da pickup</span><b>opcional</b></li>
+          <li><span>03 — Set gravado e transmitido</span><b>60–90 min</b></li>
+          <li><span>04 — Prato finalizado no encerramento</span><b>1 receita</b></li>
+          <li><span>05 — Publicação no YouTube</span><b>sempre</b></li>
+        </ul>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ARTISTAS ================= -->
+<section id="artistas">
+  <div class="container">
+    <div class="sec-titulo">
+      <h2 class="fogo-titulo">Artistas da Label</h2>
+      <span class="tag">Cardápio da casa</span>
+    </div>
+    <div class="carrossel">
+    <div class="comandas" id="trilho-artistas">
+
+      <!-- ===== EDITE AQUI: duplique este bloco para cada artista.
+           As fotos estão vindo do servidor do site antigo (Wix). Quando
+           tiver as fotos em arquivo, salve na mesma pasta do site
+           (ex: bianka.jpg) e troque o src da imagem. ===== -->
+      <article class="comanda">
+        <div class="foto-moldura"><img class="foto-artista" src="https://static.wixstatic.com/media/e1b6ab_c2f8767136bf450cbbfde92573e2b905~mv2.jpg/v1/fill/w_574,h_646,al_c,q_85,enc_auto/0Q3A6178.jpg" alt="Bianka" loading="lazy"></div>
+        <div class="comanda-topo"><span>Comanda Nº 001</span><span>CZ48</span></div>
+        <h3>Bianka</h3>
+        <div class="estilo">Afro House</div>
+        <div class="links">
+          <a href="https://www.instagram.com/biancapinhal/" target="_blank" rel="noopener">Instagram</a>
+          <a class="chama" href="https://wa.me/5518996477231?text=Quero%20a%20Bianka%20no%20meu%20rol%C3%AA!" target="_blank" rel="noopener">Quero no meu rolê!</a>
+        </div>
+      </article>
+
+      <article class="comanda">
+        <div class="foto-moldura"><img class="foto-artista" src="https://static.wixstatic.com/media/e1b6ab_432b6c054a4f45bf868db795d1d46fed~mv2.jpg/v1/fill/w_574,h_646,al_c,q_85,enc_auto/0Q3A0913.jpg" alt="Malex" loading="lazy"></div>
+        <div class="comanda-topo"><span>Comanda Nº 002</span><span>CZ48</span></div>
+        <h3>Malex</h3>
+        <div class="estilo">Tech House</div>
+        <div class="links">
+          <a href="https://www.instagram.com/leleemathias/" target="_blank" rel="noopener">Instagram</a>
+          <a class="chama" href="https://wa.me/5518996477231?text=Quero%20o%20Malex%20no%20meu%20rol%C3%AA!" target="_blank" rel="noopener">Quero no meu rolê!</a>
+        </div>
+      </article>
+
+      <article class="comanda">
+        <div class="foto-moldura"><img class="foto-artista" src="https://static.wixstatic.com/media/e1b6ab_24162602ed8744a99d581b5c2cf647d3~mv2.jpeg/v1/fill/w_574,h_646,al_c,q_85,enc_auto/foto.jpeg" alt="Cazadey" loading="lazy"></div>
+        <div class="comanda-topo"><span>Comanda Nº 003</span><span>CZ48</span></div>
+        <h3>Cazadey</h3>
+        <div class="estilo">Tech House</div>
+        <div class="links">
+          <a href="https://www.instagram.com/cazadey__/" target="_blank" rel="noopener">Instagram</a>
+          <a class="chama" href="https://wa.me/5518996477231?text=Quero%20o%20Cazadey%20no%20meu%20rol%C3%AA!" target="_blank" rel="noopener">Quero no meu rolê!</a>
+        </div>
+      </article>
+
+      <article class="comanda">
+        <div class="foto-moldura"><img class="foto-artista" src="https://static.wixstatic.com/media/e1b6ab_5c4fb9a52b8f4e0a8a927f75006be701~mv2.jpg/v1/fill/w_574,h_646,al_c,q_85,enc_auto/foto.jpg" alt="Goes" loading="lazy"></div>
+        <div class="comanda-topo"><span>Comanda Nº 004</span><span>CZ48</span></div>
+        <h3>Goes</h3>
+        <div class="estilo">Tech House</div>
+        <div class="links">
+          <a href="https://www.instagram.com/goesmusicc" target="_blank" rel="noopener">Instagram</a>
+          <a class="chama" href="https://wa.me/5518996477231?text=Quero%20o%20Goes%20no%20meu%20rol%C3%AA!" target="_blank" rel="noopener">Quero no meu rolê!</a>
+        </div>
+      </article>
+
+      <article class="comanda">
+        <div class="foto-moldura"><img class="foto-artista" src="lowix.jpg" alt="LOWIX" loading="lazy"></div>
+        <div class="comanda-topo"><span>Comanda Nº 005</span><span>CZ48</span></div>
+        <h3>LOWIX</h3>
+        <div class="estilo">Tech House</div>
+        <div class="links">
+          <a href="https://www.instagram.com/lowixmusic/" target="_blank" rel="noopener">Instagram</a>
+          <a class="chama" href="https://wa.me/5518996477231?text=Quero%20o%20LOWIX%20no%20meu%20rol%C3%AA!" target="_blank" rel="noopener">Quero no meu rolê!</a>
+        </div>
+      </article>
+
+    </div>
+    <p class="arraste">← arraste pro lado pra ver todos →</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= GRAVAÇÕES (YOUTUBE) ================= -->
+<section id="gravacoes">
+  <div class="container">
+    <div class="sec-titulo">
+      <h2 class="fogo-titulo">Gravações</h2>
+      <span class="tag">Direto do fogão</span>
+    </div>
+    <!-- Player principal: toca a playlist de uploads do canal,
+         sempre começando pelo vídeo mais recente. Não precisa editar. -->
+    <div class="player-principal">
+      <div class="moldura">
+        <iframe id="player" src="https://www.youtube.com/embed/videoseries?list=PLYD5r5GrqVQgnbFJIJt5sXQ533_b4jnDp&enablejsapi=1" title="DJ Sets da Cozinha 48" loading="lazy" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+      </div>
+      <p class="player-legenda">▶ No ar: a playlist COZINHA 48 — DJ Sets — clique numa miniatura abaixo pra trocar o set</p>
+    </div>
+
+    <!-- Grade preenchida automaticamente com os últimos vídeos do canal -->
+    <div class="videos-grade" id="lista-videos" aria-live="polite">
+      <p class="carregando">Carregando os últimos sets…</p>
+    </div>
+
+    <div class="canal">
+      <a class="btn" href="https://www.youtube.com/playlist?list=PLYD5r5GrqVQgnbFJIJt5sXQ533_b4jnDp" target="_blank" rel="noopener">Ver a playlist completa no YouTube →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= LOJA ================= -->
+<section id="loja">
+  <div class="container">
+    <div class="sec-titulo">
+      <h2 class="fogo-titulo">Loja</h2>
+      <span class="tag">Pra viagem</span>
+    </div>
+    <div class="produtos">
+
+      <!-- ===== EDITE AQUI: duplique este bloco para cada produto.
+           Para colocar foto, troque a div "foto" por:
+           <img class="foto" src="caminho-da-foto.jpg" alt="Nome do produto"> ===== -->
+      <article class="produto">
+        <div class="foto" aria-hidden="true">CZ48</div>
+        <div class="info">
+          <h3>Camiseta Cozinha 48</h3>
+          <span class="preco">R$ 89,00</span>
+          <a class="btn btn-cheio" href="https://wa.me/5518900000000?text=Quero%20a%20camiseta%20Cozinha%2048" target="_blank" rel="noopener">Pedir pelo WhatsApp</a>
+        </div>
+      </article>
+
+      <article class="produto">
+        <div class="foto" aria-hidden="true">CZ48</div>
+        <div class="info">
+          <h3>Avental do Set</h3>
+          <span class="preco">R$ 69,00</span>
+          <a class="btn btn-cheio" href="https://wa.me/5518900000000?text=Quero%20o%20avental%20do%20set" target="_blank" rel="noopener">Pedir pelo WhatsApp</a>
+        </div>
+      </article>
+
+      <article class="produto">
+        <div class="foto" aria-hidden="true">CZ48</div>
+        <div class="info">
+          <h3>Boné Cozinha 48</h3>
+          <span class="preco">R$ 59,00</span>
+          <a class="btn btn-cheio" href="https://wa.me/5518900000000?text=Quero%20o%20bon%C3%A9%20Cozinha%2048" target="_blank" rel="noopener">Pedir pelo WhatsApp</a>
+        </div>
+      </article>
+
+      <article class="produto">
+        <div class="foto" aria-hidden="true">CZ48</div>
+        <div class="info">
+          <h3>Copo da Casa</h3>
+          <span class="preco">R$ 35,00</span>
+          <a class="btn btn-cheio" href="https://wa.me/5518900000000?text=Quero%20o%20copo%20da%20casa" target="_blank" rel="noopener">Pedir pelo WhatsApp</a>
+        </div>
+      </article>
+
+    </div>
+    <p class="aviso-loja">Por enquanto os pedidos são fechados pelo WhatsApp — troque o número 5518900000000 nos links pelo seu. Quando quiser uma loja com carrinho e pagamento, dá pra integrar com Nuvemshop ou Shopify.</p>
+  </div>
+</section>
+
+<!-- ================= RODAPÉ ================= -->
+<footer>
+  <div class="container grade">
+    <div>
+      <img class="logo-rodape" src="logo.png" alt="Cozinha 48">
+      <p style="max-width:340px;font-size:.92rem;color:#97907F">Estúdio de lives e gravações de sets de música eletrônica dentro de uma cozinha. Presidente Prudente — SP.</p>
+    </div>
+    <div>
+      <h3>Menu</h3>
+      <ul>
+        <li><a href="#quem-somos">Quem Somos</a></li>
+        <li><a href="#artistas">Artistas</a></li>
+        <li><a href="#gravacoes">Gravações</a></li>
+        <li><a href="#loja">Loja</a></li>
+        <li><a href="conta.html">Sua conta</a></li>
+      </ul>
+    </div>
+    <div>
+      <h3>Siga</h3>
+      <div class="social-icones">
+        <a href="https://instagram.com/48cozinha" target="_blank" rel="noopener" aria-label="Instagram" title="Instagram — @48cozinha">
+          <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="2" width="20" height="20" rx="5"/>
+            <circle cx="12" cy="12" r="4.2"/>
+            <circle cx="17.6" cy="6.4" r="1.2" fill="currentColor" stroke="none"/>
+          </svg>
+        </a>
+        <a href="https://www.youtube.com/@Cozinha48" target="_blank" rel="noopener" aria-label="YouTube" title="YouTube — @Cozinha48">
+          <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="5" width="20" height="14" rx="4"/>
+            <path d="M10 9.2 L15.5 12 L10 14.8 Z" fill="currentColor" stroke="none"/>
+          </svg>
+        </a>
+        <a href="mailto:48cozinha@gmail.com" aria-label="E-mail" title="48cozinha@gmail.com">
+          <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2.5" y="4.5" width="19" height="15" rx="2.5"/>
+            <path d="M3.5 6.5 L12 13 L20.5 6.5"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="container copy">© 2026 Cozinha 48 — feito com fogo baixo e grave alto.</div>
+</footer>
+
+<script>
+/* ============================================================
+   GRAVAÇÕES — busca automática dos últimos vídeos do canal
+   Canal: youtube.com/@Cozinha48
+   Não precisa editar nada aqui: ao postar um vídeo novo no
+   canal, ele aparece sozinho no site.
+
+   Estratégia: TUDO em paralelo, pra carregar o mais rápido possível.
+   — Os 3 intermediários do feed são consultados ao mesmo tempo;
+     o primeiro que responder preenche a grade (com título e data).
+   — A API oficial do player do YouTube também começa junto, sem
+     esperar ninguém falhar. Se ela terminar primeiro, a grade já
+     aparece (sem data) e é atualizada quando o feed chegar.
+   ============================================================ */
+const CANAL_ID = "UCLoK1Xvg0soEGg7huKE2R7w";
+const QTD_VIDEOS = 8; // quantas miniaturas mostrar na grade
+
+// Playlist específica "COZINHA 48 - DJ SETs". Tanto o player quanto a grade
+// de miniaturas usam só os vídeos desta playlist, na ordem montada nela.
+// Pra trocar de playlist no futuro, basta mudar o código abaixo (a parte
+// que vem depois de "list=" no link da playlist no YouTube).
+const PLAYLIST_VIDEOS = "PLYD5r5GrqVQgnbFJIJt5sXQ533_b4jnDp";
+const feedUrl = "https://www.youtube.com/feeds/videos.xml?playlist_id=" + PLAYLIST_VIDEOS;
+
+const lista = document.getElementById("lista-videos");
+const playerFrame = document.getElementById("player");
+let ytPlayer = null;        // player oficial (criado em paralelo)
+let gradePronta = false;    // alguma grade já está na tela?
+let dadosCompletos = false; // a grade na tela já tem título + data?
+let planoBFalhou = false;   // controle pra só mostrar erro se tudo falhar
+
+/* ---------- montagem da grade (usada pelos dois caminhos) ---------- */
+function montarGrade(videos, completo){
+  // nunca trocar dados completos por dados incompletos
+  if (dadosCompletos && !completo) return;
+  gradePronta = true;
+  dadosCompletos = completo;
+
+  lista.innerHTML = "";
+  videos.forEach(function(v){
+    const botao = document.createElement("button");
+    botao.className = "thumb";
+    botao.setAttribute("data-id", v.id);
+    botao.setAttribute("aria-label", "Assistir: " + v.titulo);
+
+    const img = document.createElement("img");
+    img.src = "https://i.ytimg.com/vi/" + v.id + "/hqdefault.jpg";
+    img.alt = "";
+    img.loading = "lazy";
+
+    const info = document.createElement("span");
+    info.className = "t-info";
+    const t = document.createElement("span");
+    t.className = "t-titulo";
+    t.textContent = v.titulo;
+    info.appendChild(t);
+    if (v.data) {
+      const d = document.createElement("span");
+      d.className = "t-data";
+      d.textContent = "Publicado em " + v.data;
+      info.appendChild(d);
+    }
+
+    botao.appendChild(img);
+    botao.appendChild(info);
+
+    // ao clicar na miniatura, o player principal troca pro vídeo escolhido
+    botao.addEventListener("click", function(){
+      if (ytPlayer && ytPlayer.loadVideoById) {
+        ytPlayer.loadVideoById(v.id);
+      } else {
+        playerFrame.src = "https://www.youtube.com/embed/" + v.id + "?autoplay=1";
+      }
+      document.querySelector(".player-principal").scrollIntoView({behavior:"smooth", block:"center"});
+    });
+
+    lista.appendChild(botao);
+  });
+}
+
+function mostrarErro(){
+  if (gradePronta) return; // se algum caminho já preencheu, não há erro
+  lista.innerHTML = '<p class="erro-videos">Não foi possível carregar a lista agora. Assista aos sets no player acima ou direto no <a href="https://www.youtube.com/@Cozinha48" target="_blank" rel="noopener" style="color:var(--mostarda)">canal do YouTube</a>.</p>';
+}
+
+/* ---------- CAMINHO 1: feed do YouTube via intermediários ---------- */
+// O navegador não consegue ler o feed do YouTube diretamente (bloqueio de
+// segurança chamado CORS), então usamos intermediários gratuitos — os três
+// ao mesmo tempo, e o primeiro que responder vence:
+const INTERMEDIARIOS = [
+  function(u){ return "https://api.allorigins.win/raw?url=" + encodeURIComponent(u); },
+  function(u){ return "https://corsproxy.io/?url=" + encodeURIComponent(u); },
+  function(u){ return "https://api.codetabs.com/v1/proxy?quest=" + encodeURIComponent(u); }
+];
+
+function buscarFeed(url){
+  return new Promise(function(entregar){
+    let pendentes = INTERMEDIARIOS.length;
+    let entregue = false;
+    INTERMEDIARIOS.forEach(function(montar){
+      const controle = new AbortController();
+      const tempo = setTimeout(function(){ controle.abort(); }, 5000);
+      fetch(montar(url), { signal: controle.signal })
+        .then(function(resp){ if (!resp.ok) throw new Error("falhou"); return resp.text(); })
+        .then(function(texto){
+          const xml = new DOMParser().parseFromString(texto, "text/xml");
+          // se veio algo que não é o feed (página de erro), descarta
+          if (xml.getElementsByTagName("entry").length === 0) throw new Error("sem entradas");
+          if (!entregue) { entregue = true; entregar(xml); }
+        })
+        .catch(function(){ /* esse intermediário falhou; os outros seguem */ })
+        .finally(function(){
+          clearTimeout(tempo);
+          pendentes--;
+          if (pendentes === 0 && !entregue) entregar(null); // todos falharam
+        });
+    });
+  });
+}
+
+function caminhoFeed(){
+  buscarFeed(feedUrl).then(function(xml){
+    if (!xml) { if (planoBFalhou) mostrarErro(); return; }
+    const entradas = Array.from(xml.getElementsByTagName("entry")).slice(0, QTD_VIDEOS);
+    if (entradas.length === 0) { if (planoBFalhou) mostrarErro(); return; }
+    montarGrade(entradas.map(function(entrada){
+      const publicado = new Date(entrada.getElementsByTagName("published")[0].textContent);
+      return {
+        id: entrada.getElementsByTagName("yt:videoId")[0].textContent,
+        titulo: entrada.getElementsByTagName("title")[0].textContent,
+        data: publicado.toLocaleDateString("pt-BR", {day:"2-digit", month:"short", year:"numeric"})
+      };
+    }), true);
+  });
+}
+
+/* ---------- CAMINHO 2: API oficial do player do YouTube ---------- */
+// Não depende de nenhum intermediário, então não sofre bloqueio.
+// Só não traz a data de publicação (por isso o feed continua existindo).
+function caminhoPlayer(){
+  const s = document.createElement("script");
+  s.src = "https://www.youtube.com/iframe_api";
+  document.head.appendChild(s);
+
+  window.onYouTubeIframeAPIReady = function(){
+    ytPlayer = new YT.Player("player", {
+      events: {
+        onReady: function(){
+          // a lista da playlist demora um instante pra ficar disponível
+          let tentativas = 0;
+          (function pegarLista(){
+            if (dadosCompletos) return; // o feed já chegou primeiro
+            const ids = ytPlayer.getPlaylist();
+            if (ids && ids.length > 0) {
+              const videos = ids.slice(0, QTD_VIDEOS).map(function(id){
+                return { id: id, titulo: "Set Cozinha 48", data: null };
+              });
+              montarGrade(videos, false);
+              buscarTitulos(videos);
+            } else if (++tentativas < 25) {
+              setTimeout(pegarLista, 300);
+            } else {
+              planoBFalhou = true;
+              mostrarErro();
+            }
+          })();
+        }
+      }
+    });
+  };
+}
+
+// completa os títulos do caminho 2 (melhor esforço: se falhar, a grade
+// continua funcionando, só com o título genérico)
+function buscarTitulos(videos){
+  videos.forEach(function(v){
+    fetch("https://noembed.com/embed?url=" + encodeURIComponent("https://www.youtube.com/watch?v=" + v.id))
+      .then(function(r){ return r.json(); })
+      .then(function(d){
+        if (d && d.title) {
+          const alvo = lista.querySelector('[data-id="' + v.id + '"] .t-titulo');
+          if (alvo) alvo.textContent = d.title;
+        }
+      })
+      .catch(function(){ /* mantém o título genérico */ });
+  });
+}
+
+/* ---------- início ---------- */
+// Se o site for aberto direto do arquivo (file://), o YouTube bloqueia o
+// player (Erro 153) e o navegador bloqueia a busca dos vídeos. Nesse caso
+// mostramos um aviso amigável em vez do erro. No site publicado, tudo roda.
+if (location.protocol === "file:") {
+  playerFrame.outerHTML =
+    '<div class="aviso-local">' +
+      '<strong>Quase lá!</strong>' +
+      '<p>Os vídeos só carregam quando o site está publicado num endereço de verdade (por exemplo, no Netlify). Abrindo o arquivo direto do computador, o YouTube bloqueia o player.</p>' +
+      '<p><a href="https://www.youtube.com/@Cozinha48" target="_blank" rel="noopener">Enquanto isso, assista no canal →</a></p>' +
+    '</div>';
+  lista.innerHTML = '<p class="erro-videos">A lista dos últimos sets aparece automaticamente quando o site estiver no ar.</p>';
+} else {
+  caminhoPlayer(); // dispara já
+  caminhoFeed();   // dispara junto — quem chegar primeiro preenche
+}
+</script>
+
+
+<script>
+/* ============================================================
+   Carrossel de artistas: infinito, automático e com destaque
+   — as comandas são clonadas pra fila nunca acabar;
+   — anda sozinho bem devagar;
+   — mouse sobre a seta: acelera naquela direção;
+   — mouse sobre uma comanda (ou dedo na tela): pausa;
+   — a comanda mais perto do centro cresce (destaque).
+   ============================================================ */
+(function(){
+  const trilho = document.getElementById("trilho-artistas");
+  if (!trilho || trilho.children.length === 0) return;
+
+  // clona o conjunto 2x: [conjunto][conjunto][conjunto]
+  const originais = Array.from(trilho.children);
+  for (let i = 0; i < 2; i++) originais.forEach(function(c){ trilho.appendChild(c.cloneNode(true)); });
+
+  let larguraConjunto = trilho.scrollWidth / 3;
+  window.addEventListener("resize", function(){ larguraConjunto = trilho.scrollWidth / 3; });
+  trilho.scrollLeft = larguraConjunto; // começa no conjunto do meio
+
+  const VEL_PASSEIO = 0.15; // pixels por quadro (~9 px/s): bem devagarinho mesmo
+  const VEL_BORDA = 1.1;    // com o mouse na faixa lateral: um empurrãozinho suave
+  let vel = VEL_PASSEIO;
+  let acelerando = false;
+  let pausado = false;
+  let sobra = 0; // acumula frações de pixel
+  const reduzMovimento = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // aceleradores invisíveis: mouse na faixa direita corre pra frente,
+  // na faixa esquerda corre pra trás; no meio, passeio normal
+  trilho.addEventListener("mousemove", function(e){
+    const caixa = trilho.getBoundingClientRect();
+    const posicao = (e.clientX - caixa.left) / caixa.width; // 0 = esquerda, 1 = direita
+    if (posicao > 0.82)      { vel = VEL_BORDA;  acelerando = true; }
+    else if (posicao < 0.18) { vel = -VEL_BORDA; acelerando = true; }
+    else                     { vel = VEL_PASSEIO; acelerando = false; }
+  });
+  trilho.addEventListener("mouseleave", function(){ vel = VEL_PASSEIO; acelerando = false; });
+
+  // pausa pra leitura/clique (só no miolo; nas bordas a aceleração manda)
+  trilho.addEventListener("mouseover", function(e){ if (e.target.closest(".comanda")) pausado = true; });
+  trilho.addEventListener("mouseout", function(e){ if (e.target.closest(".comanda")) pausado = false; });
+  trilho.addEventListener("touchstart", function(){ pausado = true; }, { passive: true });
+  trilho.addEventListener("touchend", function(){ setTimeout(function(){ pausado = false; }, 1600); }, { passive: true });
+
+  function quadro(){
+    // anda sozinho
+    if (!reduzMovimento && (!pausado || acelerando)) {
+      sobra += vel;
+      const passo = sobra > 0 ? Math.floor(sobra) : Math.ceil(sobra);
+      if (passo !== 0) { trilho.scrollLeft += passo; sobra -= passo; }
+    }
+    // truque do infinito: voltar um conjunto sem ninguém perceber
+    if (trilho.scrollLeft >= larguraConjunto * 2) trilho.scrollLeft -= larguraConjunto;
+    else if (trilho.scrollLeft < 2) trilho.scrollLeft += larguraConjunto;
+
+    // destaque: quanto mais perto do centro, maior a comanda
+    const caixa = trilho.getBoundingClientRect();
+    const centro = caixa.left + caixa.width / 2;
+    Array.from(trilho.children).forEach(function(c){
+      const r = c.getBoundingClientRect();
+      if (r.right < caixa.left - 100 || r.left > caixa.right + 100) return; // fora da tela
+      const dist = Math.abs(r.left + r.width / 2 - centro);
+      const perto = Math.max(0, 1 - dist / (caixa.width / 2)); // 1 no centro, 0 na borda
+      const escala = 0.92 + 0.16 * perto * perto;
+      c.style.transform = "scale(" + escala.toFixed(3) + ")";
+      c.style.zIndex = String(100 + Math.round(perto * 100));
+    });
+
+    requestAnimationFrame(quadro);
+  }
+  requestAnimationFrame(quadro);
+})();
+</script>
+
+<!-- ================= POPUP DA LIVE (TWITCH) ================= -->
+<style>
+  #live-pop{
+    position:fixed;right:20px;bottom:20px;z-index:9999;
+    width:340px;max-width:calc(100vw - 40px);
+    background:var(--carbono);border:2px solid var(--mostarda);
+    border-radius:10px;overflow:hidden;
+    box-shadow:6px 6px 0 rgba(0,0,0,.6);
+    transform:translateY(140%);opacity:0;
+    transition:transform .45s cubic-bezier(.2,.9,.3,1.2),opacity .3s;
+    font-family:'Archivo',sans-serif;
+  }
+  #live-pop.aberto{transform:translateY(0);opacity:1}
+  #live-pop .pop-topo{
+    display:flex;align-items:center;justify-content:space-between;
+    gap:10px;padding:8px 12px;background:var(--carvao);
+    border-bottom:2px solid var(--borda);
+  }
+  #live-pop .pop-titulo{
+    display:flex;align-items:center;gap:8px;
+    font-size:.78rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;
+    color:var(--creme);
+  }
+  #live-pop .bolinha{
+    width:9px;height:9px;border-radius:50%;background:var(--pimenta);
+    box-shadow:0 0 0 0 rgba(232,56,13,.7);animation:pulsa 1.6s infinite;
+  }
+  @keyframes pulsa{
+    0%{box-shadow:0 0 0 0 rgba(232,56,13,.7)}
+    70%{box-shadow:0 0 0 9px rgba(232,56,13,0)}
+    100%{box-shadow:0 0 0 0 rgba(232,56,13,0)}
+  }
+  #live-pop .pop-fechar{
+    background:none;border:none;color:var(--inox);cursor:pointer;
+    font-size:1.3rem;line-height:1;padding:2px 6px;border-radius:5px;
+  }
+  #live-pop .pop-fechar:hover{color:var(--creme);background:var(--borda)}
+  #live-pop .pop-video{position:relative;width:100%;aspect-ratio:16/9;background:#000}
+  #live-pop iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+  #live-pop .pop-rodape{padding:8px 12px;background:var(--carvao)}
+  #live-pop .pop-rodape a{
+    display:block;text-align:center;text-decoration:none;
+    background:var(--mostarda);color:#000;font-weight:800;
+    font-size:.74rem;letter-spacing:.05em;text-transform:uppercase;
+    padding:9px;border-radius:6px;
+  }
+  /* botão flutuante p/ reabrir depois de fechado */
+  #live-btn{
+    position:fixed;right:20px;bottom:20px;z-index:9998;display:none;
+    align-items:center;gap:8px;cursor:pointer;
+    background:var(--pimenta);color:var(--creme);border:none;
+    font-family:'Archivo',sans-serif;font-weight:800;font-size:.8rem;
+    letter-spacing:.06em;text-transform:uppercase;
+    padding:12px 16px;border-radius:30px;box-shadow:4px 4px 0 rgba(0,0,0,.5);
+  }
+  #live-btn .bolinha{width:9px;height:9px;border-radius:50%;background:#fff;animation:pulsa 1.6s infinite}
+</style>
+
+<div id="live-pop" role="dialog" aria-label="Live ao vivo na Twitch">
+  <div class="pop-topo">
+    <span class="pop-titulo"><span class="bolinha"></span> Ao vivo agora</span>
+    <button class="pop-fechar" id="live-x" aria-label="Fechar">&times;</button>
+  </div>
+  <div class="pop-video" id="live-video"></div>
+  <div class="pop-rodape">
+    <a href="https://www.twitch.tv/cozinha48" target="_blank" rel="noopener">Assistir na Twitch</a>
+  </div>
+</div>
+
+<button id="live-btn" aria-label="Abrir a live"><span class="bolinha"></span> Ao vivo</button>
+
+<script>
+(function(){
+  var CANAL = 'cozinha48';
+  // dominios onde o player pode rodar (a Twitch exige listar)
+  var PARENTS = ['cozinha48.com','www.cozinha48.com','cozinha48.com.br','www.cozinha48.com.br','localhost'];
+  // inclui o dominio atual automaticamente (ex: o endereco .netlify.app)
+  if (PARENTS.indexOf(location.hostname) === -1) PARENTS.push(location.hostname);
+
+  var pop = document.getElementById('live-pop');
+  var btn = document.getElementById('live-btn');
+  var box = document.getElementById('live-video');
+  var fechado = false;
+
+  function montaPlayer(){
+    if (box.querySelector('iframe')) return;
+    var p = PARENTS.map(function(h){return 'parent='+encodeURIComponent(h)}).join('&');
+    var ifr = document.createElement('iframe');
+    ifr.src = 'https://player.twitch.tv/?channel='+CANAL+'&'+p+'&muted=true&autoplay=true';
+    ifr.allow = 'autoplay; fullscreen';
+    ifr.setAttribute('allowfullscreen','');
+    box.appendChild(ifr);
+  }
+  function abre(){ if(fechado) return; montaPlayer(); pop.classList.add('aberto'); btn.style.display='none'; }
+  function fecha(){ pop.classList.remove('aberto'); fechado=true; btn.style.display='flex'; }
+
+  document.getElementById('live-x').addEventListener('click', fecha);
+  btn.addEventListener('click', function(){ fechado=false; abre(); });
+
+  // Checa se o canal esta AO VIVO (sem credencial, via pagina publica).
+  // Se a checagem falhar por bloqueio do navegador, mostramos o player
+  // assim mesmo — quando offline ele aparece como "offline" da Twitch.
+  function checaAoVivo(){
+    fetch('https://www.twitch.tv/'+CANAL, {mode:'cors'})
+      .then(function(r){return r.text()})
+      .then(function(html){
+        var aoVivo = /"isLiveBroadcast":true|"type":"live"/.test(html);
+        if (aoVivo) abre();
+      })
+      .catch(function(){
+        // navegador bloqueou a checagem (comum). Mostra o botao discreto
+        // para a pessoa decidir abrir, em vez de forcar o player offline.
+        if(!fechado){ btn.style.display='flex'; }
+      });
+  }
+  checaAoVivo();
+})();
+</script>
+
+</body>
+</html>
