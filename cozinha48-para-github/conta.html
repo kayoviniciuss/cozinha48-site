@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0D0C09">
+<title>Conta — Cozinha 48</title>
+<meta name="description" content="Crie sua conta na Cozinha 48: candidate-se pra tocar, deixe recados e faça parte da casa.">
+<link rel="icon" type="image/png" href="logo.png">
+
+<!-- ============================================================
+     COZINHA 48 — página de conta (fãs e donos)
+     EDITE AQUI (obrigatório): cole a URL e a chave "anon public"
+     do seu projeto Supabase nas duas linhas marcadas lá embaixo,
+     no início do bloco de código. Sem isso a página mostra um aviso.
+     ============================================================ -->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --carvao:#0D0C09;--grelha:#1B1812;--carbono:#16130E;--borda:#2B2619;
+  --creme:#F6EFE0;--pimenta:#E8380D;--brasa:#FF7A1A;--mostarda:#FFB40C;
+  --inox:#97907F;
+  --fogo:linear-gradient(100deg, #E8380D 0%, #FF7A1A 52%, #FFB40C 100%);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:'Archivo',sans-serif;color:var(--creme);background-color:var(--carvao);
+  background-image:linear-gradient(var(--grelha) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grelha) 1px, transparent 1px);
+  background-size:72px 72px;line-height:1.6;
+}
+h1,h2,h3{font-family:'Anton',sans-serif;font-weight:400;line-height:1.05}
+a{color:var(--mostarda)}
+img{max-width:100%;display:block}
+:focus-visible{outline:3px solid var(--mostarda);outline-offset:3px}
+.container{max-width:760px;margin:0 auto;padding:0 24px}
+
+header{position:sticky;top:0;z-index:50;background:rgba(13,12,9,.92);backdrop-filter:blur(6px);border-bottom:3px solid transparent;border-image:var(--fogo) 1}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:10px 24px;max-width:1100px;margin:0 auto}
+.nav img{height:54px;width:auto}
+.nav a.volta{font-family:'Space Mono',monospace;font-size:.8rem;text-transform:uppercase;letter-spacing:.08em;text-decoration:none;color:var(--creme);padding:8px 12px;border:1px solid transparent}
+.nav a.volta:hover{border-color:var(--pimenta);color:var(--mostarda)}
+
+main{padding:56px 0 90px}
+.fogo-titulo{
+  font-style:italic;text-transform:uppercase;
+  background:var(--fogo);-webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent;color:transparent;
+  filter:drop-shadow(3px 3px 0 #000);padding-right:.08em;
+}
+h1.fogo-titulo{font-size:clamp(2.2rem,7vw,3.6rem);margin-bottom:10px}
+.sub{color:#CFC7B4;margin-bottom:34px}
+
+.cartao{background:var(--carbono);border:2px solid var(--borda);box-shadow:6px 6px 0 var(--pimenta);padding:26px;margin-bottom:34px}
+.cartao h2{font-size:1.3rem;text-transform:uppercase;font-style:italic;color:var(--mostarda);margin-bottom:16px}
+label{display:block;font-family:'Space Mono',monospace;font-size:.72rem;text-transform:uppercase;letter-spacing:.1em;color:var(--inox);margin:14px 0 6px}
+input,textarea,select{
+  width:100%;padding:12px 14px;background:#0F0D09;border:1px solid var(--borda);
+  color:var(--creme);font-family:'Archivo',sans-serif;font-size:1rem;border-radius:0;
+}
+input:focus,textarea:focus,select:focus{border-color:var(--mostarda);outline:none}
+textarea{min-height:90px;resize:vertical}
+.btn{
+  display:inline-block;margin-top:18px;cursor:pointer;text-decoration:none;
+  font-family:'Space Mono',monospace;font-size:.85rem;text-transform:uppercase;
+  letter-spacing:.08em;padding:13px 24px;border:2px solid var(--creme);
+  background:none;color:var(--creme);transition:all .15s;
+}
+.btn-cheio{background:var(--fogo);color:#0D0C09;border-color:transparent;font-weight:700}
+.btn-cheio:hover{filter:brightness(1.12)}
+.btn-mini{padding:6px 12px;font-size:.7rem;margin-top:8px}
+.troca{font-family:'Space Mono',monospace;font-size:.8rem;margin-top:16px;color:var(--inox)}
+.troca a{cursor:pointer}
+.mensagem{font-family:'Space Mono',monospace;font-size:.8rem;margin-top:14px;padding:10px 12px;display:none}
+.mensagem.erro{display:block;border-left:4px solid var(--pimenta);color:#FFB4A0;background:#1d0f0a}
+.mensagem.ok{display:block;border-left:4px solid var(--mostarda);color:#FFE3A0;background:#1d160a}
+.oculto{display:none}
+
+.linha-topo{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:26px}
+.ola{font-family:'Space Mono',monospace;font-size:.85rem;color:var(--mostarda);text-transform:uppercase;letter-spacing:.08em}
+
+.recado{border-bottom:1px dashed var(--borda);padding:14px 0}
+.recado .quem{font-family:'Space Mono',monospace;font-size:.72rem;color:var(--mostarda);text-transform:uppercase;letter-spacing:.08em}
+.recado .quando{color:var(--inox);font-size:.72rem;font-family:'Space Mono',monospace;margin-left:8px;text-transform:none}
+.recado p{margin-top:4px;color:#D8D0BE;font-size:.95rem}
+.recado button{background:none;border:1px solid var(--borda);color:var(--inox);font-family:'Space Mono',monospace;font-size:.65rem;text-transform:uppercase;padding:3px 8px;cursor:pointer;margin-top:6px}
+.recado button:hover{border-color:var(--pimenta);color:var(--pimenta)}
+
+.cand{border:1px solid var(--borda);padding:14px;margin-bottom:12px}
+.cand .st{font-family:'Space Mono',monospace;font-size:.7rem;text-transform:uppercase;letter-spacing:.08em;padding:2px 8px}
+.st-recebida{background:#2a2415;color:var(--mostarda)}
+.st-aprovada{background:#16240f;color:#9fdd7a}
+.st-recusada{background:#260f0a;color:#ff9c85}
+.cand p{font-size:.9rem;color:#CFC7B4;margin-top:6px}
+.cand .acoes{margin-top:10px;display:flex;gap:8px;flex-wrap:wrap}
+.selo-mestre{font-family:'Space Mono',monospace;font-size:.7rem;background:var(--fogo);color:#0D0C09;font-weight:700;padding:3px 9px;text-transform:uppercase;letter-spacing:.08em}
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="nav" aria-label="Menu">
+    <a href="index.html"><img src="logo.png" alt="Cozinha 48"></a>
+    <a class="volta" href="index.html">← Voltar pro site</a>
+  </nav>
+</header>
+
+<main>
+  <div class="container">
+    <h1 class="fogo-titulo">Sua conta</h1>
+    <p class="sub">Faça parte da casa: candidate-se pra tocar num set, deixe seu recado no mural e fique por dentro do que sai do fogão.</p>
+
+    <!-- aviso de configuração pendente (some quando o Supabase for configurado) -->
+    <div class="cartao oculto" id="aviso-config">
+      <h2>Falta ligar o banco de dados</h2>
+      <p style="color:#CFC7B4">Esta página precisa das duas chaves do projeto Supabase. Abra o arquivo <b>conta.html</b>, procure por <b>EDITE AQUI</b> no início do script e cole a URL e a chave "anon public" do seu projeto.</p>
+    </div>
+
+    <!-- ================= ENTRAR / CRIAR CONTA ================= -->
+    <div class="cartao oculto" id="bloco-entrar">
+      <h2 id="titulo-auth">Entrar</h2>
+      <form id="form-auth">
+        <div id="campo-nome" class="oculto">
+          <label for="nome">Seu nome (ou nome artístico)</label>
+          <input id="nome" type="text" maxlength="60" autocomplete="name">
+        </div>
+        <label for="email">E-mail</label>
+        <input id="email" type="email" required autocomplete="email">
+        <label for="senha">Senha</label>
+        <input id="senha" type="password" required minlength="6" autocomplete="current-password">
+        <button class="btn btn-cheio" type="submit" id="botao-auth">Entrar</button>
+        <p class="troca" id="troca-modo">Ainda não tem conta? <a id="link-troca">Criar conta</a></p>
+        <p class="mensagem" id="msg-auth"></p>
+      </form>
+    </div>
+
+    <!-- ================= ÁREA LOGADA ================= -->
+    <div id="area-logada" class="oculto">
+      <div class="linha-topo">
+        <span class="ola" id="ola">Olá!</span>
+        <span class="selo-mestre oculto" id="selo-mestre">Mestre da casa</span>
+        <button class="btn btn-mini" id="botao-sair">Sair</button>
+      </div>
+
+      <!-- QUERO TOCAR -->
+      <div class="cartao">
+        <h2>Quero tocar na Cozinha</h2>
+        <div id="minhas-candidaturas"></div>
+        <form id="form-candidatura">
+          <label for="c-nome">Nome artístico</label>
+          <input id="c-nome" type="text" required maxlength="60">
+          <label for="c-estilo">Estilo (ex: Tech House)</label>
+          <input id="c-estilo" type="text" maxlength="60">
+          <label for="c-link">Link de um set ou perfil (SoundCloud, Instagram, YouTube…)</label>
+          <input id="c-link" type="url" placeholder="https://" maxlength="200">
+          <label for="c-msg">Conta pra gente quem você é</label>
+          <textarea id="c-msg" maxlength="500"></textarea>
+          <button class="btn btn-cheio" type="submit">Enviar candidatura</button>
+          <p class="mensagem" id="msg-candidatura"></p>
+        </form>
+      </div>
+
+      <!-- MURAL -->
+      <div class="cartao">
+        <h2>Mural de recados</h2>
+        <form id="form-recado">
+          <label for="r-texto">Deixe seu recado (até 280 caracteres)</label>
+          <textarea id="r-texto" required maxlength="280"></textarea>
+          <button class="btn btn-cheio" type="submit">Mandar pro mural</button>
+          <p class="mensagem" id="msg-recado"></p>
+        </form>
+        <div id="lista-recados" style="margin-top:20px"></div>
+      </div>
+
+      <!-- PAINEL MESTRE -->
+      <div class="cartao oculto" id="painel-mestre">
+        <h2>Painel mestre — candidaturas</h2>
+        <p style="color:var(--inox);font-size:.85rem;margin-bottom:14px">Só os donos veem este bloco.</p>
+        <div id="lista-candidaturas-admin"></div>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>
+/* ============================================================
+   EDITE AQUI (obrigatório): cole os dados do seu projeto Supabase.
+   Onde achar: painel do Supabase → Settings → API
+   - Project URL  → cole em SUPABASE_URL
+   - anon public  → cole em SUPABASE_KEY
+   (Pode deixar essa chave no site: ela é feita pra isso. As regras
+   de segurança ficam no banco, no arquivo supabase-setup.sql.)
+   ============================================================ */
+const SUPABASE_URL = "https://fobduihqyeuetrxpbntk.supabase.co";
+const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZvYmR1aWhxeWV1ZXRyeHBibnRrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEyMzE0OTMsImV4cCI6MjA5NjgwNzQ5M30.FnDyuGvQt-iLcXThqZCxiAWWvA4DVwyx4NIqwFO-oK0";
+
+/* ------------------------------------------------------------ */
+const $ = function(id){ return document.getElementById(id); };
+function esc(t){ return String(t).replace(/[&<>"']/g, function(m){ return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[m]; }); }
+function aviso(el, tipo, texto){ el.className = "mensagem " + tipo; el.textContent = texto; }
+function dataBr(iso){ return new Date(iso).toLocaleDateString("pt-BR", {day:"2-digit", month:"short", year:"numeric"}); }
+
+let sb = null, usuario = null, perfil = null, modoCriar = false;
+
+if (SUPABASE_URL.indexOf("https://") === 0) {
+  sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+  iniciar();
+} else {
+  $("aviso-config").classList.remove("oculto");
+}
+
+async function iniciar(){
+  const sessao = await sb.auth.getSession();
+  usuario = sessao.data.session ? sessao.data.session.user : null;
+  desenhar();
+  sb.auth.onAuthStateChange(function(_evento, sess){
+    usuario = sess ? sess.user : null;
+    desenhar();
+  });
+}
+
+async function desenhar(){
+  if (!usuario) {
+    $("bloco-entrar").classList.remove("oculto");
+    $("area-logada").classList.add("oculto");
+    return;
+  }
+  $("bloco-entrar").classList.add("oculto");
+  $("area-logada").classList.remove("oculto");
+
+  const r = await sb.from("profiles").select("*").eq("id", usuario.id).single();
+  perfil = r.data || { nome: "Fã da Cozinha", is_admin: false };
+  $("ola").textContent = "Olá, " + (perfil.nome || "Fã da Cozinha") + "!";
+  $("selo-mestre").classList.toggle("oculto", !perfil.is_admin);
+  $("painel-mestre").classList.toggle("oculto", !perfil.is_admin);
+
+  carregarMinhasCandidaturas();
+  carregarRecados();
+  if (perfil.is_admin) carregarCandidaturasAdmin();
+}
+
+/* ---------- entrar / criar conta ---------- */
+$("link-troca").addEventListener("click", function(){
+  modoCriar = !modoCriar;
+  $("titulo-auth").textContent = modoCriar ? "Criar conta" : "Entrar";
+  $("botao-auth").textContent = modoCriar ? "Criar minha conta" : "Entrar";
+  $("campo-nome").classList.toggle("oculto", !modoCriar);
+  $("troca-modo").firstChild.textContent = modoCriar ? "Já tem conta? " : "Ainda não tem conta? ";
+  $("link-troca").textContent = modoCriar ? "Entrar" : "Criar conta";
+});
+
+$("form-auth").addEventListener("submit", async function(e){
+  e.preventDefault();
+  const email = $("email").value.trim(), senha = $("senha").value;
+  const msg = $("msg-auth");
+  aviso(msg, "ok", "Um instante…");
+  if (modoCriar) {
+    const r = await sb.auth.signUp({ email: email, password: senha, options: { data: { nome: $("nome").value.trim() } } });
+    if (r.error) return aviso(msg, "erro", traduzir(r.error.message));
+    if (r.data.session) aviso(msg, "ok", "Conta criada! Bem-vindo(a) à casa.");
+    else aviso(msg, "ok", "Conta criada! Confira seu e-mail pra confirmar o cadastro e depois entre por aqui.");
+  } else {
+    const r = await sb.auth.signInWithPassword({ email: email, password: senha });
+    if (r.error) return aviso(msg, "erro", traduzir(r.error.message));
+  }
+});
+
+$("botao-sair").addEventListener("click", async function(){ await sb.auth.signOut(); });
+
+function traduzir(m){
+  if (/Invalid login credentials/i.test(m)) return "E-mail ou senha incorretos.";
+  if (/already registered/i.test(m)) return "Esse e-mail já tem conta. É só entrar.";
+  if (/at least 6/i.test(m)) return "A senha precisa ter pelo menos 6 caracteres.";
+  if (/Email not confirmed/i.test(m)) return "Confirme seu e-mail antes de entrar (veja sua caixa de entrada).";
+  return "Algo deu errado: " + m;
+}
+
+/* ---------- candidaturas (lado do fã) ---------- */
+$("form-candidatura").addEventListener("submit", async function(e){
+  e.preventDefault();
+  const msg = $("msg-candidatura");
+  const r = await sb.from("candidaturas").insert({
+    user_id: usuario.id,
+    nome_artistico: $("c-nome").value.trim(),
+    estilo: $("c-estilo").value.trim(),
+    link_som: $("c-link").value.trim(),
+    mensagem: $("c-msg").value.trim()
+  });
+  if (r.error) return aviso(msg, "erro", "Não foi possível enviar agora. Tenta de novo?");
+  aviso(msg, "ok", "Candidatura enviada! A casa vai avaliar e o status aparece aqui em cima.");
+  e.target.reset();
+  carregarMinhasCandidaturas();
+});
+
+async function carregarMinhasCandidaturas(){
+  const r = await sb.from("candidaturas").select("*").eq("user_id", usuario.id).order("created_at", { ascending: false });
+  const caixa = $("minhas-candidaturas");
+  caixa.innerHTML = "";
+  (r.data || []).forEach(function(c){
+    caixa.innerHTML +=
+      '<div class="cand"><span class="st st-' + esc(c.status) + '">' + esc(c.status) + '</span>' +
+      '<p><b>' + esc(c.nome_artistico) + '</b>' + (c.estilo ? " · " + esc(c.estilo) : "") +
+      ' <span style="color:var(--inox)">— enviada em ' + dataBr(c.created_at) + '</span></p></div>';
+  });
+}
+
+/* ---------- mural ---------- */
+$("form-recado").addEventListener("submit", async function(e){
+  e.preventDefault();
+  const msg = $("msg-recado");
+  const r = await sb.from("recados").insert({
+    user_id: usuario.id,
+    nome: perfil.nome || "Fã da Cozinha",
+    texto: $("r-texto").value.trim()
+  });
+  if (r.error) return aviso(msg, "erro", "Não foi possível mandar agora. Tenta de novo?");
+  aviso(msg, "ok", "Recado no mural!");
+  e.target.reset();
+  carregarRecados();
+});
+
+async function carregarRecados(){
+  const r = await sb.from("recados").select("*").order("created_at", { ascending: false }).limit(40);
+  const caixa = $("lista-recados");
+  caixa.innerHTML = "";
+  (r.data || []).forEach(function(rec){
+    const meu = rec.user_id === usuario.id;
+    caixa.innerHTML +=
+      '<div class="recado"><span class="quem">' + esc(rec.nome) + '</span>' +
+      '<span class="quando">' + dataBr(rec.created_at) + '</span>' +
+      '<p>' + esc(rec.texto) + '</p>' +
+      ((meu || (perfil && perfil.is_admin)) ? '<button data-id="' + rec.id + '">apagar</button>' : '') +
+      '</div>';
+  });
+  caixa.querySelectorAll("button").forEach(function(b){
+    b.addEventListener("click", async function(){
+      await sb.from("recados").delete().eq("id", b.dataset.id);
+      carregarRecados();
+    });
+  });
+}
+
+/* ---------- painel mestre ---------- */
+async function carregarCandidaturasAdmin(){
+  const r = await sb.from("candidaturas").select("*").order("created_at", { ascending: false });
+  const caixa = $("lista-candidaturas-admin");
+  caixa.innerHTML = (r.data && r.data.length) ? "" : '<p style="color:var(--inox)">Nenhuma candidatura por enquanto.</p>';
+  (r.data || []).forEach(function(c){
+    caixa.innerHTML +=
+      '<div class="cand"><span class="st st-' + esc(c.status) + '">' + esc(c.status) + '</span>' +
+      '<p><b>' + esc(c.nome_artistico) + '</b>' + (c.estilo ? " · " + esc(c.estilo) : "") +
+      ' <span style="color:var(--inox)">— ' + dataBr(c.created_at) + '</span></p>' +
+      (c.link_som ? '<p><a href="' + esc(c.link_som) + '" target="_blank" rel="noopener">ouvir o som ↗</a></p>' : "") +
+      (c.mensagem ? '<p>' + esc(c.mensagem) + '</p>' : "") +
+      '<div class="acoes">' +
+        '<button class="btn btn-mini" data-acao="aprovada" data-id="' + c.id + '">Aprovar</button>' +
+        '<button class="btn btn-mini" data-acao="recusada" data-id="' + c.id + '">Recusar</button>' +
+      '</div></div>';
+  });
+  caixa.querySelectorAll("button").forEach(function(b){
+    b.addEventListener("click", async function(){
+      await sb.from("candidaturas").update({ status: b.dataset.acao }).eq("id", b.dataset.id);
+      carregarCandidaturasAdmin();
+    });
+  });
+}
+</script>
+
+</body>
+</html>
