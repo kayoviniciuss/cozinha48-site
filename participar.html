@@ -107,7 +107,7 @@ textarea{min-height:90px;resize:vertical}
       <h2 id="titulo-auth">Criar conta</h2>
       <form id="form-auth">
         <div id="campo-nome">
-          <label for="nome">Seu nome (ou nome artístico)</label>
+          <label for="nome">Seu nome completo</label>
           <input id="nome" type="text" maxlength="60" autocomplete="name">
         </div>
         <label for="email">E-mail</label>
@@ -205,7 +205,6 @@ async function desenhar(){
   const r = await sb.from("profiles").select("*").eq("id", usuario.id).single();
   perfil = r.data || { nome: "" };
   $("ola").textContent = "Olá, " + (perfil.nome || "artista") + "!";
-  if (!$("c-nome").value) $("c-nome").value = perfil.nome || "";
 
   // já se cadastrou antes? então mostra só o agradecimento
   const jaTem = await sb.from("candidaturas").select("id").eq("user_id", usuario.id).limit(1);
