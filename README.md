@@ -4,7 +4,8 @@ Site oficial: estúdio de lives e gravações de DJ sets dentro de uma cozinha.
 
 ## Arquivos
 - `index.html` — página principal do site
-- `conta.html` — área de conta dos fãs e painel dos donos (usa Supabase)
+- `participar.html` — cadastro pra tocar na Cozinha (cria conta + manda o som; usa Supabase)
+- `conta.html` — Minha conta: meus dados, meus pedidos e "cadastros do site" pros mestres (usa Supabase)
 - `logo.png` — logomarca
 - `lowix.jpg` — foto de artista (carrossel)
 - `supabase-setup.sql` — script do banco de dados (referência; já foi executado)

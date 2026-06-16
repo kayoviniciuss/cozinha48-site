@@ -364,7 +364,7 @@ section{scroll-margin-top:92px}
       <li><a href="#artistas">Artistas</a></li>
       <li><a href="#gravacoes">Gravações</a></li>
       <li><a href="#loja">Loja</a></li>
-      <li><a href="conta.html" style="color:var(--mostarda)">Conta</a></li>
+      <li><a href="conta.html" id="link-conta" style="color:var(--mostarda)">Minha conta</a></li>
     </ul>
   </nav>
 </header>
@@ -376,7 +376,7 @@ section{scroll-margin-top:92px}
     <h1 class="fogo-titulo">Preparado em<br>fogo baixo<br>e grave alto!</h1>
     <div class="hero-acoes">
       <a class="btn btn-cheio" href="#gravacoes">Assistir aos sets</a>
-      <a class="btn btn-vazio" href="#quem-somos">Conhecer o projeto</a>
+      <a class="btn btn-vazio" href="participar.html">Quero participar</a>
     </div>
   </div>
   <div class="selo" aria-hidden="true">
@@ -601,7 +601,7 @@ section{scroll-margin-top:92px}
         <li><a href="#artistas">Artistas</a></li>
         <li><a href="#gravacoes">Gravações</a></li>
         <li><a href="#loja">Loja</a></li>
-        <li><a href="conta.html">Sua conta</a></li>
+        <li><a href="conta.html" id="link-conta-rodape">Minha conta</a></li>
       </ul>
     </div>
     <div>
@@ -1031,6 +1031,28 @@ if (location.protocol === "file:") {
       });
   }
   checaAoVivo();
+})();
+</script>
+
+<!-- nome do usuário no menu quando logado -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>
+(function(){
+  const SUPABASE_URL = "https://fobduihqyeuetrxpbntk.supabase.co";
+  const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZvYmR1aWhxeWV1ZXRyeHBibnRrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEyMzE0OTMsImV4cCI6MjA5NjgwNzQ5M30.FnDyuGvQt-iLcXThqZCxiAWWvA4DVwyx4NIqwFO-oK0";
+  if (SUPABASE_URL.indexOf("https://") !== 0 || !window.supabase) return;
+  const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+  const els = function(){ return [document.getElementById("link-conta"), document.getElementById("link-conta-rodape")].filter(Boolean); };
+  async function pinta(){
+    const sessao = await sb.auth.getSession();
+    const u = sessao.data.session ? sessao.data.session.user : null;
+    if (!u){ els().forEach(function(e){ e.textContent = "Minha conta"; }); return; }
+    let nome = (u.user_metadata && u.user_metadata.nome) || "";
+    try { const r = await sb.from("profiles").select("nome").eq("id", u.id).single(); if (r.data && r.data.nome) nome = r.data.nome; } catch(e){}
+    els().forEach(function(e){ e.textContent = nome ? ("Minha conta · " + nome) : "Minha conta"; });
+  }
+  pinta();
+  sb.auth.onAuthStateChange(function(){ pinta(); });
 })();
 </script>
 

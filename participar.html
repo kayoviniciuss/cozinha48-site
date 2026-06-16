@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#0D0C09">
-<title>Minha conta — Cozinha 48</title>
-<meta name="description" content="Sua conta na Cozinha 48: seus dados, seus pedidos e a área dos mestres da casa.">
+<title>Quero participar — Cozinha 48</title>
+<meta name="description" content="Candidate-se pra tocar na Cozinha 48: crie sua conta e mande seu som pra equipe da casa.">
 <link rel="icon" type="image/png" href="logo.png">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -33,7 +33,7 @@ img{max-width:100%;display:block}
 .container{max-width:760px;margin:0 auto;padding:0 24px}
 
 header{position:sticky;top:0;z-index:50;background:rgba(13,12,9,.92);backdrop-filter:blur(6px);border-bottom:3px solid transparent;border-image:var(--fogo) 1}
-.nav{display:flex;align-items:center;justify-content:space-between;padding:10px 24px;max-width:1100px;margin:0 auto}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:10px 24px;max-width:1100px;margin:0 auto;gap:12px}
 .nav img{height:54px;width:auto}
 .nav a.volta{font-family:'Space Mono',monospace;font-size:.8rem;text-transform:uppercase;letter-spacing:.08em;text-decoration:none;color:var(--creme);padding:8px 12px;border:1px solid transparent}
 .nav a.volta:hover{border-color:var(--pimenta);color:var(--mostarda)}
@@ -57,7 +57,7 @@ input,textarea,select{
   color:var(--creme);font-family:'Archivo',sans-serif;font-size:1rem;border-radius:0;
 }
 input:focus,textarea:focus,select:focus{border-color:var(--mostarda);outline:none}
-input:disabled{color:var(--inox);cursor:not-allowed}
+textarea{min-height:90px;resize:vertical}
 .btn{
   display:inline-block;margin-top:18px;cursor:pointer;text-decoration:none;
   font-family:'Space Mono',monospace;font-size:.85rem;text-transform:uppercase;
@@ -67,26 +67,19 @@ input:disabled{color:var(--inox);cursor:not-allowed}
 .btn-cheio{background:var(--fogo);color:#0D0C09;border-color:transparent;font-weight:700}
 .btn-cheio:hover{filter:brightness(1.12)}
 .btn-mini{padding:6px 12px;font-size:.7rem;margin-top:8px}
+.troca{font-family:'Space Mono',monospace;font-size:.8rem;margin-top:16px;color:var(--inox)}
+.troca a{cursor:pointer}
 .mensagem{font-family:'Space Mono',monospace;font-size:.8rem;margin-top:14px;padding:10px 12px;display:none}
 .mensagem.erro{display:block;border-left:4px solid var(--pimenta);color:#FFB4A0;background:#1d0f0a}
 .mensagem.ok{display:block;border-left:4px solid var(--mostarda);color:#FFE3A0;background:#1d160a}
 .oculto{display:none}
-.troca{font-family:'Space Mono',monospace;font-size:.8rem;margin-top:16px;color:var(--inox)}
-.troca a{cursor:pointer}
-.em-breve{color:var(--inox);font-family:'Space Mono',monospace;font-size:.85rem;letter-spacing:.04em}
 
 .linha-topo{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:26px}
 .ola{font-family:'Space Mono',monospace;font-size:.85rem;color:var(--mostarda);text-transform:uppercase;letter-spacing:.08em}
-.selo-mestre{font-family:'Space Mono',monospace;font-size:.7rem;background:var(--fogo);color:#0D0C09;font-weight:700;padding:3px 9px;text-transform:uppercase;letter-spacing:.08em}
 
-.cad{border:1px solid var(--borda);padding:14px;margin-bottom:12px}
-.cad .topo{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}
-.cad b{color:var(--creme)}
-.cad .quando{color:var(--inox);font-size:.72rem;font-family:'Space Mono',monospace}
-.cad p{font-size:.92rem;color:#CFC7B4;margin-top:6px}
-.cad .acoes{margin-top:10px}
-.cad button{background:none;border:1px solid var(--borda);color:var(--inox);font-family:'Space Mono',monospace;font-size:.65rem;text-transform:uppercase;padding:3px 8px;cursor:pointer}
-.cad button:hover{border-color:var(--pimenta);color:var(--pimenta)}
+.obrigado{text-align:center;padding:14px 6px}
+.obrigado .selo{font-size:2.4rem;line-height:1;margin-bottom:14px}
+.obrigado p{color:#D8D0BE}
 </style>
 </head>
 <body>
@@ -100,20 +93,20 @@ input:disabled{color:var(--inox);cursor:not-allowed}
 
 <main>
   <div class="container">
-    <h1 class="fogo-titulo">Minha conta</h1>
-    <p class="sub">Seus dados e seus pedidos num lugar só.</p>
+    <h1 class="fogo-titulo">Quero participar</h1>
+    <p class="sub">Quer tocar na Cozinha 48? Cria tua conta, manda teu som e a equipe da casa entra em contato.</p>
 
     <!-- aviso de configuração pendente -->
     <div class="cartao oculto" id="aviso-config">
       <h2>Falta ligar o banco de dados</h2>
-      <p style="color:#CFC7B4">Esta página precisa das duas chaves do projeto Supabase. Abra o arquivo <b>conta.html</b>, procure por <b>EDITE AQUI</b> no início do script e cole a URL e a chave "anon public" do seu projeto.</p>
+      <p style="color:#CFC7B4">Esta página precisa das duas chaves do projeto Supabase. Abra o arquivo <b>participar.html</b>, procure por <b>EDITE AQUI</b> no início do script e cole a URL e a chave "anon public" do seu projeto.</p>
     </div>
 
-    <!-- ENTRAR / CRIAR CONTA (quando deslogado) -->
+    <!-- ENTRAR / CRIAR CONTA -->
     <div class="cartao oculto" id="bloco-entrar">
-      <h2 id="titulo-auth">Entrar</h2>
+      <h2 id="titulo-auth">Criar conta</h2>
       <form id="form-auth">
-        <div id="campo-nome" class="oculto">
+        <div id="campo-nome">
           <label for="nome">Seu nome (ou nome artístico)</label>
           <input id="nome" type="text" maxlength="60" autocomplete="name">
         </div>
@@ -121,8 +114,8 @@ input:disabled{color:var(--inox);cursor:not-allowed}
         <input id="email" type="email" required autocomplete="email">
         <label for="senha">Senha</label>
         <input id="senha" type="password" required minlength="6" autocomplete="current-password">
-        <button class="btn btn-cheio" type="submit" id="botao-auth">Entrar</button>
-        <p class="troca" id="troca-modo">Quer tocar na Cozinha? <a href="participar.html">Quero participar</a></p>
+        <button class="btn btn-cheio" type="submit" id="botao-auth">Criar minha conta</button>
+        <p class="troca" id="troca-modo">Já tem conta? <a id="link-troca">Entrar</a></p>
         <p class="mensagem" id="msg-auth"></p>
       </form>
     </div>
@@ -131,34 +124,33 @@ input:disabled{color:var(--inox);cursor:not-allowed}
     <div id="area-logada" class="oculto">
       <div class="linha-topo">
         <span class="ola" id="ola">Olá!</span>
-        <span class="selo-mestre oculto" id="selo-mestre">Mestre da casa</span>
         <button class="btn btn-mini" id="botao-sair">Sair</button>
       </div>
 
-      <!-- MEUS DADOS -->
-      <div class="cartao">
-        <h2>Meus dados</h2>
-        <form id="form-dados">
-          <label for="d-nome">Nome</label>
-          <input id="d-nome" type="text" maxlength="60">
-          <label for="d-email">E-mail</label>
-          <input id="d-email" type="email" disabled>
-          <button class="btn btn-cheio" type="submit">Salvar</button>
-          <p class="mensagem" id="msg-dados"></p>
+      <!-- FORMULÁRIO DE CADASTRO -->
+      <div class="cartao" id="bloco-form">
+        <h2>Manda teu som</h2>
+        <form id="form-candidatura">
+          <label for="c-nome">Nome artístico</label>
+          <input id="c-nome" type="text" required maxlength="60">
+          <label for="c-estilo">Estilo (ex: Tech House)</label>
+          <input id="c-estilo" type="text" maxlength="60">
+          <label for="c-link">Link do teu som ou perfil (Instagram, SoundCloud, YouTube…)</label>
+          <input id="c-link" type="url" placeholder="https://" maxlength="200">
+          <label for="c-msg">Conta pra gente quem você é</label>
+          <textarea id="c-msg" maxlength="500"></textarea>
+          <button class="btn btn-cheio" type="submit">Enviar cadastro</button>
+          <p class="mensagem" id="msg-candidatura"></p>
         </form>
       </div>
 
-      <!-- MEUS PEDIDOS -->
-      <div class="cartao">
-        <h2>Meus pedidos</h2>
-        <p class="em-breve">Em breve — aqui vão aparecer seus pedidos da loja.</p>
-      </div>
-
-      <!-- CADASTROS DO SITE (só mestres) -->
-      <div class="cartao oculto" id="bloco-cadastros">
-        <h2>Cadastros do site</h2>
-        <p style="color:var(--inox);font-size:.85rem;margin-bottom:14px">Quem se cadastrou pra tocar na Cozinha. Só os mestres veem este bloco.</p>
-        <div id="lista-cadastros"></div>
+      <!-- AGRADECIMENTO (aparece depois de enviar / se já enviou) -->
+      <div class="cartao oculto" id="bloco-obrigado">
+        <div class="obrigado">
+          <div class="selo" aria-hidden="true">🔥</div>
+          <h2 style="margin-bottom:10px">Cadastro recebido!</h2>
+          <p>Valeu por mandar teu som. A equipe da casa vai dar uma olhada com calma e entra em contato assim que possível.</p>
+        </div>
       </div>
     </div>
 
@@ -178,11 +170,9 @@ const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZ
 
 /* ------------------------------------------------------------ */
 const $ = function(id){ return document.getElementById(id); };
-function esc(t){ return String(t).replace(/[&<>"']/g, function(m){ return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[m]; }); }
 function aviso(el, tipo, texto){ el.className = "mensagem " + tipo; el.textContent = texto; }
-function dataBr(iso){ return new Date(iso).toLocaleDateString("pt-BR", {day:"2-digit", month:"short", year:"numeric"}); }
 
-let sb = null, usuario = null, perfil = null;
+let sb = null, usuario = null, perfil = null, modoCriar = true;
 
 if (SUPABASE_URL.indexOf("https://") === 0) {
   sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
@@ -211,67 +201,70 @@ async function desenhar(){
   $("area-logada").classList.remove("oculto");
 
   const r = await sb.from("profiles").select("*").eq("id", usuario.id).single();
-  perfil = r.data || { nome: "Fã da Cozinha", is_admin: false };
-  $("ola").textContent = "Olá, " + (perfil.nome || "Fã da Cozinha") + "!";
-  $("selo-mestre").classList.toggle("oculto", !perfil.is_admin);
-  $("bloco-cadastros").classList.toggle("oculto", !perfil.is_admin);
+  perfil = r.data || { nome: "" };
+  $("ola").textContent = "Olá, " + (perfil.nome || "artista") + "!";
+  if (!$("c-nome").value) $("c-nome").value = perfil.nome || "";
 
-  $("d-nome").value = perfil.nome || "";
-  $("d-email").value = usuario.email || "";
-
-  if (perfil.is_admin) carregarCadastros();
+  // já se cadastrou antes? então mostra só o agradecimento
+  const jaTem = await sb.from("candidaturas").select("id").eq("user_id", usuario.id).limit(1);
+  if (jaTem.data && jaTem.data.length) mostrarObrigado();
 }
 
-/* ---------- entrar (deslogado) ---------- */
+function mostrarObrigado(){
+  $("bloco-form").classList.add("oculto");
+  $("bloco-obrigado").classList.remove("oculto");
+}
+
+/* ---------- entrar / criar conta ---------- */
+$("link-troca").addEventListener("click", function(){
+  modoCriar = !modoCriar;
+  $("titulo-auth").textContent = modoCriar ? "Criar conta" : "Entrar";
+  $("botao-auth").textContent = modoCriar ? "Criar minha conta" : "Entrar";
+  $("campo-nome").classList.toggle("oculto", !modoCriar);
+  $("troca-modo").firstChild.textContent = modoCriar ? "Já tem conta? " : "Ainda não tem conta? ";
+  $("link-troca").textContent = modoCriar ? "Entrar" : "Criar conta";
+});
+
 $("form-auth").addEventListener("submit", async function(e){
   e.preventDefault();
   const email = $("email").value.trim(), senha = $("senha").value;
   const msg = $("msg-auth");
   aviso(msg, "ok", "Um instante…");
-  const r = await sb.auth.signInWithPassword({ email: email, password: senha });
-  if (r.error) return aviso(msg, "erro", traduzir(r.error.message));
+  if (modoCriar) {
+    const r = await sb.auth.signUp({ email: email, password: senha, options: { data: { nome: $("nome").value.trim() } } });
+    if (r.error) return aviso(msg, "erro", traduzir(r.error.message));
+    if (r.data.session) aviso(msg, "ok", "Conta criada! Agora é só mandar teu som aqui embaixo.");
+    else aviso(msg, "ok", "Conta criada! Confira seu e-mail pra confirmar o cadastro e depois entre por aqui.");
+  } else {
+    const r = await sb.auth.signInWithPassword({ email: email, password: senha });
+    if (r.error) return aviso(msg, "erro", traduzir(r.error.message));
+  }
 });
 
 $("botao-sair").addEventListener("click", async function(){ await sb.auth.signOut(); location.reload(); });
 
 function traduzir(m){
   if (/Invalid login credentials/i.test(m)) return "E-mail ou senha incorretos.";
+  if (/already registered/i.test(m)) return "Esse e-mail já tem conta. É só entrar.";
+  if (/at least 6/i.test(m)) return "A senha precisa ter pelo menos 6 caracteres.";
   if (/Email not confirmed/i.test(m)) return "Confirme seu e-mail antes de entrar (veja sua caixa de entrada).";
   return "Algo deu errado: " + m;
 }
 
-/* ---------- meus dados ---------- */
-$("form-dados").addEventListener("submit", async function(e){
+/* ---------- enviar cadastro ---------- */
+$("form-candidatura").addEventListener("submit", async function(e){
   e.preventDefault();
-  const msg = $("msg-dados");
-  const nome = $("d-nome").value.trim();
-  const r = await sb.from("profiles").update({ nome: nome }).eq("id", usuario.id);
-  if (r.error) return aviso(msg, "erro", "Não foi possível salvar agora. Tenta de novo?");
-  perfil.nome = nome;
-  $("ola").textContent = "Olá, " + (nome || "Fã da Cozinha") + "!";
-  aviso(msg, "ok", "Dados salvos!");
+  const msg = $("msg-candidatura");
+  const r = await sb.from("candidaturas").insert({
+    user_id: usuario.id,
+    nome_artistico: $("c-nome").value.trim(),
+    estilo: $("c-estilo").value.trim(),
+    link_som: $("c-link").value.trim(),
+    mensagem: $("c-msg").value.trim()
+  });
+  if (r.error) return aviso(msg, "erro", "Não foi possível enviar agora. Tenta de novo?");
+  mostrarObrigado();
 });
-
-/* ---------- cadastros do site (mestres) ---------- */
-async function carregarCadastros(){
-  const r = await sb.from("candidaturas").select("*").order("created_at", { ascending: false });
-  const caixa = $("lista-cadastros");
-  caixa.innerHTML = (r.data && r.data.length) ? "" : '<p style="color:var(--inox)">Nenhum cadastro por enquanto.</p>';
-  (r.data || []).forEach(function(c){
-    caixa.innerHTML +=
-      '<div class="cad"><div class="topo"><span><b>' + esc(c.nome_artistico) + '</b>' + (c.estilo ? ' · ' + esc(c.estilo) : '') + '</span>' +
-      '<span class="quando">' + dataBr(c.created_at) + '</span></div>' +
-      (c.link_som ? '<p><a href="' + esc(c.link_som) + '" target="_blank" rel="noopener">abrir link ↗</a></p>' : '') +
-      (c.mensagem ? '<p>' + esc(c.mensagem) + '</p>' : '') +
-      '<div class="acoes"><button data-id="' + c.id + '">apagar</button></div></div>';
-  });
-  caixa.querySelectorAll("button").forEach(function(b){
-    b.addEventListener("click", async function(){
-      await sb.from("candidaturas").delete().eq("id", b.dataset.id);
-      carregarCadastros();
-    });
-  });
-}
 </script>
 
 </body>
