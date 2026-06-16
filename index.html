@@ -66,7 +66,8 @@ img{max-width:100%;display:block}
   -webkit-background-clip:text;background-clip:text;
   -webkit-text-fill-color:transparent;color:transparent;
   filter:drop-shadow(3px 3px 0 #000);
-  padding-right:.08em; /* o itálico corta a última letra sem isso */
+  line-height:1.25;                  /* cabe o til (ã/õ) sem cortar no topo */
+  padding:.14em .18em .04em 0;       /* topo p/ o acento, direita p/ o itálico */
 }
 
 /* ---------- BARRA DE NAVEGAÇÃO ---------- */
@@ -903,7 +904,7 @@ if (location.protocol === "file:") {
       const perto = Math.max(0, 1 - dist / (caixa.width / 2)); // 1 no centro, 0 na borda
       const escala = 0.92 + 0.16 * perto * perto;
       c.style.transform = "scale(" + escala.toFixed(3) + ")";
-      c.style.zIndex = String(100 + Math.round(perto * 100));
+      c.style.zIndex = String(1 + Math.round(perto * 20)); /* fica abaixo do menu (z 50) */
     });
 
     requestAnimationFrame(quadro);
