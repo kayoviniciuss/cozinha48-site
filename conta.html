@@ -276,8 +276,8 @@ async function carregarCadastros(){
     const partes = ["instagram","soundcloud","youtube"].map(function(p){ return linkSocial(p, c[p]); });
     if (c.link_som) {
       partes.push(/^https?:\/\//i.test(c.link_som)
-        ? '<a href="' + esc(c.link_som) + '" target="_blank" rel="noopener">Outros ↗</a>'
-        : 'Outros: ' + esc(c.link_som));
+        ? '<a href="' + esc(c.link_som) + '" target="_blank" rel="noopener">Outro ↗</a>'
+        : 'Outro: ' + esc(c.link_som));
     }
     const links = partes.filter(Boolean).join(" · ");
     const local = [c.cidade, c.estado].filter(Boolean).join(" - ");
