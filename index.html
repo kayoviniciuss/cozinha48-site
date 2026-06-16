@@ -122,23 +122,18 @@ header{
    em diagonal (clip-path), que o navegador desenha com bordas lisas.
    Só o texto gira 1 grau pra acompanhar. */
 .letreiro{
-  --inclina:0.873vw; /* equivale a 1 grau de inclinação */
   background:var(--fogo);color:#0D0C09;
   overflow:hidden;white-space:nowrap;
-  height:calc(46px + 2*var(--inclina));
+  height:46px;
   display:flex;align-items:center;
-  clip-path:polygon(
-    0    calc(50% - 23px + var(--inclina)),
-    100% calc(50% - 23px - var(--inclina)),
-    100% calc(50% + 23px - var(--inclina)),
-    0    calc(50% + 23px + var(--inclina))
-  );
+  width:108%;margin-left:-4%;
+  transform:rotate(-1.4deg);
 }
-.letreiro-trilho{display:inline-block;animation:rolar 22s linear infinite;font-family:'Space Mono',monospace;font-size:.85rem;text-transform:uppercase;letter-spacing:.12em;font-weight:700;transform:rotate(-1deg)}
+.letreiro-trilho{display:inline-block;animation:rolar 34s linear infinite;font-family:'Space Mono',monospace;font-size:.85rem;text-transform:uppercase;letter-spacing:.12em;font-weight:700}
 @media(prefers-reduced-motion:reduce){.letreiro-trilho{animation:none}}
 .letreiro-trilho span{margin:0 28px}
 .letreiro-trilho .pip{color:#0D0C09}
-@keyframes rolar{from{transform:translateX(0) rotate(-1deg)}to{transform:translateX(-50%) rotate(-1deg)}}
+@keyframes rolar{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 
 /* ---------- SEÇÕES ---------- */
 section{padding:84px 0}
@@ -392,8 +387,8 @@ section{scroll-margin-top:92px}
 <!-- letreiro -->
 <div class="letreiro" aria-hidden="true">
   <div class="letreiro-trilho">
-    <span>House</span><span class="pip">●</span><span>Techno</span><span class="pip">●</span><span>Disco</span><span class="pip">●</span><span>Brasilidades</span><span class="pip">●</span><span>Um prato por set</span><span class="pip">●</span>
-    <span>House</span><span class="pip">●</span><span>Techno</span><span class="pip">●</span><span>Disco</span><span class="pip">●</span><span>Brasilidades</span><span class="pip">●</span><span>Um prato por set</span><span class="pip">●</span>
+    <span>House</span><span class="pip">●</span><span>Culinária</span><span class="pip">●</span><span>Techno</span><span class="pip">●</span><span>Amizades</span><span class="pip">●</span><span>Disco</span><span class="pip">●</span><span>Brasilidades</span><span class="pip">●</span><span>Tech House</span><span class="pip">●</span><span>Liveset</span><span class="pip">●</span><span>Melodic Techno</span><span class="pip">●</span><span>Podcast</span><span class="pip">●</span><span>Afro House</span><span class="pip">●</span><span>Cozinha</span><span class="pip">●</span><span>Indie Dance</span><span class="pip">●</span>
+    <span>House</span><span class="pip">●</span><span>Culinária</span><span class="pip">●</span><span>Techno</span><span class="pip">●</span><span>Amizades</span><span class="pip">●</span><span>Disco</span><span class="pip">●</span><span>Brasilidades</span><span class="pip">●</span><span>Tech House</span><span class="pip">●</span><span>Liveset</span><span class="pip">●</span><span>Melodic Techno</span><span class="pip">●</span><span>Podcast</span><span class="pip">●</span><span>Afro House</span><span class="pip">●</span><span>Cozinha</span><span class="pip">●</span><span>Indie Dance</span><span class="pip">●</span>
   </div>
 </div>
 
