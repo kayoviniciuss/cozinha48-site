@@ -94,7 +94,7 @@ textarea{min-height:90px;resize:vertical}
 <main>
   <div class="container">
     <h1 class="fogo-titulo">Quero participar</h1>
-    <p class="sub">Quer tocar na Cozinha 48? Cria tua conta, manda teu som e a equipe da casa entra em contato.</p>
+    <p class="sub" id="sub">Quer tocar na Cozinha 48? Crie sua conta e faça seu cadastro para que nossa equipe entre em contato.</p>
 
     <!-- aviso de configuração pendente -->
     <div class="cartao oculto" id="aviso-config">
@@ -193,10 +193,12 @@ async function iniciar(){
 
 async function desenhar(){
   if (!usuario) {
+    $("sub").textContent = "Quer tocar na Cozinha 48? Crie sua conta e faça seu cadastro para que nossa equipe entre em contato.";
     $("bloco-entrar").classList.remove("oculto");
     $("area-logada").classList.add("oculto");
     return;
   }
+  $("sub").textContent = "Quer tocar na Cozinha 48? Faça seu cadastro para que nossa equipe entre em contato.";
   $("bloco-entrar").classList.add("oculto");
   $("area-logada").classList.remove("oculto");
 
