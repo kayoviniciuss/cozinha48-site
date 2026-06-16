@@ -253,15 +253,35 @@ $("form-dados").addEventListener("submit", async function(e){
 });
 
 /* ---------- cadastros do site (mestres) ---------- */
+function tipoLabel(t){ return ({dj:"DJ", chef:"Chef", ambos:"DJ + Chef"})[t] || ""; }
+function linkSocial(plat, valor){
+  if(!valor) return "";
+  valor = String(valor).trim();
+  let url = valor;
+  if(!/^https?:\/\//i.test(valor)){
+    const u = valor.replace(/^@/,"");
+    const bases = {instagram:"https://instagram.com/", tiktok:"https://tiktok.com/@", soundcloud:"https://soundcloud.com/", youtube:"https://youtube.com/@"};
+    url = (bases[plat]||"") + u;
+  }
+  const nomes = {instagram:"Instagram", tiktok:"TikTok", soundcloud:"SoundCloud", youtube:"YouTube"};
+  return '<a href="'+esc(url)+'" target="_blank" rel="noopener">'+nomes[plat]+' ↗</a>';
+}
+
 async function carregarCadastros(){
   const r = await sb.from("candidaturas").select("*").order("created_at", { ascending: false });
   const caixa = $("lista-cadastros");
   caixa.innerHTML = (r.data && r.data.length) ? "" : '<p style="color:var(--inox)">Nenhum cadastro por enquanto.</p>';
   (r.data || []).forEach(function(c){
+    const tipo = tipoLabel(c.tipo);
+    const links = ["instagram","tiktok","soundcloud","youtube"].map(function(p){ return linkSocial(p, c[p]); }).filter(Boolean).join(" · ");
+    const local = [c.cidade, c.estado].filter(Boolean).join(" - ");
     caixa.innerHTML +=
-      '<div class="cad"><div class="topo"><span><b>' + esc(c.nome_artistico) + '</b>' + (c.estilo ? ' · ' + esc(c.estilo) : '') + '</span>' +
-      '<span class="quando">' + dataBr(c.created_at) + '</span></div>' +
-      (c.link_som ? '<p><a href="' + esc(c.link_som) + '" target="_blank" rel="noopener">abrir link ↗</a></p>' : '') +
+      '<div class="cad"><div class="topo"><span><b>' + esc(c.nome_artistico) + '</b>' +
+        (tipo ? ' · ' + esc(tipo) : '') + (c.idade ? ' · ' + esc(c.idade) + ' anos' : '') + '</span>' +
+        '<span class="quando">' + dataBr(c.created_at) + '</span></div>' +
+      (c.estilo ? '<p>🎵 ' + esc(c.estilo) + '</p>' : '') +
+      (local ? '<p>📍 ' + esc(local) + '</p>' : '') +
+      (links ? '<p>' + links + '</p>' : '') +
       (c.mensagem ? '<p>' + esc(c.mensagem) + '</p>' : '') +
       '<div class="acoes"><button data-id="' + c.id + '">apagar</button></div></div>';
   });

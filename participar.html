@@ -80,6 +80,19 @@ textarea{min-height:90px;resize:vertical}
 .obrigado{text-align:center;padding:14px 6px}
 .obrigado .selo{font-size:2.4rem;line-height:1;margin-bottom:14px}
 .obrigado p{color:#D8D0BE}
+
+/* caixas "sou DJ / sou Chef / ambos" */
+.opcoes{display:flex;gap:10px;flex-wrap:wrap;margin-top:6px}
+.opcao{flex:1;min-width:90px;padding:14px 12px;text-align:center;background:#0F0D09;border:1px solid var(--borda);color:var(--creme);font-family:'Space Mono',monospace;font-size:.8rem;text-transform:uppercase;letter-spacing:.06em;cursor:pointer;transition:all .15s}
+.opcao:hover{border-color:var(--mostarda)}
+.opcao.ativo{background:var(--fogo);color:#0D0C09;border-color:transparent;font-weight:700}
+/* lista de links, um embaixo do outro */
+.links-grupo input{margin-bottom:10px}
+.links-grupo input:last-child{margin-bottom:0}
+/* cidade + estado lado a lado */
+.linha-cidade{display:flex;gap:12px;align-items:flex-end}
+.linha-cidade .c-cidade{flex:1}
+.linha-cidade .c-estado{width:108px;flex:0 0 108px}
 </style>
 </head>
 <body>
@@ -129,16 +142,54 @@ textarea{min-height:90px;resize:vertical}
 
       <!-- FORMULÁRIO DE CADASTRO -->
       <div class="cartao" id="bloco-form">
-        <h2>Manda teu som</h2>
+        <h2>Seu cadastro</h2>
         <form id="form-candidatura">
+          <label>Você é</label>
+          <div class="opcoes" id="grupo-tipo">
+            <div class="opcao" data-tipo="dj">Sou DJ</div>
+            <div class="opcao" data-tipo="chef">Sou Chef</div>
+            <div class="opcao" data-tipo="ambos">Ambos</div>
+          </div>
+
           <label for="c-nome">Nome artístico</label>
           <input id="c-nome" type="text" required maxlength="60">
-          <label for="c-estilo">Estilo (ex: Tech House)</label>
-          <input id="c-estilo" type="text" maxlength="60">
-          <label for="c-link">Link do teu som ou perfil (Instagram, SoundCloud, YouTube…)</label>
-          <input id="c-link" type="url" placeholder="https://" maxlength="200">
-          <label for="c-msg">Conta pra gente quem você é</label>
-          <textarea id="c-msg" maxlength="500"></textarea>
+
+          <label for="c-idade">Idade</label>
+          <input id="c-idade" type="number" min="14" max="120">
+
+          <label for="c-generos">Gêneros musicais</label>
+          <input id="c-generos" type="text" maxlength="120" placeholder="ex: tech house, melodic techno">
+
+          <label>Seus links</label>
+          <div class="links-grupo">
+            <input id="c-instagram" type="text" maxlength="200" placeholder="Instagram">
+            <input id="c-tiktok" type="text" maxlength="200" placeholder="TikTok">
+            <input id="c-soundcloud" type="text" maxlength="200" placeholder="SoundCloud">
+            <input id="c-youtube" type="text" maxlength="200" placeholder="YouTube">
+          </div>
+
+          <div class="linha-cidade">
+            <div class="c-cidade">
+              <label for="c-cidade">Cidade</label>
+              <input id="c-cidade" type="text" maxlength="80">
+            </div>
+            <div class="c-estado">
+              <label for="c-estado">Estado</label>
+              <select id="c-estado">
+                <option value="">UF</option>
+                <option>AC</option><option>AL</option><option>AP</option><option>AM</option>
+                <option>BA</option><option>CE</option><option>DF</option><option>ES</option>
+                <option>GO</option><option>MA</option><option>MT</option><option>MS</option>
+                <option>MG</option><option>PA</option><option>PB</option><option>PR</option>
+                <option>PE</option><option>PI</option><option>RJ</option><option>RN</option>
+                <option>RS</option><option>RO</option><option>RR</option><option>SC</option>
+                <option>SP</option><option>SE</option><option>TO</option>
+              </select>
+            </div>
+          </div>
+
+          <label for="c-msg">Nos conte mais sobre você e por que gostaria de tocar na Cozinha 48</label>
+          <textarea id="c-msg" maxlength="600"></textarea>
           <button class="btn btn-cheio" type="submit">Enviar cadastro</button>
           <p class="mensagem" id="msg-candidatura"></p>
         </form>
@@ -252,15 +303,33 @@ function traduzir(m){
   return "Algo deu errado: " + m;
 }
 
+/* ---------- caixas: sou DJ / sou Chef / ambos ---------- */
+let tipoSelecionado = "";
+document.querySelectorAll("#grupo-tipo .opcao").forEach(function(op){
+  op.addEventListener("click", function(){
+    document.querySelectorAll("#grupo-tipo .opcao").forEach(function(o){ o.classList.remove("ativo"); });
+    op.classList.add("ativo");
+    tipoSelecionado = op.dataset.tipo;
+  });
+});
+
 /* ---------- enviar cadastro ---------- */
 $("form-candidatura").addEventListener("submit", async function(e){
   e.preventDefault();
   const msg = $("msg-candidatura");
+  if (!tipoSelecionado) return aviso(msg, "erro", "Escolha se você é DJ, Chef ou ambos.");
   const r = await sb.from("candidaturas").insert({
     user_id: usuario.id,
+    tipo: tipoSelecionado,
     nome_artistico: $("c-nome").value.trim(),
-    estilo: $("c-estilo").value.trim(),
-    link_som: $("c-link").value.trim(),
+    idade: $("c-idade").value ? parseInt($("c-idade").value, 10) : null,
+    estilo: $("c-generos").value.trim(),
+    instagram: $("c-instagram").value.trim(),
+    tiktok: $("c-tiktok").value.trim(),
+    soundcloud: $("c-soundcloud").value.trim(),
+    youtube: $("c-youtube").value.trim(),
+    cidade: $("c-cidade").value.trim(),
+    estado: $("c-estado").value,
     mensagem: $("c-msg").value.trim()
   });
   if (r.error) return aviso(msg, "erro", "Não foi possível enviar agora. Tenta de novo?");

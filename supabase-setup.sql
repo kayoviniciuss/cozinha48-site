@@ -43,14 +43,34 @@ create trigger on_auth_user_created
 create table public.candidaturas (
   id bigint generated always as identity primary key,
   user_id uuid not null references auth.users(id) on delete cascade,
+  tipo text,                  -- dj | chef | ambos
   nome_artistico text not null,
-  estilo text,
-  link_som text,
+  idade int,
+  estilo text,                -- gêneros musicais
+  instagram text,
+  tiktok text,
+  soundcloud text,
+  youtube text,
+  cidade text,
+  estado text,                -- UF (2 letras)
+  link_som text,              -- (antigo; mantido por compatibilidade)
   mensagem text,
   status text not null default 'recebida', -- recebida | aprovada | recusada
   created_at timestamptz not null default now()
 );
 alter table public.candidaturas enable row level security;
+
+-- Se a tabela JÁ existe (banco antigo), rode este bloco UMA vez pra
+-- adicionar os campos novos do formulário de cadastro:
+alter table public.candidaturas
+  add column if not exists tipo text,
+  add column if not exists idade int,
+  add column if not exists instagram text,
+  add column if not exists tiktok text,
+  add column if not exists soundcloud text,
+  add column if not exists youtube text,
+  add column if not exists cidade text,
+  add column if not exists estado text;
 
 create policy "enviar a propria candidatura" on public.candidaturas
   for insert with check (auth.uid() = user_id);
