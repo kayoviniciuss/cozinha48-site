@@ -273,7 +273,13 @@ async function carregarCadastros(){
   caixa.innerHTML = (r.data && r.data.length) ? "" : '<p style="color:var(--inox)">Nenhum cadastro por enquanto.</p>';
   (r.data || []).forEach(function(c){
     const tipo = tipoLabel(c.tipo);
-    const links = ["instagram","tiktok","soundcloud","youtube"].map(function(p){ return linkSocial(p, c[p]); }).filter(Boolean).join(" · ");
+    const partes = ["instagram","tiktok","soundcloud","youtube"].map(function(p){ return linkSocial(p, c[p]); });
+    if (c.link_som) {
+      partes.push(/^https?:\/\//i.test(c.link_som)
+        ? '<a href="' + esc(c.link_som) + '" target="_blank" rel="noopener">Outros ↗</a>'
+        : 'Outros: ' + esc(c.link_som));
+    }
+    const links = partes.filter(Boolean).join(" · ");
     const local = [c.cidade, c.estado].filter(Boolean).join(" - ");
     caixa.innerHTML +=
       '<div class="cad"><div class="topo"><span><b>' + esc(c.nome_artistico) + '</b>' +
