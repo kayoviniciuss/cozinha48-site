@@ -273,7 +273,7 @@ async function carregarCadastros(){
   caixa.innerHTML = (r.data && r.data.length) ? "" : '<p style="color:var(--inox)">Nenhum cadastro por enquanto.</p>';
   (r.data || []).forEach(function(c){
     const tipo = tipoLabel(c.tipo);
-    const partes = ["instagram","tiktok","soundcloud","youtube"].map(function(p){ return linkSocial(p, c[p]); });
+    const partes = ["instagram","soundcloud","youtube"].map(function(p){ return linkSocial(p, c[p]); });
     if (c.link_som) {
       partes.push(/^https?:\/\//i.test(c.link_som)
         ? '<a href="' + esc(c.link_som) + '" target="_blank" rel="noopener">Outros ↗</a>'

@@ -163,7 +163,6 @@ textarea{min-height:90px;resize:vertical}
           <label>Seus links</label>
           <div class="links-grupo">
             <input id="c-instagram" type="text" maxlength="200" placeholder="Instagram">
-            <input id="c-tiktok" type="text" maxlength="200" placeholder="TikTok">
             <input id="c-soundcloud" type="text" maxlength="200" placeholder="SoundCloud">
             <input id="c-youtube" type="text" maxlength="200" placeholder="YouTube">
             <input id="c-outros" type="text" maxlength="200" placeholder="Outros">
@@ -326,7 +325,6 @@ $("form-candidatura").addEventListener("submit", async function(e){
     idade: $("c-idade").value ? parseInt($("c-idade").value, 10) : null,
     estilo: $("c-generos").value.trim(),
     instagram: $("c-instagram").value.trim(),
-    tiktok: $("c-tiktok").value.trim(),
     soundcloud: $("c-soundcloud").value.trim(),
     youtube: $("c-youtube").value.trim(),
     link_som: $("c-outros").value.trim(),
