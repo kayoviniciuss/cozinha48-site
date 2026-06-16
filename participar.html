@@ -332,7 +332,7 @@ $("form-candidatura").addEventListener("submit", async function(e){
     estado: $("c-estado").value,
     mensagem: $("c-msg").value.trim()
   });
-  if (r.error) return aviso(msg, "erro", "Não foi possível enviar agora. Tenta de novo?");
+  if (r.error) return aviso(msg, "erro", "Não foi possível enviar: " + r.error.message);
   mostrarObrigado();
 });
 </script>
