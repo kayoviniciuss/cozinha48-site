@@ -230,7 +230,15 @@ section{padding:84px 0}
   display:flex;justify-content:space-between;padding:14px 18px 8px;
   border-bottom:2px dashed var(--borda);
 }
-.foto-moldura{position:relative;border-bottom:2px dashed var(--borda);overflow:hidden}
+.foto-moldura{
+  position:relative;border-bottom:2px dashed var(--borda);overflow:hidden;
+  background:
+    radial-gradient(circle at 50% 45%, rgba(232,56,13,.55), transparent 62%),
+    linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px),
+    #0D0C09;
+  background-size:100% 100%, 58px 58px, 58px 58px, auto;
+}
 .comanda .foto-artista{
   width:100%;aspect-ratio:7/8;object-fit:cover;display:block;
   /* acabamento leve e igual pra todas, sem tirar a cor */
@@ -488,7 +496,7 @@ section{scroll-margin-top:92px}
            tiver as fotos em arquivo, salve na mesma pasta do site
            (ex: bianka.jpg) e troque o src da imagem. ===== -->
       <article class="comanda">
-        <div class="foto-moldura"><img class="foto-artista" src="https://static.wixstatic.com/media/e1b6ab_c2f8767136bf450cbbfde92573e2b905~mv2.jpg/v1/fill/w_574,h_646,al_c,q_85,enc_auto/0Q3A6178.jpg" alt="Bianka" loading="lazy"></div>
+        <div class="foto-moldura"><img class="foto-artista" src="BIANKA.png" alt="Bianka" loading="lazy"></div>
         <div class="comanda-topo"><span>Comanda Nº 001</span><span>CZ48</span></div>
         <h3>Bianka</h3>
         <div class="estilo">Afro House</div>
@@ -499,7 +507,7 @@ section{scroll-margin-top:92px}
       </article>
 
       <article class="comanda">
-        <div class="foto-moldura"><img class="foto-artista" src="https://static.wixstatic.com/media/e1b6ab_432b6c054a4f45bf868db795d1d46fed~mv2.jpg/v1/fill/w_574,h_646,al_c,q_85,enc_auto/0Q3A0913.jpg" alt="Malex" loading="lazy"></div>
+        <div class="foto-moldura"><img class="foto-artista" src="MALEX.png" alt="Malex" loading="lazy"></div>
         <div class="comanda-topo"><span>Comanda Nº 002</span><span>CZ48</span></div>
         <h3>Malex</h3>
         <div class="estilo">Tech House</div>
@@ -510,7 +518,7 @@ section{scroll-margin-top:92px}
       </article>
 
       <article class="comanda">
-        <div class="foto-moldura"><img class="foto-artista" src="https://static.wixstatic.com/media/e1b6ab_24162602ed8744a99d581b5c2cf647d3~mv2.jpeg/v1/fill/w_574,h_646,al_c,q_85,enc_auto/foto.jpeg" alt="Cazadey" loading="lazy"></div>
+        <div class="foto-moldura"><img class="foto-artista" src="CAZADEY.png" alt="Cazadey" loading="lazy"></div>
         <div class="comanda-topo"><span>Comanda Nº 003</span><span>CZ48</span></div>
         <h3>Cazadey</h3>
         <div class="estilo">Tech House</div>
@@ -521,7 +529,7 @@ section{scroll-margin-top:92px}
       </article>
 
       <article class="comanda">
-        <div class="foto-moldura"><img class="foto-artista" src="https://static.wixstatic.com/media/e1b6ab_5c4fb9a52b8f4e0a8a927f75006be701~mv2.jpg/v1/fill/w_574,h_646,al_c,q_85,enc_auto/foto.jpg" alt="Goes" loading="lazy"></div>
+        <div class="foto-moldura"><img class="foto-artista" src="GOES.png" alt="Goes" loading="lazy"></div>
         <div class="comanda-topo"><span>Comanda Nº 004</span><span>CZ48</span></div>
         <h3>Goes</h3>
         <div class="estilo">Tech House</div>
@@ -532,7 +540,7 @@ section{scroll-margin-top:92px}
       </article>
 
       <article class="comanda">
-        <div class="foto-moldura"><img class="foto-artista" src="lowix.jpg" alt="LOWIX" loading="lazy"></div>
+        <div class="foto-moldura"><img class="foto-artista" src="LOWIX.png" alt="LOWIX" loading="lazy"></div>
         <div class="comanda-topo"><span>Comanda Nº 005</span><span>CZ48</span></div>
         <h3>LOWIX</h3>
         <div class="estilo">Tech House</div>
