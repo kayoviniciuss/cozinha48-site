@@ -74,6 +74,8 @@ input:disabled{color:var(--inox);cursor:not-allowed}
 .troca{font-family:'Space Mono',monospace;font-size:.8rem;margin-top:16px;color:var(--inox)}
 .troca a{cursor:pointer}
 .em-breve{color:var(--inox);font-family:'Space Mono',monospace;font-size:.85rem;letter-spacing:.04em}
+.criar-linha{display:flex;align-items:center;gap:20px;flex-wrap:wrap;margin:-10px 0 34px}
+.criar-tit{font-family:'Anton',sans-serif;font-style:italic;text-transform:uppercase;font-size:clamp(1.4rem,4.5vw,2.2rem);color:var(--creme)}
 
 .linha-topo{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:26px}
 .ola{font-family:'Space Mono',monospace;font-size:.85rem;color:var(--mostarda);text-transform:uppercase;letter-spacing:.08em}
@@ -101,7 +103,6 @@ input:disabled{color:var(--inox);cursor:not-allowed}
 <main>
   <div class="container">
     <h1 class="fogo-titulo">Minha conta</h1>
-    <p class="sub">Seus dados e seus pedidos num lugar só.</p>
 
     <!-- aviso de configuração pendente -->
     <div class="cartao oculto" id="aviso-config">
@@ -114,7 +115,7 @@ input:disabled{color:var(--inox);cursor:not-allowed}
       <h2 id="titulo-auth">Entrar</h2>
       <form id="form-auth">
         <div id="campo-nome" class="oculto">
-          <label for="nome">Seu nome (ou nome artístico)</label>
+          <label for="nome">Seu nome</label>
           <input id="nome" type="text" maxlength="60" autocomplete="name">
         </div>
         <label for="email">E-mail</label>
@@ -122,9 +123,14 @@ input:disabled{color:var(--inox);cursor:not-allowed}
         <label for="senha">Senha</label>
         <input id="senha" type="password" required minlength="6" autocomplete="current-password">
         <button class="btn btn-cheio" type="submit" id="botao-auth">Entrar</button>
-        <p class="troca" id="troca-modo">Quer tocar na Cozinha? <a href="participar.html">Quero participar</a></p>
         <p class="mensagem" id="msg-auth"></p>
       </form>
+    </div>
+
+    <!-- criar conta simples (só deslogado) -->
+    <div class="criar-linha oculto" id="bloco-criar">
+      <span class="criar-tit" id="criar-tit">Ainda não possui?</span>
+      <button class="btn btn-cheio" id="btn-criar-conta" type="button">Criar conta</button>
     </div>
 
     <!-- ÁREA LOGADA -->
@@ -204,10 +210,12 @@ async function iniciar(){
 async function desenhar(){
   if (!usuario) {
     $("bloco-entrar").classList.remove("oculto");
+    $("bloco-criar").classList.remove("oculto");
     $("area-logada").classList.add("oculto");
     return;
   }
   $("bloco-entrar").classList.add("oculto");
+  $("bloco-criar").classList.add("oculto");
   $("area-logada").classList.remove("oculto");
 
   const r = await sb.from("profiles").select("*").eq("id", usuario.id).single();
@@ -222,20 +230,41 @@ async function desenhar(){
   if (perfil.is_admin) carregarCadastros();
 }
 
-/* ---------- entrar (deslogado) ---------- */
+/* ---------- entrar / criar conta (deslogado) ---------- */
+let modoCriar = false;
+function setModo(criar){
+  modoCriar = criar;
+  $("titulo-auth").textContent = criar ? "Criar conta" : "Entrar";
+  $("botao-auth").textContent = criar ? "Criar minha conta" : "Entrar";
+  $("campo-nome").classList.toggle("oculto", !criar);
+  $("criar-tit").textContent = criar ? "Já tem conta?" : "Ainda não possui?";
+  $("btn-criar-conta").textContent = criar ? "Entrar" : "Criar conta";
+  if (criar) $("nome").focus();
+}
+$("btn-criar-conta").addEventListener("click", function(){ setModo(!modoCriar); });
+
 $("form-auth").addEventListener("submit", async function(e){
   e.preventDefault();
   const email = $("email").value.trim(), senha = $("senha").value;
   const msg = $("msg-auth");
   aviso(msg, "ok", "Um instante…");
-  const r = await sb.auth.signInWithPassword({ email: email, password: senha });
-  if (r.error) return aviso(msg, "erro", traduzir(r.error.message));
+  if (modoCriar) {
+    const r = await sb.auth.signUp({ email: email, password: senha, options: { data: { nome: $("nome").value.trim() } } });
+    if (r.error) return aviso(msg, "erro", traduzir(r.error.message));
+    if (r.data.session) aviso(msg, "ok", "Conta criada! Bem-vindo(a) à casa.");
+    else aviso(msg, "ok", "Conta criada! Confira seu e-mail pra confirmar o cadastro e depois entre por aqui.");
+  } else {
+    const r = await sb.auth.signInWithPassword({ email: email, password: senha });
+    if (r.error) return aviso(msg, "erro", traduzir(r.error.message));
+  }
 });
 
 $("botao-sair").addEventListener("click", async function(){ await sb.auth.signOut(); location.reload(); });
 
 function traduzir(m){
   if (/Invalid login credentials/i.test(m)) return "E-mail ou senha incorretos.";
+  if (/already registered/i.test(m)) return "Esse e-mail já tem conta. É só entrar.";
+  if (/at least 6/i.test(m)) return "A senha precisa ter pelo menos 6 caracteres.";
   if (/Email not confirmed/i.test(m)) return "Confirme seu e-mail antes de entrar (veja sua caixa de entrada).";
   return "Algo deu errado: " + m;
 }
