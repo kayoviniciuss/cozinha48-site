@@ -86,6 +86,9 @@ textarea{min-height:90px;resize:vertical}
 .btn-mini{padding:6px 12px;font-size:.7rem;margin-top:8px}
 .troca{font-family:'Space Mono',monospace;font-size:.8rem;margin-top:16px;color:var(--inox)}
 .troca a{cursor:pointer}
+.criar-linha{display:flex;align-items:center;gap:20px;flex-wrap:wrap;margin:40px 0 4px}
+.criar-linha .btn{margin-top:0}
+.criar-tit{font-family:'Anton',sans-serif;font-style:italic;text-transform:uppercase;font-size:clamp(1.4rem,4.5vw,2.2rem);color:var(--creme);line-height:1;transform:translateY(.06em)}
 .mensagem{font-family:'Space Mono',monospace;font-size:.8rem;margin-top:14px;padding:10px 12px;display:none}
 .mensagem.erro{display:block;border-left:4px solid var(--pimenta);color:#FFB4A0;background:#1d0f0a}
 .mensagem.ok{display:block;border-left:4px solid var(--mostarda);color:#FFE3A0;background:#1d160a}
@@ -155,9 +158,14 @@ textarea{min-height:90px;resize:vertical}
         <label for="senha">Senha</label>
         <input id="senha" type="password" required minlength="6" autocomplete="current-password">
         <button class="btn btn-cheio" type="submit" id="botao-auth">Criar minha conta</button>
-        <p class="troca" id="troca-modo">Já tem conta? <a id="link-troca">Entrar</a></p>
         <p class="mensagem" id="msg-auth"></p>
       </form>
+    </div>
+
+    <!-- alternar criar/entrar (só deslogado) -->
+    <div class="criar-linha oculto" id="bloco-criar">
+      <span class="criar-tit" id="criar-tit">Já tem conta?</span>
+      <button class="btn btn-cheio" id="btn-criar-conta" type="button">Entrar</button>
     </div>
 
     <!-- ÁREA LOGADA -->
@@ -275,11 +283,13 @@ async function desenhar(){
     $("link-conta").textContent = "Login";
     if ($("nav-sair")) $("nav-sair").style.display = "none";
     $("bloco-entrar").classList.remove("oculto");
+    $("bloco-criar").classList.remove("oculto");
     $("area-logada").classList.add("oculto");
     return;
   }
   $("sub").textContent = "Quer tocar na Cozinha 48? Faça seu cadastro para que nossa equipe entre em contato.";
   $("bloco-entrar").classList.add("oculto");
+  $("bloco-criar").classList.add("oculto");
   $("area-logada").classList.remove("oculto");
 
   const r = await sb.from("profiles").select("*").eq("id", usuario.id).single();
@@ -300,14 +310,15 @@ function mostrarObrigado(){
 }
 
 /* ---------- entrar / criar conta ---------- */
-$("link-troca").addEventListener("click", function(){
-  modoCriar = !modoCriar;
-  $("titulo-auth").textContent = modoCriar ? "Criar conta" : "Entrar";
-  $("botao-auth").textContent = modoCriar ? "Criar minha conta" : "Entrar";
-  $("campo-nome").classList.toggle("oculto", !modoCriar);
-  $("troca-modo").firstChild.textContent = modoCriar ? "Já tem conta? " : "Ainda não tem conta? ";
-  $("link-troca").textContent = modoCriar ? "Entrar" : "Criar conta";
-});
+function setModo(criar){
+  modoCriar = criar;
+  $("titulo-auth").textContent = criar ? "Criar conta" : "Entrar";
+  $("botao-auth").textContent = criar ? "Criar minha conta" : "Entrar";
+  $("campo-nome").classList.toggle("oculto", !criar);
+  $("criar-tit").textContent = criar ? "Já tem conta?" : "Ainda não possui?";
+  $("btn-criar-conta").textContent = criar ? "Entrar" : "Criar conta";
+}
+$("btn-criar-conta").addEventListener("click", function(){ setModo(!modoCriar); });
 
 $("form-auth").addEventListener("submit", async function(e){
   e.preventDefault();
