@@ -73,15 +73,24 @@ img{max-width:100%;display:block}
 
 /* ---------- TELA DE ENTRADA (site em reformulação) ---------- */
 #portao{
-  position:fixed;inset:0;z-index:100000;background:var(--carvao);
+  position:fixed;inset:0;z-index:100000;overflow:hidden;
   display:flex;flex-direction:column;align-items:center;justify-content:center;
-  text-align:center;gap:26px;padding:24px;
+  text-align:center;gap:22px;padding:24px;
+  background:
+    radial-gradient(circle at 50% 40%, rgba(232,56,13,.20), transparent 48%),
+    linear-gradient(var(--grelha) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grelha) 1px, transparent 1px),
+    var(--carvao);
+  background-size:100% 100%, 72px 72px, 72px 72px, auto;
 }
-#portao img{height:140px;width:auto}
-#portao .portao-tit{font-size:clamp(3rem,9vw,7rem)}
-#portao p{color:#CFC7B4;max-width:440px;margin:0 auto;line-height:1.6}
+#portao img{height:150px;width:auto;filter:drop-shadow(0 0 34px rgba(232,56,13,.4));animation:portao-in .7s ease both}
+#portao .portao-tit{font-size:clamp(3rem,9vw,7rem);animation:portao-in .7s .12s ease both}
+#portao .portao-sub{font-family:'Space Mono',monospace;font-size:.8rem;letter-spacing:.2em;text-transform:uppercase;color:var(--inox);animation:portao-in .7s .22s ease both}
+#portao .btn{margin-top:4px;animation:portao-in .7s .32s ease both}
+@keyframes portao-in{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
 #portao.portao-saindo{opacity:0;visibility:hidden;transition:opacity .5s ease,visibility .5s ease}
 .ja-entrou #portao{display:none}
+@media(prefers-reduced-motion:reduce){#portao img,#portao .portao-tit,#portao .portao-sub,#portao .btn{animation:none}}
 
 /* ---------- BARRA DE NAVEGAÇÃO ---------- */
 header{
@@ -380,6 +389,7 @@ section{scroll-margin-top:92px}
 <div id="portao">
   <img src="logo.png" alt="Cozinha 48">
   <div class="fogo-titulo portao-tit">Site em reconstrução</div>
+  <div class="portao-sub">Voltamos logo · fogo baixo e grave alto</div>
   <button class="btn btn-cheio" id="btn-entrar" type="button">Entrar</button>
 </div>
 
