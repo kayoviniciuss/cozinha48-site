@@ -91,9 +91,12 @@ header{
   border-image:var(--fogo) 1;
 }
 .nav{display:flex;align-items:center;padding:16px 32px;gap:28px}
-.logo{display:flex;align-items:center;text-decoration:none}
+.logo{display:flex;align-items:center;text-decoration:none;flex:1}
 .logo img{height:80px;width:auto}
 @media(max-width:560px){.logo img{height:58px}}
+.nav-conta{flex:1;display:flex;align-items:center;justify-content:flex-end;gap:14px;white-space:nowrap}
+.nav-sair{cursor:pointer;font-family:'Space Mono',monospace;font-size:.68rem;text-transform:uppercase;letter-spacing:.06em;color:var(--creme);background:none;border:1px solid var(--borda);padding:6px 10px;transition:all .15s}
+.nav-sair:hover{border-color:var(--pimenta);color:var(--pimenta)}
 .nav ul{display:flex;gap:0;list-style:none;flex-wrap:wrap;align-items:center}
 .nav ul li:not(:first-child){border-left:1px solid var(--borda)}
 .nav ul a{
@@ -339,6 +342,8 @@ section{scroll-margin-top:92px}
   /* menu: logo em cima, links numa fileira deslizável embaixo,
      com área de toque maior */
   .nav{flex-wrap:wrap;justify-content:center;padding:10px 12px 4px;gap:2px}
+  .logo{flex:0 0 auto}
+  .nav-conta{flex:0 0 auto;width:100%;justify-content:center;margin-top:4px}
   .nav ul{
     width:100%;flex-wrap:nowrap;justify-content:flex-start;
     overflow-x:auto;-webkit-overflow-scrolling:touch;
@@ -386,8 +391,11 @@ section{scroll-margin-top:92px}
       <li><a href="participar.html">Quero participar</a></li>
       <li><a href="#gravacoes">Gravações</a></li>
       <li><a href="#loja">Loja</a></li>
-      <li><a href="conta.html" id="link-conta" style="color:var(--mostarda)">Minha conta</a></li>
     </ul>
+    <div class="nav-conta">
+      <a href="conta.html" id="link-conta" style="color:var(--mostarda)">Minha conta</a>
+      <a class="nav-sair" id="nav-sair" style="display:none">Sair</a>
+    </div>
   </nav>
 </header>
 
@@ -1065,9 +1073,12 @@ if (location.protocol === "file:") {
   if (SUPABASE_URL.indexOf("https://") !== 0 || !window.supabase) return;
   const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
   const els = function(){ return [document.getElementById("link-conta"), document.getElementById("link-conta-rodape")].filter(Boolean); };
+  const btnSair = document.getElementById("nav-sair");
+  if (btnSair) btnSair.addEventListener("click", async function(){ await sb.auth.signOut(); location.reload(); });
   async function pinta(){
     const sessao = await sb.auth.getSession();
     const u = sessao.data.session ? sessao.data.session.user : null;
+    if (btnSair) btnSair.style.display = u ? "inline-block" : "none";
     if (!u){ els().forEach(function(e){ e.textContent = "Minha conta"; }); return; }
     let nome = (u.user_metadata && u.user_metadata.nome) || "";
     try { const r = await sb.from("profiles").select("nome").eq("id", u.id).single(); if (r.data && r.data.nome) nome = r.data.nome; } catch(e){}
