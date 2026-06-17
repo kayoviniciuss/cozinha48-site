@@ -90,13 +90,12 @@ header{
   border-bottom:3px solid transparent;
   border-image:var(--fogo) 1;
 }
-.nav{display:flex;align-items:center;padding:16px 24px;max-width:1100px;margin:0 auto;gap:24px}
+.nav{display:flex;align-items:center;padding:16px 32px;gap:28px}
 .logo{display:flex;align-items:center;text-decoration:none}
 .logo img{height:80px;width:auto}
 @media(max-width:560px){.logo img{height:58px}}
-.nav-cta{margin-left:auto;white-space:nowrap;font-family:'Space Mono',monospace;font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;font-weight:700;text-decoration:none;background:var(--fogo);color:#0D0C09;padding:11px 18px;border:1px solid transparent;transition:filter .15s}
-.nav-cta:hover{filter:brightness(1.12)}
-.nav ul{display:flex;gap:6px;list-style:none;flex-wrap:wrap}
+.nav ul{display:flex;gap:0;list-style:none;flex-wrap:wrap;align-items:center}
+.nav ul li:not(:first-child){border-left:1px solid var(--borda)}
 .nav ul a{
   text-decoration:none;font-family:'Space Mono',monospace;font-size:.8rem;
   text-transform:uppercase;letter-spacing:.08em;color:var(--creme);
@@ -347,7 +346,6 @@ section{scroll-margin-top:92px}
   }
   .nav ul::-webkit-scrollbar{display:none}
   .nav ul a{padding:10px 12px;white-space:nowrap}
-  .nav-cta{margin-left:0;margin:2px auto 8px}
 
   /* respiros mais compactos: menos rolagem até o conteúdo */
   .hero{padding:52px 0 46px}
@@ -385,11 +383,11 @@ section{scroll-margin-top:92px}
     <ul>
       <li><a href="#quem-somos">Quem Somos</a></li>
       <li><a href="#artistas">Artistas</a></li>
+      <li><a href="participar.html">Quero participar</a></li>
       <li><a href="#gravacoes">Gravações</a></li>
       <li><a href="#loja">Loja</a></li>
       <li><a href="conta.html" id="link-conta" style="color:var(--mostarda)">Minha conta</a></li>
     </ul>
-    <a class="nav-cta" href="participar.html">Quero participar</a>
   </nav>
 </header>
 
