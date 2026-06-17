@@ -395,7 +395,7 @@ section{scroll-margin-top:92px}
       <li><a href="#loja">Loja</a></li>
     </ul>
     <div class="nav-conta">
-      <a href="conta.html" id="link-conta" style="color:var(--mostarda)">Minha conta</a>
+      <a href="conta.html" id="link-conta" style="color:var(--mostarda)">Login</a>
       <a class="nav-sair" id="nav-sair" style="display:none">Sair</a>
     </div>
   </nav>
@@ -633,7 +633,7 @@ section{scroll-margin-top:92px}
         <li><a href="#artistas">Artistas</a></li>
         <li><a href="#gravacoes">Gravações</a></li>
         <li><a href="#loja">Loja</a></li>
-        <li><a href="conta.html" id="link-conta-rodape">Minha conta</a></li>
+        <li><a href="conta.html" id="link-conta-rodape">Login</a></li>
       </ul>
     </div>
     <div>
@@ -1081,7 +1081,7 @@ if (location.protocol === "file:") {
     const sessao = await sb.auth.getSession();
     const u = sessao.data.session ? sessao.data.session.user : null;
     if (btnSair) btnSair.style.display = u ? "inline-block" : "none";
-    if (!u){ els().forEach(function(e){ e.textContent = "Minha conta"; }); return; }
+    if (!u){ els().forEach(function(e){ e.textContent = "Login"; }); return; }
     let nome = (u.user_metadata && u.user_metadata.nome) || "";
     try { const r = await sb.from("profiles").select("nome").eq("id", u.id).single(); if (r.data && r.data.nome) nome = r.data.nome; } catch(e){}
     els().forEach(function(e){ e.textContent = nome ? ("Minha conta · " + nome) : "Minha conta"; });
