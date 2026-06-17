@@ -33,10 +33,27 @@ img{max-width:100%;display:block}
 .container{max-width:760px;margin:0 auto;padding:0 24px}
 
 header{position:sticky;top:0;z-index:50;background:rgba(13,12,9,.92);backdrop-filter:blur(6px);border-bottom:3px solid transparent;border-image:var(--fogo) 1}
-.nav{display:flex;align-items:center;justify-content:space-between;padding:16px 32px}
-.nav img{height:80px;width:auto}
-.nav a.volta{font-family:'Space Mono',monospace;font-size:.8rem;text-transform:uppercase;letter-spacing:.08em;text-decoration:none;color:var(--creme);padding:8px 12px;border:1px solid transparent}
-.nav a.volta:hover{border-color:var(--pimenta);color:var(--mostarda)}
+.nav{display:flex;align-items:center;padding:16px 32px;gap:28px}
+.logo{display:flex;align-items:center;text-decoration:none;flex:1}
+.logo img{height:80px;width:auto}
+.nav ul{display:flex;gap:0;list-style:none;flex-wrap:wrap;align-items:center}
+.nav ul li:not(:first-child){border-left:1px solid var(--borda)}
+.nav ul a{text-decoration:none;font-family:'Space Mono',monospace;font-size:.8rem;text-transform:uppercase;letter-spacing:.08em;color:var(--creme);padding:8px 12px;border:1px solid transparent;transition:all .15s}
+.nav ul a:hover{border-color:var(--pimenta);color:var(--mostarda)}
+.nav-conta{flex:1;display:flex;align-items:center;justify-content:flex-end;gap:14px;white-space:nowrap}
+.nav-conta #link-conta{font-family:'Space Mono',monospace;font-size:.8rem;text-transform:uppercase;letter-spacing:.08em;text-decoration:none;padding:8px 12px;border:1px solid transparent;transition:all .15s;color:var(--mostarda)}
+.nav-conta #link-conta:hover{border-color:var(--pimenta)}
+.nav-sair{cursor:pointer;font-family:'Space Mono',monospace;font-size:.68rem;text-transform:uppercase;letter-spacing:.06em;color:var(--creme);background:none;border:1px solid var(--borda);padding:6px 10px;transition:all .15s}
+.nav-sair:hover{border-color:var(--pimenta);color:var(--pimenta)}
+@media(max-width:560px){.logo img{height:58px}}
+@media(max-width:700px){
+  .nav{flex-wrap:wrap;justify-content:center;padding:10px 12px 4px;gap:2px}
+  .logo{flex:0 0 auto}
+  .nav-conta{flex:0 0 auto;width:100%;justify-content:center;margin-top:4px}
+  .nav ul{width:100%;flex-wrap:nowrap;justify-content:flex-start;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding:2px 4px 8px}
+  .nav ul::-webkit-scrollbar{display:none}
+  .nav ul a{padding:10px 12px;white-space:nowrap}
+}
 
 main{padding:56px 0 90px}
 .fogo-titulo{
@@ -95,9 +112,19 @@ input:disabled{color:var(--inox);cursor:not-allowed}
 <body>
 
 <header>
-  <nav class="nav" aria-label="Menu">
-    <a href="index.html"><img src="logo.png" alt="Cozinha 48"></a>
-    <a class="volta" href="index.html">← Voltar</a>
+  <nav class="nav" aria-label="Menu principal">
+    <a class="logo" href="index.html"><img src="logo.png" alt="Cozinha 48"></a>
+    <ul>
+      <li><a href="index.html#quem-somos">Quem Somos</a></li>
+      <li><a href="index.html#artistas">Artistas</a></li>
+      <li><a href="participar.html">Quero participar</a></li>
+      <li><a href="index.html#gravacoes">Gravações</a></li>
+      <li><a href="index.html#loja">Loja</a></li>
+    </ul>
+    <div class="nav-conta">
+      <a href="conta.html" id="link-conta" style="color:var(--mostarda)">Login</a>
+      <a class="nav-sair" id="nav-sair" style="display:none">Sair</a>
+    </div>
   </nav>
 </header>
 
@@ -210,6 +237,8 @@ async function iniciar(){
 
 async function desenhar(){
   if (!usuario) {
+    $("link-conta").textContent = "Login";
+    if ($("nav-sair")) $("nav-sair").style.display = "none";
     $("bloco-entrar").classList.remove("oculto");
     $("bloco-criar").classList.remove("oculto");
     $("area-logada").classList.add("oculto");
@@ -222,6 +251,8 @@ async function desenhar(){
   const r = await sb.from("profiles").select("*").eq("id", usuario.id).single();
   perfil = r.data || { nome: "Fã da Cozinha", is_admin: false };
   $("ola").textContent = "Olá, " + (perfil.nome || "Fã da Cozinha") + "!";
+  $("link-conta").textContent = "Minha conta · " + (perfil.nome || "Fã da Cozinha");
+  if ($("nav-sair")) $("nav-sair").style.display = "inline-block";
   $("selo-mestre").classList.toggle("oculto", !perfil.is_admin);
   $("bloco-cadastros").classList.toggle("oculto", !perfil.is_admin);
 
@@ -261,6 +292,7 @@ $("form-auth").addEventListener("submit", async function(e){
 });
 
 $("botao-sair").addEventListener("click", async function(){ await sb.auth.signOut(); location.reload(); });
+if ($("nav-sair")) $("nav-sair").addEventListener("click", async function(){ await sb.auth.signOut(); location.reload(); });
 
 function traduzir(m){
   if (/Invalid login credentials/i.test(m)) return "E-mail ou senha incorretos.";
