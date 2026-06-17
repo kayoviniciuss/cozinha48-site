@@ -34,21 +34,21 @@ img{max-width:100%;display:block}
 
 header{position:sticky;top:0;z-index:50;background:rgba(13,12,9,.92);backdrop-filter:blur(6px);border-bottom:3px solid transparent;border-image:var(--fogo) 1}
 .nav{display:flex;align-items:center;padding:16px 32px;gap:28px}
-.logo{display:flex;align-items:center;text-decoration:none;flex:1}
+.logo{display:flex;align-items:center;text-decoration:none;flex:1;margin-left:24px}
 .logo img{height:80px;width:auto}
 .nav ul{display:flex;gap:0;list-style:none;flex-wrap:wrap;align-items:center}
 .nav ul li:not(:first-child){border-left:1px solid var(--borda)}
-.nav ul a{text-decoration:none;font-family:'Space Mono',monospace;font-size:.8rem;text-transform:uppercase;letter-spacing:.08em;color:var(--creme);padding:8px 12px;border:1px solid transparent;transition:all .15s}
+.nav ul a{text-decoration:none;font-family:'Space Mono',monospace;font-size:.95rem;text-transform:uppercase;letter-spacing:.08em;color:var(--creme);padding:8px 12px;border:1px solid transparent;transition:all .15s}
 .nav ul a:hover{border-color:var(--pimenta);color:var(--mostarda)}
 .nav-conta{flex:1;display:flex;align-items:center;justify-content:flex-end;gap:14px;white-space:nowrap}
-.nav-conta #link-conta{font-family:'Space Mono',monospace;font-size:.8rem;text-transform:uppercase;letter-spacing:.08em;text-decoration:none;padding:8px 12px;border:1px solid transparent;transition:all .15s;color:var(--mostarda)}
+.nav-conta #link-conta{font-family:'Space Mono',monospace;font-size:.95rem;text-transform:uppercase;letter-spacing:.08em;text-decoration:none;padding:8px 12px;border:1px solid transparent;transition:all .15s;color:var(--mostarda)}
 .nav-conta #link-conta:hover{border-color:var(--pimenta)}
 .nav-sair{cursor:pointer;font-family:'Space Mono',monospace;font-size:.68rem;text-transform:uppercase;letter-spacing:.06em;color:var(--creme);background:none;border:1px solid var(--borda);padding:6px 10px;transition:all .15s}
 .nav-sair:hover{border-color:var(--pimenta);color:var(--pimenta)}
 @media(max-width:560px){.logo img{height:58px}}
 @media(max-width:700px){
   .nav{flex-wrap:wrap;justify-content:center;padding:10px 12px 4px;gap:2px}
-  .logo{flex:0 0 auto}
+  .logo{flex:0 0 auto;margin-left:0}
   .nav-conta{flex:0 0 auto;width:100%;justify-content:center;margin-top:4px}
   .nav ul{width:100%;flex-wrap:nowrap;justify-content:flex-start;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding:2px 4px 8px}
   .nav ul::-webkit-scrollbar{display:none}
