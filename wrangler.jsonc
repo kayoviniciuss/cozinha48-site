@@ -1,0 +1,8 @@
+{
+  // Configuração pro Cloudflare Workers servir o site estático (HTML/CSS/JS)
+  "name": "cozinha48-site",
+  "compatibility_date": "2026-01-01",
+  "assets": {
+    "directory": "."
+  }
+}
