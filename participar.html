@@ -173,7 +173,6 @@ textarea{min-height:90px;resize:vertical}
     <div id="area-logada" class="oculto">
       <div class="linha-topo">
         <span class="ola" id="ola">Olá!</span>
-        <button class="btn btn-mini" id="botao-sair">Sair</button>
       </div>
 
       <!-- FORMULÁRIO DE CADASTRO -->
@@ -306,7 +305,6 @@ async function desenhar(){
 
 function mostrarObrigado(){
   $("bloco-form").classList.add("oculto");
-  $("botao-sair").classList.add("oculto");
   $("bloco-obrigado").classList.remove("oculto");
 }
 
@@ -338,7 +336,6 @@ $("form-auth").addEventListener("submit", async function(e){
   }
 });
 
-$("botao-sair").addEventListener("click", async function(){ await sb.auth.signOut(); location.reload(); });
 if ($("nav-sair")) $("nav-sair").addEventListener("click", async function(){ await sb.auth.signOut(); location.reload(); });
 
 function traduzir(m){
