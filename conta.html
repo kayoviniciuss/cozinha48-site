@@ -94,6 +94,9 @@ input:disabled{color:var(--inox);cursor:not-allowed}
 .criar-linha{display:flex;align-items:center;gap:20px;flex-wrap:wrap;margin:68px 0 34px}
 .criar-linha .btn{margin-top:0}
 .criar-tit{font-family:'Anton',sans-serif;font-style:italic;text-transform:uppercase;font-size:clamp(1.4rem,4.5vw,2.2rem);color:var(--creme);line-height:1;transform:translateY(.06em)}
+.linha-tel{display:flex;gap:12px}
+.linha-tel .c-ddd{width:90px;flex:0 0 90px}
+.linha-tel .c-num{flex:1}
 
 .linha-topo{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:26px}
 .ola{font-family:'Space Mono',monospace;font-size:.85rem;color:var(--mostarda);text-transform:uppercase;letter-spacing:.08em}
@@ -145,6 +148,11 @@ input:disabled{color:var(--inox);cursor:not-allowed}
         <div id="campo-nome" class="oculto">
           <label for="nome">Seu nome</label>
           <input id="nome" type="text" maxlength="60" autocomplete="name">
+          <label>Celular</label>
+          <div class="linha-tel">
+            <input id="ddd" class="c-ddd" type="tel" inputmode="numeric" maxlength="2" placeholder="DDD" autocomplete="tel-area-code">
+            <input id="celular" class="c-num" type="tel" inputmode="numeric" maxlength="10" placeholder="Número" autocomplete="tel-national">
+          </div>
         </div>
         <label for="email">E-mail</label>
         <input id="email" type="email" required autocomplete="email">
@@ -281,7 +289,9 @@ $("form-auth").addEventListener("submit", async function(e){
   const msg = $("msg-auth");
   aviso(msg, "ok", "Um instante…");
   if (modoCriar) {
-    const r = await sb.auth.signUp({ email: email, password: senha, options: { data: { nome: $("nome").value.trim() } } });
+    const ddd = $("ddd").value.trim(), num = $("celular").value.trim();
+    const tel = ddd ? ("(" + ddd + ") " + num) : num;
+    const r = await sb.auth.signUp({ email: email, password: senha, options: { data: { nome: $("nome").value.trim(), telefone: tel } } });
     if (r.error) return aviso(msg, "erro", traduzir(r.error.message));
     if (r.data.session) aviso(msg, "ok", "Conta criada! Bem-vindo(a) à casa.");
     else aviso(msg, "ok", "Conta criada! Confira seu e-mail pra confirmar o cadastro e depois entre por aqui.");
