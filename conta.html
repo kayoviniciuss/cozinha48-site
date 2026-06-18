@@ -366,9 +366,8 @@ async function carregarCadastros(){
     const tipo = tipoLabel(c.tipo);
     const partes = ["instagram","soundcloud","youtube"].map(function(p){ return linkSocial(p, c[p]); });
     if (c.link_som) {
-      partes.push(/^https?:\/\//i.test(c.link_som)
-        ? '<a href="' + esc(c.link_som) + '" target="_blank" rel="noopener">Outro ↗</a>'
-        : 'Outro: ' + esc(c.link_som));
+      var ou = /^https?:\/\//i.test(c.link_som) ? c.link_som : "https://" + c.link_som.replace(/^\/+/, "");
+      partes.push('<a href="' + esc(ou) + '" target="_blank" rel="noopener">Outro ↗</a>');
     }
     const links = partes.filter(Boolean).join(" · ");
     const local = [c.cidade, c.estado].filter(Boolean).join(" - ");
