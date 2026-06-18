@@ -1108,6 +1108,17 @@ if (location.protocol === "file:") {
 })();
 </script>
 
+<!-- logo leva pro topo absoluto da página -->
+<script>
+(function(){
+  var logo = document.querySelector('a.logo');
+  if(logo) logo.addEventListener('click', function(e){
+    e.preventDefault();
+    window.scrollTo({ top:0, behavior:'smooth' });
+  });
+})();
+</script>
+
 <!-- tela de entrada: botão Entrar -->
 <script>
 (function(){
