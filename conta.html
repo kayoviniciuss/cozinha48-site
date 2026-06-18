@@ -376,6 +376,8 @@ function traduzir(m){
   if (/Invalid login credentials/i.test(m)) return "E-mail ou senha incorretos.";
   if (/already registered/i.test(m)) return "Esse e-mail já tem conta. É só entrar.";
   if (/at least 6/i.test(m)) return "A senha precisa ter pelo menos 6 caracteres.";
+  if (/different from the old password/i.test(m)) return "A nova senha precisa ser diferente da senha atual.";
+  if (/For security purposes|rate limit|too many requests/i.test(m)) return "Muitas tentativas. Espere um pouquinho e tente de novo.";
   if (/Email not confirmed/i.test(m)) return "Confirme seu e-mail antes de entrar (veja sua caixa de entrada).";
   return "Algo deu errado: " + m;
 }
