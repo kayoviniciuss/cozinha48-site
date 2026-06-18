@@ -183,6 +183,11 @@ input:disabled{color:var(--inox);cursor:not-allowed}
         <form id="form-dados">
           <label for="d-nome">Nome</label>
           <input id="d-nome" type="text" maxlength="60">
+          <label>Celular</label>
+          <div class="linha-tel">
+            <input id="d-ddd" class="c-ddd" type="tel" inputmode="numeric" maxlength="2" placeholder="DDD" autocomplete="off">
+            <input id="d-celular" class="c-num" type="tel" inputmode="numeric" maxlength="10" placeholder="Número" autocomplete="off">
+          </div>
           <label for="d-email">E-mail</label>
           <input id="d-email" type="email" disabled>
           <button class="btn btn-cheio" type="submit">Salvar</button>
@@ -266,6 +271,9 @@ async function desenhar(){
 
   $("d-nome").value = perfil.nome || "";
   $("d-email").value = usuario.email || "";
+  var tdig = String(perfil.telefone || "").replace(/\D/g, "");
+  $("d-ddd").value = tdig.slice(0, 2);
+  $("d-celular").value = tdig.slice(2);
 
   if (perfil.is_admin) carregarCadastros();
 }
@@ -317,9 +325,11 @@ $("form-dados").addEventListener("submit", async function(e){
   e.preventDefault();
   const msg = $("msg-dados");
   const nome = $("d-nome").value.trim();
-  const r = await sb.from("profiles").update({ nome: nome }).eq("id", usuario.id);
+  const ddd = $("d-ddd").value.trim(), num = $("d-celular").value.trim();
+  const tel = ddd ? ("(" + ddd + ") " + num) : num;
+  const r = await sb.from("profiles").update({ nome: nome, telefone: tel }).eq("id", usuario.id);
   if (r.error) return aviso(msg, "erro", "Não foi possível salvar agora. Tenta de novo?");
-  perfil.nome = nome;
+  perfil.nome = nome; perfil.telefone = tel;
   $("ola").textContent = "Olá, " + (nome || "Fã da Cozinha") + "!";
   aviso(msg, "ok", "Dados salvos!");
 });
@@ -341,9 +351,17 @@ function linkSocial(plat, valor){
 
 async function carregarCadastros(){
   const r = await sb.from("candidaturas").select("*").order("created_at", { ascending: false });
+  const cads = r.data || [];
+  const ids = Array.from(new Set(cads.map(function(c){ return c.user_id; })));
+  const mapa = {};
+  if (ids.length) {
+    const rp = await sb.from("profiles").select("id,nome,telefone").in("id", ids);
+    (rp.data || []).forEach(function(p){ mapa[p.id] = p; });
+  }
   const caixa = $("lista-cadastros");
-  caixa.innerHTML = (r.data && r.data.length) ? "" : '<p style="color:var(--inox)">Nenhum cadastro por enquanto.</p>';
-  (r.data || []).forEach(function(c){
+  caixa.innerHTML = cads.length ? "" : '<p style="color:var(--inox)">Nenhum cadastro por enquanto.</p>';
+  cads.forEach(function(c){
+    const perf = mapa[c.user_id] || {};
     const tipo = tipoLabel(c.tipo);
     const partes = ["instagram","soundcloud","youtube"].map(function(p){ return linkSocial(p, c[p]); });
     if (c.link_som) {
@@ -357,6 +375,8 @@ async function carregarCadastros(){
       '<div class="cad"><div class="topo"><span><b>' + esc(c.nome_artistico) + '</b>' +
         (tipo ? ' · ' + esc(tipo) : '') + (c.idade ? ' · ' + esc(c.idade) + ' anos' : '') + '</span>' +
         '<span class="quando">' + dataBr(c.created_at) + '</span></div>' +
+      (perf.nome ? '<p>👤 ' + esc(perf.nome) + '</p>' : '') +
+      (perf.telefone ? '<p>📱 ' + esc(perf.telefone) + '</p>' : '') +
       (c.estilo ? '<p>🎵 ' + esc(c.estilo) + '</p>' : '') +
       (local ? '<p>📍 ' + esc(local) + '</p>' : '') +
       (links ? '<p>' + links + '</p>' : '') +

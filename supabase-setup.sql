@@ -8,10 +8,14 @@
 create table public.profiles (
   id uuid primary key references auth.users(id) on delete cascade,
   nome text,
+  telefone text,
   is_admin boolean not null default false,
   created_at timestamptz not null default now()
 );
 alter table public.profiles enable row level security;
+
+-- Se a tabela JÁ existe (banco antigo), rode esta linha UMA vez:
+alter table public.profiles add column if not exists telefone text;
 
 -- função que diz se quem está logado é dono/mestre
 create or replace function public.is_admin()
@@ -30,8 +34,10 @@ create or replace function public.handle_new_user()
 returns trigger language plpgsql security definer
 set search_path = public as $$
 begin
-  insert into public.profiles (id, nome)
-  values (new.id, coalesce(new.raw_user_meta_data->>'nome', 'Fã da Cozinha'));
+  insert into public.profiles (id, nome, telefone)
+  values (new.id,
+          coalesce(new.raw_user_meta_data->>'nome', 'Fã da Cozinha'),
+          new.raw_user_meta_data->>'telefone');
   return new;
 end; $$;
 
