@@ -160,7 +160,32 @@ input:disabled{color:var(--inox);cursor:not-allowed}
         <label for="senha">Senha</label>
         <input id="senha" type="password" required minlength="6" autocomplete="current-password">
         <button class="btn btn-cheio" type="submit" id="botao-auth">Entrar</button>
+        <p class="troca" id="esqueci-wrap"><a id="link-esqueci">Esqueci minha senha</a></p>
         <p class="mensagem" id="msg-auth"></p>
+      </form>
+    </div>
+
+    <!-- RECUPERAR SENHA (pede o e-mail) -->
+    <div class="cartao oculto" id="bloco-reset">
+      <h2>Recuperar senha</h2>
+      <p style="color:#CFC7B4;font-size:.9rem;margin-bottom:6px">Digite seu e-mail e enviamos um link pra você criar uma nova senha.</p>
+      <form id="form-reset">
+        <label for="r-email">E-mail</label>
+        <input id="r-email" type="email" required autocomplete="email">
+        <button class="btn btn-cheio" type="submit">Enviar link</button>
+        <p class="troca"><a id="link-voltar-login">Voltar ao login</a></p>
+        <p class="mensagem" id="msg-reset"></p>
+      </form>
+    </div>
+
+    <!-- CRIAR NOVA SENHA (depois de clicar no link do e-mail) -->
+    <div class="cartao oculto" id="bloco-nova-senha">
+      <h2>Criar nova senha</h2>
+      <form id="form-nova-senha">
+        <label for="ns">Nova senha</label>
+        <input id="ns" type="password" required minlength="6" autocomplete="new-password">
+        <button class="btn btn-cheio" type="submit">Salvar nova senha</button>
+        <p class="mensagem" id="msg-ns"></p>
       </form>
     </div>
 
@@ -233,15 +258,26 @@ if (SUPABASE_URL.indexOf("https://") === 0) {
   $("aviso-config").classList.remove("oculto");
 }
 
+const modoRecuperar = location.hash.indexOf("type=recovery") !== -1;
+
 async function iniciar(){
   const sessao = await sb.auth.getSession();
   usuario = sessao.data.session ? sessao.data.session.user : null;
-  desenhar();
-  sb.auth.onAuthStateChange(function(_evento, sess){
+  if (modoRecuperar) mostrarNovaSenha(); else desenhar();
+  sb.auth.onAuthStateChange(function(evento, sess){
     usuario = sess ? sess.user : null;
+    if (evento === "PASSWORD_RECOVERY") { mostrarNovaSenha(); return; }
+    if (modoRecuperar) return;
     desenhar();
   });
 }
+
+function ocultarTudo(){
+  ["bloco-entrar","bloco-criar","bloco-reset","bloco-nova-senha","area-logada"].forEach(function(id){
+    var el = $(id); if (el) el.classList.add("oculto");
+  });
+}
+function mostrarNovaSenha(){ ocultarTudo(); $("bloco-nova-senha").classList.remove("oculto"); }
 
 async function desenhar(){
   if (!usuario) {
@@ -282,9 +318,39 @@ function setModo(criar){
   $("campo-nome").classList.toggle("oculto", !criar);
   $("criar-tit").textContent = criar ? "Já tem conta?" : "Ainda não possui?";
   $("btn-criar-conta").textContent = criar ? "Entrar" : "Criar conta";
+  $("esqueci-wrap").classList.toggle("oculto", criar);
   if (criar) $("nome").focus();
 }
 $("btn-criar-conta").addEventListener("click", function(){ setModo(!modoCriar); });
+
+/* ---------- esqueci minha senha ---------- */
+$("link-esqueci").addEventListener("click", function(){
+  $("bloco-entrar").classList.add("oculto");
+  $("bloco-criar").classList.add("oculto");
+  $("bloco-reset").classList.remove("oculto");
+  if ($("email").value) $("r-email").value = $("email").value;
+});
+$("link-voltar-login").addEventListener("click", function(){
+  $("bloco-reset").classList.add("oculto");
+  $("bloco-entrar").classList.remove("oculto");
+  $("bloco-criar").classList.remove("oculto");
+});
+$("form-reset").addEventListener("submit", async function(e){
+  e.preventDefault();
+  const msg = $("msg-reset");
+  aviso(msg, "ok", "Enviando…");
+  await sb.auth.resetPasswordForEmail($("r-email").value.trim(), { redirectTo: "https://cozinha48.com/conta.html" });
+  aviso(msg, "ok", "Se esse e-mail tiver conta, enviamos um link pra criar a nova senha. Confira a caixa de entrada (e o spam).");
+});
+$("form-nova-senha").addEventListener("submit", async function(e){
+  e.preventDefault();
+  const msg = $("msg-ns");
+  aviso(msg, "ok", "Salvando…");
+  const r = await sb.auth.updateUser({ password: $("ns").value });
+  if (r.error) return aviso(msg, "erro", traduzir(r.error.message));
+  aviso(msg, "ok", "Senha alterada! Entrando…");
+  setTimeout(function(){ location.href = "conta.html"; }, 1200);
+});
 
 $("form-auth").addEventListener("submit", async function(e){
   e.preventDefault();
