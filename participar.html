@@ -334,6 +334,7 @@ $("form-auth").addEventListener("submit", async function(e){
   } else {
     const r = await sb.auth.signInWithPassword({ email: email, password: senha });
     if (r.error) return aviso(msg, "erro", traduzir(r.error.message));
+    location.href = "conta.html"; // login leva pra Minha conta
   }
 });
 
