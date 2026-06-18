@@ -99,13 +99,13 @@ header{
   border-bottom:3px solid transparent;
   border-image:var(--fogo) 1;
 }
-.nav{display:flex;align-items:center;padding:16px 32px;gap:28px}
-.logo{display:flex;align-items:center;text-decoration:none;flex:1;margin-left:24px}
+.nav{display:flex;align-items:center;padding:16px 64px;gap:28px}
+.logo{display:flex;align-items:center;text-decoration:none;flex:1}
 .logo img{height:80px;width:auto}
 @media(max-width:560px){.logo img{height:58px}}
 .nav-conta{flex:1;display:flex;align-items:center;justify-content:flex-end;gap:14px;white-space:nowrap}
-.nav-conta #link-conta{font-family:'Space Mono',monospace;font-size:.95rem;text-transform:uppercase;letter-spacing:.08em;text-decoration:none;padding:8px 12px;border:1px solid transparent;transition:all .15s}
-.nav-conta #link-conta:hover{border-color:var(--pimenta)}
+.nav-conta #link-conta{font-family:'Space Mono',monospace;font-size:.95rem;text-transform:uppercase;letter-spacing:.08em;text-decoration:none;padding:8px 14px;color:var(--mostarda);border:1px solid var(--mostarda);transition:all .15s}
+.nav-conta #link-conta:hover{background:var(--fogo);color:#0D0C09;border-color:transparent;font-weight:700}
 .nav-sair{cursor:pointer;font-family:'Space Mono',monospace;font-size:.68rem;text-transform:uppercase;letter-spacing:.06em;color:var(--creme);background:none;border:1px solid var(--borda);padding:6px 10px;transition:all .15s}
 .nav-sair:hover{border-color:var(--pimenta);color:var(--pimenta)}
 .nav ul{display:flex;gap:0;list-style:none;flex-wrap:wrap;align-items:center}
@@ -412,7 +412,7 @@ section{scroll-margin-top:92px}
       <li><a href="participar.html">Quero participar</a></li>
     </ul>
     <div class="nav-conta">
-      <a href="conta.html" id="link-conta" style="color:var(--mostarda)">Login</a>
+      <a href="conta.html" id="link-conta">Login</a>
       <a class="nav-sair" id="nav-sair" style="display:none">Sair</a>
     </div>
   </nav>
