@@ -235,8 +235,13 @@ section{padding:84px 0}
 }
 .foto-moldura{
   position:relative;border-bottom:2px dashed var(--borda);overflow:hidden;
-  background:#0a0805 url('halftone.svg?v=2') center/cover no-repeat;
+  background:#060403 url('halftone.svg?v=3') center/cover no-repeat;
 }
+.comandas .comanda:nth-child(5n+1) .foto-moldura{background-position:32% 42%}
+.comandas .comanda:nth-child(5n+2) .foto-moldura{background-position:68% 38%}
+.comandas .comanda:nth-child(5n+3) .foto-moldura{background-position:48% 62%}
+.comandas .comanda:nth-child(5n+4) .foto-moldura{background-position:60% 48%}
+.comandas .comanda:nth-child(5n+5) .foto-moldura{background-position:38% 55%}
 .comanda .foto-artista{
   width:100%;aspect-ratio:7/8;object-fit:cover;display:block;
   /* acabamento leve e igual pra todas, sem tirar a cor */
@@ -908,8 +913,8 @@ if (location.protocol === "file:") {
   window.addEventListener("resize", function(){ larguraConjunto = trilho.scrollWidth / 3; });
   trilho.scrollLeft = larguraConjunto; // começa no conjunto do meio
 
-  const VEL_PASSEIO = 0.15; // pixels por quadro (~9 px/s): bem devagarinho mesmo
-  const VEL_BORDA = 1.1;    // com o mouse na faixa lateral: um empurrãozinho suave
+  const VEL_PASSEIO = 0.12; // pixels por quadro: bem devagarinho mesmo
+  const VEL_BORDA = 0.8;    // com o mouse na faixa lateral: um empurrãozinho suave
   let vel = VEL_PASSEIO;
   let acelerando = false;
   let pausado = false;
