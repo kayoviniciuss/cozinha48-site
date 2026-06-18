@@ -175,7 +175,6 @@ input:disabled{color:var(--inox);cursor:not-allowed}
       <div class="linha-topo">
         <span class="ola" id="ola">Olá!</span>
         <span class="selo-mestre oculto" id="selo-mestre">Mestre da casa</span>
-        <button class="btn btn-mini" id="botao-sair">Sair</button>
       </div>
 
       <!-- MEUS DADOS -->
@@ -196,11 +195,6 @@ input:disabled{color:var(--inox);cursor:not-allowed}
         </form>
       </div>
 
-      <!-- MEUS PEDIDOS -->
-      <div class="cartao">
-        <h2>Meus pedidos</h2>
-        <p class="em-breve">Em breve — aqui vão aparecer seus pedidos da loja.</p>
-      </div>
 
       <!-- CADASTROS DO SITE (só mestres) -->
       <div class="cartao oculto" id="bloco-cadastros">
@@ -310,7 +304,6 @@ $("form-auth").addEventListener("submit", async function(e){
   }
 });
 
-$("botao-sair").addEventListener("click", async function(){ await sb.auth.signOut(); location.reload(); });
 if ($("nav-sair")) $("nav-sair").addEventListener("click", async function(){ await sb.auth.signOut(); location.reload(); });
 
 function traduzir(m){
