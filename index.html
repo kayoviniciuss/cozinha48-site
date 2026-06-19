@@ -335,14 +335,21 @@ section{padding:84px 0}
 /* RODAPÉ */
 footer{background:#0A0907;color:var(--creme);padding:54px 0 40px;border-top:3px solid transparent;border-image:var(--fogo) 1}
 footer .grade{display:grid;gap:30px;grid-template-columns:1fr}
-@media(min-width:720px){footer .grade{grid-template-columns:2fr 1fr 1fr}}
+@media(min-width:720px){footer .grade{grid-template-columns:1.8fr 1fr 1.1fr 1.1fr}}
 footer .logo-rodape{height:96px;width:auto;display:block;margin:0 auto 14px}
+.rodape-marca{text-align:center}
+.rodape-marca p{max-width:340px;margin:0 auto;font-size:.92rem;color:#97907F}
+footer .lista-rede{list-style:none}
+footer .lista-rede li{padding:5px 0}
+footer .lista-rede a{display:inline-flex;align-items:center;gap:9px;font-size:.92rem}
+footer .lista-rede svg{width:20px;height:20px;flex:0 0 20px}
+@media(max-width:720px){footer .grade{text-align:center}footer .lista-rede a{justify-content:center}}
 footer h3{font-size:1.2rem;text-transform:uppercase;margin-bottom:12px;font-style:italic}
 footer a{color:var(--mostarda);text-decoration:none}
 footer a:hover{color:var(--brasa)}
 footer ul{list-style:none}
 footer li{padding:4px 0;font-size:.92rem}
-.copy{margin-top:40px;font-family:'Space Mono',monospace;font-size:.72rem;color:var(--inox);text-transform:uppercase;letter-spacing:.1em}
+.copy{margin-top:40px;font-family:'Space Mono',monospace;font-size:.72rem;color:var(--inox);text-transform:uppercase;letter-spacing:.1em;text-align:center}
 
 .social-icones{display:flex;gap:16px;align-items:center;margin-top:4px}
 .social-icones a{
@@ -643,9 +650,9 @@ section{scroll-margin-top:92px}
 <!-- ================= RODAPÉ ================= -->
 <footer>
   <div class="container grade">
-    <div style="max-width:340px">
+    <div class="rodape-marca">
       <img class="logo-rodape" src="logo.png" alt="Cozinha 48">
-      <p style="font-size:.92rem;color:#97907F">Estúdio de lives e gravações de sets de música eletrônica dentro de uma cozinha. Presidente Prudente — SP.</p>
+      <p>Estúdio de lives e gravações de sets de música eletrônica dentro de uma cozinha. Presidente Prudente — SP.</p>
     </div>
     <div>
       <h3>Menu</h3>
@@ -654,35 +661,38 @@ section{scroll-margin-top:92px}
         <li><a href="#artistas">Artistas</a></li>
         <li><a href="#gravacoes">Gravações</a></li>
         <li><a href="#loja">Loja</a></li>
-        <li><a href="conta.html" id="link-conta-rodape">Login</a></li>
       </ul>
     </div>
     <div>
-      <h3>Siga</h3>
-      <div class="social-icones">
-        <a href="https://instagram.com/48cozinha" target="_blank" rel="noopener" aria-label="Instagram" title="Instagram — @48cozinha">
-          <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="2" y="2" width="20" height="20" rx="5"/>
-            <circle cx="12" cy="12" r="4.2"/>
-            <circle cx="17.6" cy="6.4" r="1.2" fill="currentColor" stroke="none"/>
-          </svg>
-        </a>
-        <a href="https://www.youtube.com/@Cozinha48" target="_blank" rel="noopener" aria-label="YouTube" title="YouTube — @Cozinha48">
-          <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="2" y="5" width="20" height="14" rx="4"/>
-            <path d="M10 9.2 L15.5 12 L10 14.8 Z" fill="currentColor" stroke="none"/>
-          </svg>
-        </a>
-        <a href="mailto:48cozinha@gmail.com" aria-label="E-mail" title="48cozinha@gmail.com">
-          <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="2.5" y="4.5" width="19" height="15" rx="2.5"/>
-            <path d="M3.5 6.5 L12 13 L20.5 6.5"/>
-          </svg>
-        </a>
-      </div>
+      <h3>Redes</h3>
+      <ul class="lista-rede">
+        <li><a href="https://instagram.com/48cozinha" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.6" cy="6.4" r="1.2" fill="currentColor" stroke="none"/></svg>
+          <span>Instagram</span></a></li>
+        <li><a href="https://www.tiktok.com/@cozinha48" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 3v3.6c0 1.6 1.4 3 3.1 3v2.6c-1.1 0-2.2-.3-3.1-.9V16a5 5 0 1 1-5-5c.2 0 .4 0 .6.05v2.7a2.4 2.4 0 1 0 1.9 2.35V3H14z"/></svg>
+          <span>TikTok</span></a></li>
+        <li><a href="https://www.youtube.com/@Cozinha48" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="4"/><path d="M10 9.2 L15.5 12 L10 14.8 Z" fill="currentColor" stroke="none"/></svg>
+          <span>YouTube</span></a></li>
+        <li><a href="https://www.twitch.tv/cozinha48" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 3 L20 3 L20 14 L15.5 18.5 L12 18.5 L9 21.5 L9 18.5 L4 18.5 Z"/><path d="M10 8 L10 13 M15 8 L15 13"/></svg>
+          <span>Twitch</span></a></li>
+      </ul>
+    </div>
+    <div>
+      <h3>Entre em contato</h3>
+      <ul class="lista-rede">
+        <li><a href="https://wa.me/5518996477231" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.5 15.3L2 22l4.8-1.4A10 10 0 1 0 12 2zm0 1.8a8.2 8.2 0 0 1 6.4 13.3 8.2 8.2 0 0 1-10.6 1.5l-.34-.2-2.85.84.86-2.78-.22-.36A8.2 8.2 0 0 1 12 3.8zm-3 4c-.2 0-.5.07-.7.3-.25.27-.95.93-.95 2.25 0 1.32.97 2.6 1.1 2.78.14.18 1.9 2.9 4.6 4.07 2.25.97 2.7.78 3.2.73.5-.05 1.6-.65 1.83-1.28.22-.63.22-1.17.16-1.28-.07-.11-.25-.18-.52-.31-.27-.14-1.6-.79-1.84-.88-.25-.09-.43-.14-.6.14-.18.27-.7.87-.85 1.05-.16.18-.31.2-.58.07-.27-.14-1.14-.42-2.17-1.34-.8-.72-1.34-1.6-1.5-1.87-.16-.27-.02-.42.12-.55.12-.12.27-.31.4-.47.14-.16.18-.27.27-.45.09-.18.05-.34-.02-.48-.07-.14-.6-1.47-.83-2.01-.22-.53-.44-.46-.6-.46z"/></svg>
+          <span>WhatsApp</span></a></li>
+        <li><a href="mailto:48cozinha@gmail.com">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="4.5" width="19" height="15" rx="2.5"/><path d="M3.5 6.5 L12 13 L20.5 6.5"/></svg>
+          <span>E-mail</span></a></li>
+      </ul>
     </div>
   </div>
-  <div class="container copy">© 2026 Cozinha 48 — feito com fogo baixo e grave alto.</div>
+  <div class="container copy">Preparado em fogo baixo e grave alto</div>
 </footer>
 
 <script>
