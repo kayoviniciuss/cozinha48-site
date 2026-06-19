@@ -314,7 +314,7 @@ section{padding:84px 0}
 }
 .produto:hover{box-shadow:6px 6px 0 var(--mostarda);transform:translateY(-3px)}
 .produto .foto{
-  aspect-ratio:1/1;
+  aspect-ratio:1/1;width:100%;object-fit:cover;
   background:repeating-linear-gradient(45deg,#16130E,#16130E 12px,#1C1812 12px,#1C1812 24px);
   display:flex;align-items:center;justify-content:center;
   border-bottom:2px solid var(--borda);
@@ -604,7 +604,7 @@ section{scroll-margin-top:92px}
            Para colocar foto, troque a div "foto" por:
            <img class="foto" src="caminho-da-foto.jpg" alt="Nome do produto"> ===== -->
       <article class="produto">
-        <div class="foto" aria-hidden="true">CZ48</div>
+        <img class="foto" src="camiseta.jpg?v=1" alt="Camiseta Cozinha 48" loading="lazy">
         <div class="info">
           <h3>Camiseta Cozinha 48</h3>
           <span class="preco">R$ 89,00</span>
