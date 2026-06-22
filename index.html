@@ -128,15 +128,15 @@ header{
 .btn-cheio:hover{filter:brightness(1.12);transform:translateY(-2px)}
 .btn-vazio:hover{border-color:var(--mostarda);color:var(--mostarda)}
 
-/* disco "ao vivo" girando em 3D no canto do hero */
+/* disco da logo girando no canto do hero */
 .selo{
-  position:absolute;right:20px;top:40px;width:160px;height:160px;
-  display:none;align-items:center;justify-content:center;perspective:720px;
+  position:absolute;right:14px;top:44px;width:180px;height:180px;
+  display:none;align-items:center;justify-content:center;
 }
 @media(min-width:820px){.selo{display:flex}}
-.selo svg{width:100%;height:100%;transform-style:preserve-3d;animation:girar3d 9s linear infinite;filter:drop-shadow(0 14px 14px rgba(0,0,0,.55))}
-@media(prefers-reduced-motion:reduce){.selo svg{animation:none;transform:rotateX(54deg)}}
-@keyframes girar3d{from{transform:rotateX(54deg) rotateZ(0)}to{transform:rotateX(54deg) rotateZ(360deg)}}
+.selo img{width:100%;height:auto;filter:drop-shadow(0 10px 12px rgba(0,0,0,.5));animation:girar 14s linear infinite}
+@media(prefers-reduced-motion:reduce){.selo img{animation:none}}
+@keyframes girar{to{transform:rotate(360deg)}}
 
 /* faixa de letreiro — agora é a chama atravessando a página */
 /* faixa inclinada SEM rotacionar o elemento: a faixa é reta e recortada
@@ -420,7 +420,7 @@ section{scroll-margin-top:92px}
 <header id="topo">
   <nav class="nav" aria-label="Menu principal">
     <div class="nav-esq">
-      <a class="logo" href="#topo"><img src="logo.png" alt="Cozinha 48"></a>
+      <a class="logo" href="#topo"><img src="logo-texto.png?v=1" alt="Cozinha 48"></a>
     </div>
     <ul>
       <li><a href="#quem-somos">Quem Somos</a></li>
@@ -463,34 +463,7 @@ section{scroll-margin-top:92px}
     </div>
   </div>
   <div class="selo" aria-hidden="true">
-    <svg viewBox="0 0 130 130">
-      <defs>
-        <linearGradient id="rim" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stop-color="#E8380D"/><stop offset=".5" stop-color="#FF7A1A"/><stop offset="1" stop-color="#FFB40C"/>
-        </linearGradient>
-      </defs>
-      <!-- borda de fogo -->
-      <circle cx="65" cy="65" r="63" fill="url(#rim)"/>
-      <!-- corpo preto do disco -->
-      <circle cx="65" cy="65" r="57" fill="#0E0C09"/>
-      <!-- sulcos -->
-      <circle cx="65" cy="65" r="50" fill="none" stroke="#241e16" stroke-width="1"/>
-      <circle cx="65" cy="65" r="45" fill="none" stroke="#241e16" stroke-width="1"/>
-      <circle cx="65" cy="65" r="40" fill="none" stroke="#241e16" stroke-width="1"/>
-      <!-- garfo + faca (como na logo) -->
-      <g fill="#E8380D" transform="rotate(-18 65 65)">
-        <rect x="51.5" y="29" width="2.6" height="15" rx="1.3"/>
-        <rect x="56.2" y="29" width="2.6" height="15" rx="1.3"/>
-        <rect x="60.9" y="29" width="2.6" height="15" rx="1.3"/>
-        <path d="M50.5 43 H62 V47 a5.75 5.75 0 0 1 -11.5 0 Z"/>
-        <rect x="54.2" y="51" width="4" height="34" rx="2"/>
-        <path d="M76 28 C 71.5 37, 71.5 51, 76 57 C 80.5 51, 80.5 37, 76 28 Z"/>
-        <rect x="74" y="55" width="4" height="30" rx="2"/>
-      </g>
-      <!-- furo central -->
-      <circle cx="65" cy="65" r="8.5" fill="#F2ECDD"/>
-      <circle cx="65" cy="65" r="2.6" fill="#0D0C09"/>
-    </svg>
+    <img src="disco.png?v=1" alt="">
   </div>
 </section>
 
