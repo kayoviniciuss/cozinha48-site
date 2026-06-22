@@ -58,7 +58,7 @@ header{position:sticky;top:0;z-index:50;background:rgba(13,12,9,.92);backdrop-fi
 }
 
 main{padding:56px 0 90px}
-.eyebrow{font-family:'Space Mono',monospace;font-size:.8rem;text-transform:uppercase;letter-spacing:.14em;color:var(--mostarda);display:block;margin-bottom:14px}
+.eyebrow{font-family:'Space Mono',monospace;font-size:.8rem;text-transform:uppercase;letter-spacing:.14em;color:var(--mostarda);display:block;margin-bottom:14px;text-align:center}
 .fogo-titulo{
   font-style:italic;text-transform:uppercase;
   background:var(--fogo);-webkit-background-clip:text;background-clip:text;
@@ -66,20 +66,21 @@ main{padding:56px 0 90px}
   filter:drop-shadow(3px 3px 0 #000);
   line-height:1.18;padding:.14em .18em .18em 0;
 }
-h1.fogo-titulo{font-size:clamp(2.1rem,6vw,3.4rem);margin-bottom:16px}
-.intro{color:#D8D0BE;font-size:1rem;max-width:720px;margin-bottom:28px}
+h1.fogo-titulo{font-size:clamp(2.1rem,6vw,3.4rem);margin-bottom:16px;text-align:center}
+.intro{color:#D8D0BE;font-size:1rem;max-width:720px;margin:0 auto 28px;text-align:center}
 
 .grid2{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px}
 @media(max-width:980px){.grid2{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:560px){.grid2{grid-template-columns:1fr}}
-.bloco{background:var(--carbono);border:2px solid var(--borda);box-shadow:5px 5px 0 var(--pimenta);padding:18px;display:flex;flex-direction:column}
-.bloco.destaque{grid-column:1/-1;border-color:var(--brasa);box-shadow:5px 5px 0 var(--brasa)}
-.bloco h2{font-size:1rem;text-transform:uppercase;font-style:italic;color:var(--mostarda);display:flex;align-items:center;gap:9px;line-height:1.15}
-.bloco h2 .ico{font-size:1.3rem;filter:none;-webkit-text-fill-color:initial}
-.bloco p{color:#CFC7B4;font-size:.86rem;margin-top:8px}
-.equip{list-style:none;margin-top:10px;display:flex;flex-direction:column;gap:6px}
-.equip li{font-family:'Space Mono',monospace;font-size:.78rem;color:var(--creme);padding-left:18px;position:relative;line-height:1.45}
-.equip li::before{content:"▸";position:absolute;left:0;color:var(--brasa)}
+.bloco{background:var(--carbono);border:2px solid var(--borda);box-shadow:5px 5px 0 var(--pimenta);padding:26px 22px;display:flex;flex-direction:column;text-align:center}
+.bloco.destaque{grid-column:1/-1;border-color:var(--brasa);box-shadow:5px 5px 0 var(--brasa);text-align:left}
+.bloco h2{font-size:1.1rem;text-transform:uppercase;font-style:italic;color:var(--mostarda);display:flex;align-items:center;justify-content:center;gap:9px;line-height:1.15}
+.bloco.destaque h2{justify-content:flex-start}
+.bloco h2 .ico{font-size:1.4rem;filter:none;-webkit-text-fill-color:initial}
+.bloco p{color:#CFC7B4;font-size:.92rem;margin-top:10px}
+.equip{list-style:none;margin-top:13px;display:flex;flex-direction:column;gap:8px;align-items:center}
+.equip li{font-family:'Space Mono',monospace;font-size:.84rem;color:var(--creme);line-height:1.45;text-align:center}
+.equip li::before{content:"▸ ";color:var(--brasa)}
 .equip li b{color:var(--mostarda);font-weight:700}
 
 .chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
@@ -121,7 +122,7 @@ h1.fogo-titulo{font-size:clamp(2.1rem,6vw,3.4rem);margin-bottom:16px}
   <div class="container">
 
     <span class="eyebrow">Estúdio de gravação · Presidente Prudente, SP</span>
-    <h1 class="fogo-titulo">Transforme seu set em uma experiência audiovisual</h1>
+    <h1 class="fogo-titulo">Transforme seu set em uma<br>experiência audiovisual</h1>
     <p class="intro">Um estúdio feito para DJs e artistas que querem conteúdo de alto nível — música eletrônica, gastronomia e uma atmosfera exclusiva. Tudo montado dentro de uma cozinha ambientada para gravação: um cenário que foge do estúdio convencional e dá identidade visual marcante ao seu conteúdo.</p>
 
     <div class="grid2">
