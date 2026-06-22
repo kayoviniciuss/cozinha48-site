@@ -387,10 +387,27 @@ section{scroll-margin-top:92px}
   .produto .btn{padding:13px 14px}
 }
 
+/* ---------- INTRO (logo + fade) ---------- */
+#intro{
+  position:fixed;inset:0;z-index:100000;
+  display:flex;align-items:center;justify-content:center;
+  background-color:var(--carvao);
+  background-image:radial-gradient(circle at 50% 45%, rgba(232,56,13,.20), transparent 55%);
+  transition:opacity .8s ease, visibility .8s ease;
+}
+#intro img{width:min(440px,72vw);height:auto;animation:intro-logo 1.1s ease both}
+#intro.saindo{opacity:0;visibility:hidden}
+@keyframes intro-logo{0%{opacity:0;transform:scale(.86)}60%{opacity:1;transform:scale(1)}100%{opacity:1;transform:scale(1)}}
+.sem-intro #intro{display:none}
+@media(prefers-reduced-motion:reduce){#intro img{animation:none}}
+
 </style>
+<script>try{if(sessionStorage.getItem('cz48_intro'))document.documentElement.className+=' sem-intro';}catch(e){}</script>
 </head>
 <body>
 
+<!-- ================= INTRO ================= -->
+<div id="intro"><img src="logo.png" alt="Cozinha 48"></div>
 
 <!-- ================= MENU ================= -->
 <header id="topo">
@@ -1147,6 +1164,17 @@ if (location.protocol === "file:") {
 })();
 </script>
 
+<!-- intro: fade out depois de mostrar a logo -->
+<script>
+(function(){
+  var intro = document.getElementById('intro');
+  if(!intro) return;
+  if(document.documentElement.classList.contains('sem-intro')){ intro.style.display='none'; return; }
+  try{ sessionStorage.setItem('cz48_intro','1'); }catch(e){}
+  setTimeout(function(){ intro.classList.add('saindo'); }, 1500);
+  setTimeout(function(){ intro.style.display='none'; }, 2400);
+})();
+</script>
 
 </body>
 </html>
