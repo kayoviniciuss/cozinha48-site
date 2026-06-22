@@ -175,21 +175,25 @@ function negar(){ $("bloco-negado").classList.remove("oculto"); $("area-mestres"
 function tipoLabel(t){ return ({dj:"DJ", chef:"Chef", ambos:"DJ + Chef"})[t] || ""; }
 function linkSocial(plat, valor){
   if(!valor) return "";
-  valor = String(valor).trim();
-  if(!valor) return "";
-  let url;
-  if(/^https?:\/\//i.test(valor)){
-    url = valor;                                   // já é link completo
-  } else if(/(instagram|tiktok|soundcloud|youtube|youtu\.be)\.[a-z]/i.test(valor)){
-    url = "https://" + valor.replace(/^\/+/, "");    // colou o domínio sem http (ex: instagram.com/fulano)
-  } else {
-    const u = valor.replace(/^@/,"").replace(/^\/+/,"");   // só o usuário
-    const bases = {instagram:"https://instagram.com/", tiktok:"https://tiktok.com/@", soundcloud:"https://soundcloud.com/", youtube:"https://youtube.com/@"};
-    url = (bases[plat]||"") + u;
-  }
+  const raw = String(valor).trim();
+  if(!raw) return "";
+  const v = raw.replace(/\s+/g, "");                 // tira espaços que a pessoa colou
+  const bases = {instagram:"https://instagram.com/", tiktok:"https://tiktok.com/@", soundcloud:"https://soundcloud.com/", youtube:"https://youtube.com/@"};
   const nomes = {instagram:"Instagram", tiktok:"TikTok", soundcloud:"SoundCloud", youtube:"YouTube"};
+  let url;
+  // se veio com domínio/url (mesmo errado, tipo instagram.com.br/fulano), pega só o que vem depois da barra
+  const m = v.match(/(?:instagram|tiktok|soundcloud|youtube|youtu\.be)\.[a-z.]+\/+(.+)$/i);
+  if (m) {
+    const user = m[1].replace(/^@/, "").replace(/[?#].*$/, "").replace(/\/+$/, "");
+    url = (bases[plat] || "") + user;                // remonta no domínio certo
+  } else if (/^https?:\/\//i.test(v)) {
+    url = v;
+  } else {
+    const user = v.replace(/^@/, "").replace(/^\/+/, "");
+    url = (bases[plat] || "") + user;
+  }
   // o title mostra exatamente o que o artista digitou (passe o mouse no link pra ver)
-  return '<a href="'+esc(url)+'" target="_blank" rel="noopener" title="Digitado: '+esc(valor)+'">'+nomes[plat]+' ↗</a>';
+  return '<a href="'+esc(url)+'" target="_blank" rel="noopener" title="Digitado: '+esc(raw)+'">'+nomes[plat]+' ↗</a>';
 }
 
 async function carregarCadastros(){
