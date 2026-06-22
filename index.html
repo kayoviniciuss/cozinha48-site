@@ -998,6 +998,12 @@ if (location.protocol === "file:") {
   const setaDir = document.getElementById("seta-dir");
   if (setaEsq) setaEsq.addEventListener("click", function(){ pular(-1); });
   if (setaDir) setaDir.addEventListener("click", function(){ pular(1); });
+  // mouse sobre uma seta também pausa, pra facilitar a escolha
+  [setaEsq, setaDir].forEach(function(s){
+    if (!s) return;
+    s.addEventListener("mouseenter", function(){ pausado = true; });
+    s.addEventListener("mouseleave", function(){ pausado = false; });
+  });
 
   function quadro(){
     if (alvo !== null) {
