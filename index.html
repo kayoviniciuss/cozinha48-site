@@ -193,6 +193,26 @@ section{padding:84px 0}
 
 /* ARTISTAS — cards estilo comanda, versão noturna, em carrossel */
 .carrossel{position:relative}
+
+/* setas laterais — só no desktop, ficam FORA do quadro das comandas */
+.seta-carrossel{display:none}
+@media(min-width:820px){
+  /* abre uma folga lateral pras setas não ficarem em cima das fotos */
+  .carrossel{padding:0 60px}
+  .seta-carrossel{
+    display:flex;align-items:center;justify-content:center;
+    position:absolute;top:50%;transform:translateY(-50%);
+    width:46px;height:46px;z-index:40;cursor:pointer;
+    background:var(--carbono);color:var(--creme);
+    border:2px solid var(--borda);border-radius:50%;
+    font-size:1.7rem;line-height:1;padding-bottom:3px;
+    transition:background .15s,color .15s,border-color .15s,transform .15s;
+  }
+  .seta-carrossel:hover{background:var(--fogo);color:#0D0C09;border-color:transparent}
+  .seta-carrossel:active{transform:translateY(-50%) scale(.9)}
+  .seta-esq{left:4px}
+  .seta-dir{right:4px}
+}
 .comandas{
   display:flex;gap:24px;overflow-x:auto;
   padding:34px 2px 38px; /* folga pra comanda do meio crescer sem cortar */
@@ -524,6 +544,8 @@ section{scroll-margin-top:92px}
       <span class="tag">Cardápio da casa</span>
     </div>
     <div class="carrossel">
+    <button class="seta-carrossel seta-esq" id="seta-esq" type="button" aria-label="Artista anterior">‹</button>
+    <button class="seta-carrossel seta-dir" id="seta-dir" type="button" aria-label="Próximo artista">›</button>
     <div class="comandas" id="trilho-artistas">
 
       <!-- ===== EDITE AQUI: duplique este bloco para cada artista.
@@ -974,16 +996,40 @@ if (location.protocol === "file:") {
   trilho.addEventListener("touchstart", function(){ pausado = true; }, { passive: true });
   trilho.addEventListener("touchend", function(){ setTimeout(function(){ pausado = false; }, 1600); }, { passive: true });
 
+  // setas laterais (desktop): cada clique avança/volta um artista.
+  // o passeio automático continua; o clique só dá um "salto" suave até o próximo.
+  let alvo = null; // destino do scroll quando a seta é clicada (null = passeio livre)
+  function passoCard(){
+    const c = trilho.querySelector(".comanda");
+    const gap = parseFloat(getComputedStyle(trilho).gap) || 24;
+    return c ? c.offsetWidth + gap : 294; // offsetWidth ignora o zoom do destaque
+  }
+  function pular(dir){
+    const base = (alvo !== null) ? alvo : trilho.scrollLeft;
+    alvo = base + dir * passoCard();
+  }
+  const setaEsq = document.getElementById("seta-esq");
+  const setaDir = document.getElementById("seta-dir");
+  if (setaEsq) setaEsq.addEventListener("click", function(){ pular(-1); });
+  if (setaDir) setaDir.addEventListener("click", function(){ pular(1); });
+
   function quadro(){
-    // anda sozinho
-    if (!reduzMovimento && (!pausado || acelerando)) {
+    if (alvo !== null) {
+      // indo até o artista clicado: anda rápido e suave até encostar no destino
+      const dif = alvo - trilho.scrollLeft;
+      const passo = Math.sign(dif) * Math.min(Math.abs(dif), Math.max(6, Math.abs(dif) * 0.18));
+      trilho.scrollLeft += passo;
+      if (Math.abs(alvo - trilho.scrollLeft) < 1) { trilho.scrollLeft = Math.round(alvo); alvo = null; }
+    } else if (!reduzMovimento && (!pausado || acelerando)) {
+      // anda sozinho
       sobra += vel;
       const passo = sobra > 0 ? Math.floor(sobra) : Math.ceil(sobra);
       if (passo !== 0) { trilho.scrollLeft += passo; sobra -= passo; }
     }
     // truque do infinito: voltar um conjunto sem ninguém perceber
-    if (trilho.scrollLeft >= larguraConjunto * 2) trilho.scrollLeft -= larguraConjunto;
-    else if (trilho.scrollLeft < 2) trilho.scrollLeft += larguraConjunto;
+    // (ajusta o destino junto, pra seta não se perder no "pulo")
+    if (trilho.scrollLeft >= larguraConjunto * 2) { trilho.scrollLeft -= larguraConjunto; if (alvo !== null) alvo -= larguraConjunto; }
+    else if (trilho.scrollLeft < 2) { trilho.scrollLeft += larguraConjunto; if (alvo !== null) alvo += larguraConjunto; }
 
     // destaque: quanto mais perto do centro, maior a comanda
     const caixa = trilho.getBoundingClientRect();
