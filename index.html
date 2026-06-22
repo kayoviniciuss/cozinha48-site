@@ -102,7 +102,12 @@ header{
   border-image:var(--fogo) 1;
 }
 .nav{display:flex;align-items:center;padding:16px 64px;gap:28px}
-.logo{display:flex;align-items:center;text-decoration:none;flex:1}
+.nav-esq{flex:1;display:flex;align-items:center;gap:18px}
+.logo{display:flex;align-items:center;text-decoration:none}
+.nav-social{display:flex;gap:12px;align-items:center}
+.nav-social a{color:var(--creme);display:flex;transition:color .15s}
+.nav-social a:hover{color:var(--brasa)}
+.nav-social svg{width:22px;height:22px}
 .logo img{height:80px;width:auto}
 @media(max-width:560px){.logo img{height:58px}}
 .nav-conta{flex:1;display:flex;align-items:center;justify-content:flex-end;gap:14px;white-space:nowrap}
@@ -369,6 +374,7 @@ section{scroll-margin-top:92px}
      com área de toque maior */
   .nav{flex-wrap:wrap;justify-content:center;padding:10px 12px 4px;gap:2px}
   .logo{flex:0 0 auto;margin-left:0}
+  .nav-esq{flex:0 0 auto;flex-wrap:wrap;justify-content:center}
   .nav-conta{flex:0 0 auto;width:100%;justify-content:center;margin-top:4px}
   .nav ul{
     width:100%;flex-wrap:nowrap;justify-content:flex-start;
@@ -410,7 +416,23 @@ section{scroll-margin-top:92px}
 <!-- ================= MENU ================= -->
 <header id="topo">
   <nav class="nav" aria-label="Menu principal">
-    <a class="logo" href="#topo"><img src="logo.png" alt="Cozinha 48"></a>
+    <div class="nav-esq">
+      <a class="logo" href="#topo"><img src="logo.png" alt="Cozinha 48"></a>
+      <div class="nav-social">
+        <a href="https://instagram.com/48cozinha" target="_blank" rel="noopener" aria-label="Instagram" title="Instagram">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.6" cy="6.4" r="1.2" fill="currentColor" stroke="none"/></svg>
+        </a>
+        <a href="https://www.tiktok.com/@cozinha.48" target="_blank" rel="noopener" aria-label="TikTok" title="TikTok">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 3v3.6c0 1.6 1.4 3 3.1 3v2.6c-1.1 0-2.2-.3-3.1-.9V16a5 5 0 1 1-5-5c.2 0 .4 0 .6.05v2.7a2.4 2.4 0 1 0 1.9 2.35V3H14z"/></svg>
+        </a>
+        <a href="https://www.youtube.com/@Cozinha48" target="_blank" rel="noopener" aria-label="YouTube" title="YouTube">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="4"/><path d="M10 9.2 L15.5 12 L10 14.8 Z" fill="currentColor" stroke="none"/></svg>
+        </a>
+        <a href="https://www.twitch.tv/cozinha48" target="_blank" rel="noopener" aria-label="Twitch" title="Twitch">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 3 L20 3 L20 14 L15.5 18.5 L12 18.5 L9 21.5 L9 18.5 L4 18.5 Z"/><path d="M10 8 L10 13 M15 8 L15 13"/></svg>
+        </a>
+      </div>
+    </div>
     <ul>
       <li><a href="#quem-somos">Quem Somos</a></li>
       <li><a href="#artistas">Artistas</a></li>
@@ -1021,16 +1043,25 @@ if (location.protocol === "file:") {
     font-size:.74rem;letter-spacing:.05em;text-transform:uppercase;
     padding:9px;border-radius:6px;
   }
-  /* botão flutuante p/ reabrir depois de fechado */
+  /* botões flutuantes (canto inferior direito) */
+  #flutua{position:fixed;right:20px;bottom:20px;z-index:9998;display:flex;gap:12px;align-items:center}
   #live-btn{
-    position:fixed;right:20px;bottom:20px;z-index:9998;display:none;
-    align-items:center;gap:8px;cursor:pointer;
+    display:none;align-items:center;gap:8px;cursor:pointer;
     background:var(--pimenta);color:var(--creme);border:none;
     font-family:'Archivo',sans-serif;font-weight:800;font-size:.8rem;
     letter-spacing:.06em;text-transform:uppercase;
     padding:12px 16px;border-radius:30px;box-shadow:4px 4px 0 rgba(0,0,0,.5);
   }
   #live-btn .bolinha{width:9px;height:9px;border-radius:50%;background:#fff;animation:pulsa 1.6s infinite}
+  #wpp-btn{
+    display:flex;align-items:center;gap:8px;cursor:pointer;text-decoration:none;
+    background:#25D366;color:#fff;
+    font-family:'Archivo',sans-serif;font-weight:800;font-size:.8rem;
+    letter-spacing:.06em;text-transform:uppercase;
+    padding:12px 16px;border-radius:30px;box-shadow:4px 4px 0 rgba(0,0,0,.5);
+  }
+  #wpp-btn:hover{filter:brightness(1.08)}
+  #wpp-btn svg{width:18px;height:18px}
 </style>
 
 <div id="live-pop" role="dialog" aria-label="Live ao vivo na Twitch">
@@ -1044,7 +1075,13 @@ if (location.protocol === "file:") {
   </div>
 </div>
 
-<button id="live-btn" aria-label="Abrir a live"><span class="bolinha"></span> Ao vivo</button>
+<div id="flutua">
+  <a id="wpp-btn" href="https://wa.me/5518996477231?text=Ol%C3%A1!%20Quero%20falar%20com%20a%20Cozinha%2048" target="_blank" rel="noopener" aria-label="Falar no WhatsApp">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.5 15.3L2 22l4.8-1.4A10 10 0 1 0 12 2zm0 1.8a8.2 8.2 0 0 1 6.4 13.3 8.2 8.2 0 0 1-10.6 1.5l-.34-.2-2.85.84.86-2.78-.22-.36A8.2 8.2 0 0 1 12 3.8zm-3 4c-.2 0-.5.07-.7.3-.25.27-.95.93-.95 2.25 0 1.32.97 2.6 1.1 2.78.14.18 1.9 2.9 4.6 4.07 2.25.97 2.7.78 3.2.73.5-.05 1.6-.65 1.83-1.28.22-.63.22-1.17.16-1.28-.07-.11-.25-.18-.52-.31-.27-.14-1.6-.79-1.84-.88-.25-.09-.43-.14-.6.14-.18.27-.7.87-.85 1.05-.16.18-.31.2-.58.07-.27-.14-1.14-.42-2.17-1.34-.8-.72-1.34-1.6-1.5-1.87-.16-.27-.02-.42.12-.55.12-.12.27-.31.4-.47.14-.16.18-.27.27-.45.09-.18.05-.34-.02-.48-.07-.14-.6-1.47-.83-2.01-.22-.53-.44-.46-.6-.46z"/></svg>
+    WhatsApp
+  </a>
+  <button id="live-btn" aria-label="Abrir a live"><span class="bolinha"></span> Ao vivo</button>
+</div>
 
 <script>
 (function(){
