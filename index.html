@@ -128,15 +128,15 @@ header{
 .btn-cheio:hover{filter:brightness(1.12);transform:translateY(-2px)}
 .btn-vazio:hover{border-color:var(--mostarda);color:var(--mostarda)}
 
-/* fita "ao vivo" girando no canto do hero */
+/* disco "ao vivo" girando em 3D no canto do hero */
 .selo{
-  position:absolute;right:24px;top:50px;width:130px;height:130px;
-  display:none;align-items:center;justify-content:center;
+  position:absolute;right:20px;top:40px;width:160px;height:160px;
+  display:none;align-items:center;justify-content:center;perspective:720px;
 }
 @media(min-width:820px){.selo{display:flex}}
-.selo svg{width:100%;height:100%;animation:girar 14s linear infinite}
-@media(prefers-reduced-motion:reduce){.selo svg{animation:none}}
-@keyframes girar{to{transform:rotate(360deg)}}
+.selo svg{width:100%;height:100%;transform-style:preserve-3d;animation:girar3d 9s linear infinite;filter:drop-shadow(0 14px 14px rgba(0,0,0,.55))}
+@media(prefers-reduced-motion:reduce){.selo svg{animation:none;transform:rotateX(54deg)}}
+@keyframes girar3d{from{transform:rotateX(54deg) rotateZ(0)}to{transform:rotateX(54deg) rotateZ(360deg)}}
 
 /* faixa de letreiro — agora é a chama atravessando a página */
 /* faixa inclinada SEM rotacionar o elemento: a faixa é reta e recortada
@@ -464,12 +464,28 @@ section{scroll-margin-top:92px}
   </div>
   <div class="selo" aria-hidden="true">
     <svg viewBox="0 0 130 130">
-      <defs><path id="circulo" d="M65,65 m-48,0 a48,48 0 1,1 96,0 a48,48 0 1,1 -96,0"/></defs>
-      <circle cx="65" cy="65" r="56" fill="none" stroke="#FFB40C" stroke-width="2"/>
-      <text font-family="Space Mono, monospace" font-size="13" letter-spacing="3" fill="#F6EFE0">
+      <defs>
+        <path id="circulo" d="M65,65 m-52,0 a52,52 0 1,1 104,0 a52,52 0 1,1 -104,0"/>
+        <linearGradient id="rotulo" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#E8380D"/><stop offset=".55" stop-color="#FF7A1A"/><stop offset="1" stop-color="#FFB40C"/>
+        </linearGradient>
+      </defs>
+      <!-- corpo do vinil -->
+      <circle cx="65" cy="65" r="62" fill="#100E0A" stroke="#FFB40C" stroke-width="2"/>
+      <!-- sulcos -->
+      <circle cx="65" cy="65" r="47" fill="none" stroke="#221d15" stroke-width="1"/>
+      <circle cx="65" cy="65" r="42" fill="none" stroke="#221d15" stroke-width="1"/>
+      <circle cx="65" cy="65" r="37" fill="none" stroke="#221d15" stroke-width="1"/>
+      <circle cx="65" cy="65" r="32" fill="none" stroke="#221d15" stroke-width="1"/>
+      <!-- texto na borda -->
+      <text font-family="Space Mono, monospace" font-size="11" letter-spacing="2.5" fill="#F6EFE0">
         <textPath href="#circulo">AO VIVO · DA COZINHA · AO VIVO · DA COZINHA ·</textPath>
       </text>
-      <circle cx="65" cy="65" r="8" fill="#E8380D"/>
+      <!-- rótulo central -->
+      <circle cx="65" cy="65" r="22" fill="url(#rotulo)"/>
+      <circle cx="65" cy="65" r="22" fill="none" stroke="#0D0C09" stroke-width="1.5"/>
+      <!-- furo -->
+      <circle cx="65" cy="65" r="3.2" fill="#0D0C09"/>
     </svg>
   </div>
 </section>
