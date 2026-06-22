@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0D0C09">
+<title>Contratar estúdio — Cozinha 48</title>
+<meta name="description" content="Estúdio de gravação de sets de música eletrônica em Presidente Prudente: setup Pioneer, produção audiovisual multicâmera, iluminação de festival e a experiência exclusiva DJ + gastronomia.">
+<link rel="icon" type="image/png" href="favicon.png?v=5">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --carvao:#0D0C09;--grelha:#1B1812;--carbono:#16130E;--borda:#2B2619;
+  --creme:#F6EFE0;--pimenta:#E8380D;--brasa:#FF7A1A;--mostarda:#FFB40C;
+  --inox:#97907F;
+  --fogo:linear-gradient(100deg, #E8380D 0%, #FF7A1A 52%, #FFB40C 100%);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scrollbar-gutter:stable}
+body{
+  font-family:'Archivo',sans-serif;color:var(--creme);background-color:var(--carvao);
+  background-image:linear-gradient(var(--grelha) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grelha) 1px, transparent 1px);
+  background-size:72px 72px;line-height:1.6;
+}
+h1,h2,h3{font-family:'Anton',sans-serif;font-weight:400;line-height:1.05}
+a{color:var(--mostarda)}
+img{max-width:100%;display:block}
+:focus-visible{outline:3px solid var(--mostarda);outline-offset:3px}
+.container{max-width:900px;margin:0 auto;padding:0 24px}
+
+header{position:sticky;top:0;z-index:50;background:rgba(13,12,9,.92);backdrop-filter:blur(6px);border-bottom:3px solid transparent;border-image:var(--fogo) 1}
+.nav{display:flex;align-items:center;padding:16px 64px;gap:28px}
+.logo{display:flex;align-items:center;text-decoration:none;flex:1}
+.logo img{height:80px;width:auto}
+.nav ul{display:flex;gap:0;list-style:none;flex-wrap:wrap;align-items:center}
+.nav ul li:not(:first-child){border-left:1px solid var(--borda)}
+.nav ul a{text-decoration:none;font-family:'Space Mono',monospace;font-size:.95rem;text-transform:uppercase;letter-spacing:.08em;color:var(--creme);padding:8px 12px;border:1px solid transparent;transition:all .15s}
+.nav ul a:hover{border-color:var(--pimenta);color:var(--mostarda)}
+.nav-conta{flex:1;display:flex;align-items:center;justify-content:flex-end;gap:14px;white-space:nowrap}
+.nav-conta #link-conta{font-family:'Space Mono',monospace;font-size:.95rem;text-transform:uppercase;letter-spacing:.08em;text-decoration:none;padding:8px 14px;color:var(--mostarda);border:1px solid var(--mostarda);transition:all .15s}
+.nav-conta #link-conta:hover{background:var(--fogo);color:#0D0C09;border-color:transparent;font-weight:700}
+.nav-sair{cursor:pointer;font-family:'Space Mono',monospace;font-size:.68rem;text-transform:uppercase;letter-spacing:.06em;color:var(--creme);background:none;border:1px solid var(--borda);padding:6px 10px;transition:all .15s}
+.nav-sair:hover{border-color:var(--pimenta);color:var(--pimenta)}
+@media(max-width:560px){.logo img{height:58px}}
+@media(max-width:700px){
+  .nav{flex-wrap:wrap;justify-content:center;padding:10px 12px 4px;gap:2px}
+  .logo{flex:0 0 auto;margin-left:0}
+  .nav-conta{flex:0 0 auto;width:100%;justify-content:center;margin-top:4px}
+  .nav ul{width:100%;flex-wrap:nowrap;justify-content:flex-start;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding:2px 4px 8px}
+  .nav ul::-webkit-scrollbar{display:none}
+  .nav ul a{padding:10px 12px;white-space:nowrap}
+}
+
+main{padding:56px 0 90px}
+.eyebrow{font-family:'Space Mono',monospace;font-size:.8rem;text-transform:uppercase;letter-spacing:.14em;color:var(--mostarda);display:block;margin-bottom:14px}
+.fogo-titulo{
+  font-style:italic;text-transform:uppercase;
+  background:var(--fogo);-webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent;color:transparent;
+  filter:drop-shadow(3px 3px 0 #000);
+  line-height:1.18;padding:.14em .18em .18em 0;
+}
+h1.fogo-titulo{font-size:clamp(2.1rem,6vw,3.4rem);margin-bottom:16px}
+.intro{color:#D8D0BE;font-size:1.05rem;max-width:720px;margin-bottom:46px}
+
+.grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:22px;margin-bottom:34px}
+@media(max-width:680px){.grid2{grid-template-columns:1fr}}
+.bloco{background:var(--carbono);border:2px solid var(--borda);box-shadow:6px 6px 0 var(--pimenta);padding:24px;display:flex;flex-direction:column}
+.bloco.destaque{grid-column:1/-1;border-color:var(--brasa);box-shadow:6px 6px 0 var(--brasa)}
+.bloco h2{font-size:1.15rem;text-transform:uppercase;font-style:italic;color:var(--mostarda);display:flex;align-items:center;gap:10px}
+.bloco h2 .ico{font-size:1.5rem;filter:none;-webkit-text-fill-color:initial}
+.bloco p{color:#CFC7B4;font-size:.95rem;margin-top:10px}
+.equip{list-style:none;margin-top:14px;display:flex;flex-direction:column;gap:8px}
+.equip li{font-family:'Space Mono',monospace;font-size:.86rem;color:var(--creme);padding-left:20px;position:relative;line-height:1.5}
+.equip li::before{content:"▸";position:absolute;left:0;color:var(--brasa)}
+.equip li b{color:var(--mostarda);font-weight:700}
+
+.chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+.chip{font-family:'Space Mono',monospace;font-size:.78rem;text-transform:uppercase;letter-spacing:.04em;color:var(--mostarda);border:1px solid var(--borda);padding:8px 14px;border-radius:30px}
+
+.fecho{text-align:center;color:#D8D0BE;font-size:1.05rem;max-width:760px;margin:48px auto 32px}
+.cta{text-align:center}
+.btn-cta{
+  display:inline-flex;align-items:center;gap:10px;cursor:pointer;text-decoration:none;
+  background:var(--fogo);color:#0D0C09;font-weight:800;
+  font-family:'Space Mono',monospace;font-size:.92rem;text-transform:uppercase;letter-spacing:.06em;
+  padding:18px 30px;border:none;box-shadow:5px 5px 0 rgba(0,0,0,.5);transition:filter .15s,transform .12s;
+}
+.btn-cta:hover{filter:brightness(1.1);transform:translate(-2px,-2px)}
+.btn-cta svg{width:22px;height:22px}
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="nav" aria-label="Menu principal">
+    <a class="logo" href="index.html"><img src="logo.png" alt="Cozinha 48"></a>
+    <ul>
+      <li><a href="index.html#quem-somos">Quem Somos</a></li>
+      <li><a href="index.html#artistas">Artistas</a></li>
+      <li><a href="index.html#gravacoes">Gravações</a></li>
+      <li><a href="participar.html">Quero participar</a></li>
+      <li><a href="promo.html">Enviar promo</a></li>
+      <li><a href="estudio.html">Contratar estúdio</a></li>
+    </ul>
+    <div class="nav-conta">
+      <a href="conta.html" id="link-conta">Login</a>
+      <a class="nav-sair" id="nav-sair" style="display:none">Sair</a>
+    </div>
+  </nav>
+</header>
+
+<main>
+  <div class="container">
+
+    <span class="eyebrow">Estúdio de gravação · Presidente Prudente, SP</span>
+    <h1 class="fogo-titulo">Transforme seu set em uma experiência audiovisual</h1>
+    <p class="intro">Um estúdio feito para DJs e artistas que querem conteúdo de alto nível — música eletrônica, gastronomia e uma atmosfera exclusiva. Tudo montado dentro de uma cozinha ambientada para gravação: um cenário que foge do estúdio convencional e dá identidade visual marcante ao seu conteúdo.</p>
+
+    <div class="grid2">
+
+      <div class="bloco">
+        <h2><span class="ico">🎛️</span> Estrutura pro DJ</h2>
+        <p>Setup completo, configurado e pronto pra gravação profissional.</p>
+        <ul class="equip">
+          <li><b>3×</b> Pioneer XDJ-1000MK2</li>
+          <li><b>1×</b> Pioneer DJM-750MK2</li>
+          <li><b>1×</b> Pioneer RMX-1000</li>
+        </ul>
+        <p>É só chegar e focar na performance.</p>
+      </div>
+
+      <div class="bloco">
+        <h2><span class="ico">🎥</span> Produção audiovisual</h2>
+        <p>Equipe especializada e equipamentos de alto padrão pra imagens cinematográficas.</p>
+        <ul class="equip">
+          <li><b>2×</b> Canon RP</li>
+          <li><b>1×</b> Sony A6500</li>
+          <li><b>1×</b> Canon R6 Mark II</li>
+          <li>Lentes profissionais pra cada enquadramento</li>
+          <li>Captação multicâmera + operadores</li>
+          <li>Edição profissional sob demanda</li>
+        </ul>
+      </div>
+
+      <div class="bloco">
+        <h2><span class="ico">💡</span> Iluminação de festival</h2>
+        <p>Ambiente personalizável conforme a identidade do artista ou evento.</p>
+        <ul class="equip">
+          <li>Sistema de iluminação profissional</li>
+          <li>Cenas de luz personalizáveis</li>
+          <li>Efeitos visuais pra gravação</li>
+          <li>Máquina de fumaça (fog)</li>
+          <li>Ambientação exclusiva pra eletrônica</li>
+        </ul>
+      </div>
+
+      <div class="bloco">
+        <h2><span class="ico">🍳</span> DJ + Gastronomia</h2>
+        <p>Nosso diferencial: um chef preparando pratos ao vivo ao lado do DJ durante a gravação.</p>
+        <p>Música, entretenimento e gastronomia em um único conteúdo — perfeito pra YouTube, Instagram, TikTok e Twitch.</p>
+      </div>
+
+      <div class="bloco destaque">
+        <h2><span class="ico">🔥</span> Ideal para</h2>
+        <div class="chips">
+          <span class="chip">DJ Sets</span>
+          <span class="chip">Lançamento de projetos</span>
+          <span class="chip">Conteúdo pra redes</span>
+          <span class="chip">Podcasts e entrevistas</span>
+          <span class="chip">Lives</span>
+          <span class="chip">Conteúdo patrocinado</span>
+        </div>
+      </div>
+
+    </div>
+
+    <p class="fecho">Mais do que um estúdio, uma experiência completa pra transformar sua apresentação em um conteúdo profissional, impactante e memorável. Aqui a música eletrônica encontra a gastronomia em um cenário único, pensado pra destacar sua identidade e elevar a qualidade da sua produção.</p>
+
+    <div class="cta">
+      <a class="btn-cta" href="https://wa.me/5518996477231?text=Ol%C3%A1!%20Tenho%20interesse%20em%20contratar%20o%20est%C3%BAdio%20da%20Cozinha%2048%20pra%20uma%20grava%C3%A7%C3%A3o.%20Pode%20me%20contar%20mais%3F" target="_blank" rel="noopener">
+        <svg viewBox="0 0 32 32" fill="currentColor"><path d="M16.04 0C7.46 0 .49 6.97 .49 15.55c0 2.74 .72 5.42 2.08 7.78L.36 32l8.86-2.32a15.5 15.5 0 0 0 6.82 1.56h.01c8.58 0 15.55-6.97 15.55-15.55 0-4.15-1.62-8.06-4.56-11A15.46 15.46 0 0 0 16.04 0zm0 28.46a12.9 12.9 0 0 1-6.57-1.8l-.47-.28-4.88 1.28 1.3-4.76-.3-.49a12.88 12.88 0 0 1-1.97-6.86c0-7.13 5.8-12.93 12.93-12.93 3.45 0 6.7 1.35 9.14 3.79a12.84 12.84 0 0 1 3.78 9.15c0 7.13-5.8 12.92-12.93 12.92zm7.09-9.68c-.39-.19-2.3-1.13-2.65-1.26-.36-.13-.62-.19-.88.2-.26.39-1 1.26-1.23 1.52-.23.26-.45.29-.84.1-.39-.2-1.64-.6-3.12-1.93-1.15-1.03-1.93-2.3-2.16-2.69-.23-.39-.02-.6.17-.79.18-.18.39-.45.58-.68.2-.23.26-.39.39-.65.13-.26.07-.49-.03-.68-.1-.19-.88-2.11-1.2-2.89-.32-.76-.64-.66-.88-.67l-.75-.01c-.26 0-.68.1-1.04.49-.36.39-1.36 1.33-1.36 3.24 0 1.91 1.39 3.76 1.59 4.02.2.26 2.75 4.2 6.66 5.89.93.4 1.66.64 2.22.82.93.3 1.78.25 2.45.15.75-.11 2.3-.94 2.62-1.84.32-.9.32-1.68.23-1.84-.1-.16-.36-.26-.75-.45z"/></svg>
+        Entrar em contato para conhecer melhor
+      </a>
+    </div>
+
+  </div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>
+(function(){
+  const SUPABASE_URL = "https://fobduihqyeuetrxpbntk.supabase.co";
+  const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZvYmR1aWhxeWV1ZXRyeHBibnRrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEyMzE0OTMsImV4cCI6MjA5NjgwNzQ5M30.FnDyuGvQt-iLcXThqZCxiAWWvA4DVwyx4NIqwFO-oK0";
+  if (SUPABASE_URL.indexOf("https://") !== 0 || !window.supabase) return;
+  const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+  const linkConta = document.getElementById("link-conta");
+  const btnSair = document.getElementById("nav-sair");
+  if (btnSair) btnSair.addEventListener("click", async function(){ await sb.auth.signOut(); location.reload(); });
+  async function pintar(){
+    const s = await sb.auth.getSession();
+    const u = s.data.session ? s.data.session.user : null;
+    if (!u) { linkConta.textContent = "Login"; if (btnSair) btnSair.style.display = "none"; return; }
+    const r = await sb.from("profiles").select("nome").eq("id", u.id).single();
+    const nome = (r.data && r.data.nome) ? r.data.nome : "Fã da Cozinha";
+    linkConta.textContent = "Minha conta · " + nome;
+    if (btnSair) btnSair.style.display = "inline-block";
+  }
+  pintar();
+  sb.auth.onAuthStateChange(function(){ pintar(); });
+})();
+</script>
+
+</body>
+</html>
