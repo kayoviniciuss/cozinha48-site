@@ -176,14 +176,20 @@ function tipoLabel(t){ return ({dj:"DJ", chef:"Chef", ambos:"DJ + Chef"})[t] || 
 function linkSocial(plat, valor){
   if(!valor) return "";
   valor = String(valor).trim();
-  let url = valor;
-  if(!/^https?:\/\//i.test(valor)){
-    const u = valor.replace(/^@/,"");
+  if(!valor) return "";
+  let url;
+  if(/^https?:\/\//i.test(valor)){
+    url = valor;                                   // já é link completo
+  } else if(/(instagram|tiktok|soundcloud|youtube|youtu\.be)\.[a-z]/i.test(valor)){
+    url = "https://" + valor.replace(/^\/+/, "");    // colou o domínio sem http (ex: instagram.com/fulano)
+  } else {
+    const u = valor.replace(/^@/,"").replace(/^\/+/,"");   // só o usuário
     const bases = {instagram:"https://instagram.com/", tiktok:"https://tiktok.com/@", soundcloud:"https://soundcloud.com/", youtube:"https://youtube.com/@"};
     url = (bases[plat]||"") + u;
   }
   const nomes = {instagram:"Instagram", tiktok:"TikTok", soundcloud:"SoundCloud", youtube:"YouTube"};
-  return '<a href="'+esc(url)+'" target="_blank" rel="noopener">'+nomes[plat]+' ↗</a>';
+  // o title mostra exatamente o que o artista digitou (passe o mouse no link pra ver)
+  return '<a href="'+esc(url)+'" target="_blank" rel="noopener" title="Digitado: '+esc(valor)+'">'+nomes[plat]+' ↗</a>';
 }
 
 async function carregarCadastros(){
