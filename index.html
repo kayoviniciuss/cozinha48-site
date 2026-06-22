@@ -8,7 +8,6 @@
 <meta name="description" content="Cozinha 48: estúdio de gravação e lives de sets de música eletrônica dentro de uma cozinha. Enquanto o set rola, um prato nasce ao lado do DJ.">
 <link rel="icon" type="image/png" href="favicon.png?v=5">
 <meta name="google-site-verification" content="3xN1X3wCshRaDdisLUhW14OqpdfNiV2qheB48JZKmwg">
-<script>try{if(sessionStorage.getItem('cz48_entrou'))document.documentElement.className+=' ja-entrou';}catch(e){}</script>
 
 <!-- ============================================================
      COZINHA 48 — site de página única
@@ -73,26 +72,6 @@ img{max-width:100%;display:block}
   padding:.14em .18em .18em 0;       /* topo p/ acento, baixo p/ cedilha, direita p/ itálico */
 }
 
-/* ---------- TELA DE ENTRADA (site em reformulação) ---------- */
-#portao{
-  position:fixed;inset:0;z-index:100000;overflow:hidden;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  text-align:center;gap:22px;padding:24px;
-  background:
-    radial-gradient(circle at 50% 40%, rgba(232,56,13,.20), transparent 48%),
-    linear-gradient(var(--grelha) 1px, transparent 1px),
-    linear-gradient(90deg, var(--grelha) 1px, transparent 1px),
-    var(--carvao);
-  background-size:100% 100%, 72px 72px, 72px 72px, auto;
-}
-#portao img{height:200px;width:auto;animation:portao-in .7s ease both}
-#portao .portao-tit{font-size:clamp(3rem,9vw,7rem);animation:portao-in .7s .12s ease both}
-#portao .portao-sub{font-family:'Space Mono',monospace;font-size:.8rem;letter-spacing:.2em;text-transform:uppercase;color:var(--inox);animation:portao-in .7s .22s ease both}
-#portao .btn{margin-top:4px;animation:portao-in .7s .32s ease both}
-@keyframes portao-in{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
-#portao.portao-saindo{opacity:0;visibility:hidden;transition:opacity .5s ease,visibility .5s ease}
-.ja-entrou #portao{display:none}
-@media(prefers-reduced-motion:reduce){#portao img,#portao .portao-tit,#portao .portao-sub,#portao .btn{animation:none}}
 
 /* ---------- BARRA DE NAVEGAÇÃO ---------- */
 header{
@@ -412,12 +391,6 @@ section{scroll-margin-top:92px}
 </head>
 <body>
 
-<!-- ================= TELA DE ENTRADA (reformulação) ================= -->
-<div id="portao">
-  <img src="logo.png" alt="Cozinha 48">
-  <div class="fogo-titulo portao-tit">Site em construção</div>
-  <button class="btn btn-cheio" id="btn-entrar" type="button">Entrar</button>
-</div>
 
 <!-- ================= MENU ================= -->
 <header id="topo">
@@ -1171,19 +1144,6 @@ if (location.protocol === "file:") {
 })();
 </script>
 
-<!-- tela de entrada: botão Entrar -->
-<script>
-(function(){
-  var portao = document.getElementById('portao');
-  var btn = document.getElementById('btn-entrar');
-  if(!portao || !btn) return;
-  btn.addEventListener('click', function(){
-    portao.classList.add('portao-saindo');
-    try{ sessionStorage.setItem('cz48_entrou','1'); }catch(e){}
-    setTimeout(function(){ portao.style.display='none'; }, 500);
-  });
-})();
-</script>
 
 </body>
 </html>
