@@ -111,6 +111,13 @@ input:disabled{color:var(--inox);cursor:not-allowed}
 .cad .acoes{margin-top:10px}
 .cad button{background:none;border:1px solid var(--borda);color:var(--inox);font-family:'Space Mono',monospace;font-size:.65rem;text-transform:uppercase;padding:3px 8px;cursor:pointer}
 .cad button:hover{border-color:var(--pimenta);color:var(--pimenta)}
+.cartao-link{display:block;text-decoration:none;transition:transform .12s,box-shadow .12s}
+.cartao-link:hover{transform:translate(-2px,-2px);box-shadow:8px 8px 0 var(--pimenta)}
+.cartao-link .cl-topo{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.cartao-link h2{margin-bottom:0}
+.cartao-link .cl-seta{color:var(--mostarda);font-size:1.5rem;font-weight:700;line-height:1}
+.cartao-link .cl-desc{color:var(--inox);font-size:.9rem;margin-top:10px}
+.cartao-link .cl-desc b{color:var(--mostarda)}
 </style>
 </head>
 <body>
@@ -222,19 +229,16 @@ input:disabled{color:var(--inox);cursor:not-allowed}
       </div>
 
 
-      <!-- CADASTROS DO SITE (só mestres) -->
-      <div class="cartao oculto" id="bloco-cadastros">
-        <h2>Cadastros do site</h2>
-        <p style="color:var(--inox);font-size:.85rem;margin-bottom:14px">Quem se cadastrou pra tocar na Cozinha. Só os mestres veem este bloco.</p>
-        <div id="lista-cadastros"></div>
-      </div>
+      <!-- ÁREA DOS MESTRES (só mestres) -->
+      <a class="cartao cartao-link oculto" id="link-cadastros" href="mestres.html#cadastros">
+        <div class="cl-topo"><h2>Cadastros do site</h2><span class="cl-seta">→</span></div>
+        <p class="cl-desc">Quem se cadastrou pra tocar na Cozinha. <b id="qtd-cadastros"></b></p>
+      </a>
 
-      <!-- PROMOS ENVIADAS (só mestres) -->
-      <div class="cartao oculto" id="bloco-promos">
-        <h2>Promos enviadas</h2>
-        <p style="color:var(--inox);font-size:.85rem;margin-bottom:14px">Links de promo que os artistas enviaram. Só os mestres veem este bloco.</p>
-        <div id="lista-promos"></div>
-      </div>
+      <a class="cartao cartao-link oculto" id="link-promos" href="mestres.html#promos">
+        <div class="cl-topo"><h2>Promos enviadas</h2><span class="cl-seta">→</span></div>
+        <p class="cl-desc">Links de promo que os artistas enviaram. <b id="qtd-promos"></b></p>
+      </a>
     </div>
 
   </div>
@@ -306,8 +310,8 @@ async function desenhar(){
   $("link-conta").textContent = "Minha conta · " + (perfil.nome || "Fã da Cozinha");
   if ($("nav-sair")) $("nav-sair").style.display = "inline-block";
   $("selo-mestre").classList.toggle("oculto", !perfil.is_admin);
-  $("bloco-cadastros").classList.toggle("oculto", !perfil.is_admin);
-  $("bloco-promos").classList.toggle("oculto", !perfil.is_admin);
+  $("link-cadastros").classList.toggle("oculto", !perfil.is_admin);
+  $("link-promos").classList.toggle("oculto", !perfil.is_admin);
 
   $("d-nome").value = perfil.nome || "";
   $("d-email").value = usuario.email || "";
@@ -315,7 +319,15 @@ async function desenhar(){
   $("d-ddd").value = tdig.slice(0, 2);
   $("d-celular").value = tdig.slice(2);
 
-  if (perfil.is_admin) { carregarCadastros(); carregarPromos(); }
+  if (perfil.is_admin) carregarContagens();
+}
+
+async function carregarContagens(){
+  const c = await sb.from("candidaturas").select("id", { count: "exact", head: true });
+  const p = await sb.from("promos").select("id", { count: "exact", head: true });
+  const nc = c.count || 0, np = p.count || 0;
+  $("qtd-cadastros").textContent = nc + (nc === 1 ? " cadastro" : " cadastros");
+  $("qtd-promos").textContent = np + (np === 1 ? " promo" : " promos");
 }
 
 /* ---------- entrar / criar conta (deslogado) ---------- */
@@ -404,93 +416,6 @@ $("form-dados").addEventListener("submit", async function(e){
   $("ola").textContent = "Olá, " + (nome || "Fã da Cozinha") + "!";
   aviso(msg, "ok", "Dados salvos!");
 });
-
-/* ---------- cadastros do site (mestres) ---------- */
-function tipoLabel(t){ return ({dj:"DJ", chef:"Chef", ambos:"DJ + Chef"})[t] || ""; }
-function linkSocial(plat, valor){
-  if(!valor) return "";
-  valor = String(valor).trim();
-  let url = valor;
-  if(!/^https?:\/\//i.test(valor)){
-    const u = valor.replace(/^@/,"");
-    const bases = {instagram:"https://instagram.com/", tiktok:"https://tiktok.com/@", soundcloud:"https://soundcloud.com/", youtube:"https://youtube.com/@"};
-    url = (bases[plat]||"") + u;
-  }
-  const nomes = {instagram:"Instagram", tiktok:"TikTok", soundcloud:"SoundCloud", youtube:"YouTube"};
-  return '<a href="'+esc(url)+'" target="_blank" rel="noopener">'+nomes[plat]+' ↗</a>';
-}
-
-async function carregarCadastros(){
-  const r = await sb.from("candidaturas").select("*").order("created_at", { ascending: false });
-  const cads = r.data || [];
-  const ids = Array.from(new Set(cads.map(function(c){ return c.user_id; })));
-  const mapa = {};
-  if (ids.length) {
-    const rp = await sb.from("profiles").select("id,nome,telefone").in("id", ids);
-    (rp.data || []).forEach(function(p){ mapa[p.id] = p; });
-  }
-  const caixa = $("lista-cadastros");
-  caixa.innerHTML = cads.length ? "" : '<p style="color:var(--inox)">Nenhum cadastro por enquanto.</p>';
-  cads.forEach(function(c){
-    const perf = mapa[c.user_id] || {};
-    const tipo = tipoLabel(c.tipo);
-    const partes = ["instagram","soundcloud","youtube"].map(function(p){ return linkSocial(p, c[p]); });
-    if (c.link_som) {
-      var ou = /^https?:\/\//i.test(c.link_som) ? c.link_som : "https://" + c.link_som.replace(/^\/+/, "");
-      partes.push('<a href="' + esc(ou) + '" target="_blank" rel="noopener">Outro ↗</a>');
-    }
-    const links = partes.filter(Boolean).join(" · ");
-    const local = [c.cidade, c.estado].filter(Boolean).join(" - ");
-    caixa.innerHTML +=
-      '<div class="cad"><div class="topo"><span><b>' + esc(c.nome_artistico) + '</b>' +
-        (tipo ? ' · ' + esc(tipo) : '') + (c.idade ? ' · ' + esc(c.idade) + ' anos' : '') + '</span>' +
-        '<span class="quando">' + dataBr(c.created_at) + '</span></div>' +
-      (perf.nome ? '<p>👤 ' + esc(perf.nome) + '</p>' : '') +
-      (perf.telefone ? '<p>📱 ' + esc(perf.telefone) + '</p>' : '') +
-      (c.estilo ? '<p>🎵 ' + esc(c.estilo) + '</p>' : '') +
-      (local ? '<p>📍 ' + esc(local) + '</p>' : '') +
-      (links ? '<p>' + links + '</p>' : '') +
-      (c.mensagem ? '<p>' + esc(c.mensagem) + '</p>' : '') +
-      '<div class="acoes"><button data-id="' + c.id + '">apagar</button></div></div>';
-  });
-  caixa.querySelectorAll("button").forEach(function(b){
-    b.addEventListener("click", async function(){
-      await sb.from("candidaturas").delete().eq("id", b.dataset.id);
-      carregarCadastros();
-    });
-  });
-}
-
-/* ---------- promos enviadas (mestres) ---------- */
-async function carregarPromos(){
-  const r = await sb.from("promos").select("*").order("created_at", { ascending: false });
-  const proms = r.data || [];
-  const ids = Array.from(new Set(proms.map(function(p){ return p.user_id; })));
-  const mapa = {};
-  if (ids.length) {
-    const rp = await sb.from("profiles").select("id,nome").in("id", ids);
-    (rp.data || []).forEach(function(p){ mapa[p.id] = p; });
-  }
-  const caixa = $("lista-promos");
-  caixa.innerHTML = proms.length ? "" : '<p style="color:var(--inox)">Nenhuma promo por enquanto.</p>';
-  proms.forEach(function(p){
-    const perf = mapa[p.user_id] || {};
-    const linhas = String(p.links || "").split("\n").filter(Boolean).map(function(l){
-      const u = /^https?:\/\//i.test(l) ? l : "https://" + l.replace(/^\/+/, "");
-      return '<p><a href="' + esc(u) + '" target="_blank" rel="noopener">' + esc(l) + ' ↗</a></p>';
-    }).join("");
-    caixa.innerHTML +=
-      '<div class="cad"><div class="topo"><span><b>' + esc(perf.nome || "Artista") + '</b></span>' +
-      '<span class="quando">' + dataBr(p.created_at) + '</span></div>' + linhas +
-      '<div class="acoes"><button data-id="' + p.id + '">apagar</button></div></div>';
-  });
-  caixa.querySelectorAll("button").forEach(function(b){
-    b.addEventListener("click", async function(){
-      await sb.from("promos").delete().eq("id", b.dataset.id);
-      carregarPromos();
-    });
-  });
-}
 </script>
 
 </body>
