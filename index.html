@@ -87,8 +87,8 @@ header{
 .nav-social a{color:var(--creme);display:flex;transition:color .15s}
 .nav-social a:hover{color:var(--brasa)}
 .nav-social svg{width:22px;height:22px}
-.logo img{height:80px;width:auto}
-@media(max-width:560px){.logo img{height:58px}}
+.logo img{height:54px;width:auto}
+@media(max-width:560px){.logo img{height:40px}}
 .nav-conta{flex:1;display:flex;align-items:center;justify-content:flex-end;gap:14px;white-space:nowrap}
 .nav-conta #link-conta{font-family:'Space Mono',monospace;font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;text-decoration:none;padding:6px 11px;color:var(--mostarda);border:1px solid var(--mostarda);transition:all .15s}
 .nav-conta #link-conta:hover{background:var(--fogo);color:#0D0C09;border-color:transparent;font-weight:700}
@@ -128,15 +128,13 @@ header{
 .btn-cheio:hover{filter:brightness(1.12);transform:translateY(-2px)}
 .btn-vazio:hover{border-color:var(--mostarda);color:var(--mostarda)}
 
-/* disco da logo girando no canto do hero */
+/* disco da logo no canto do hero (estático) */
 .selo{
   position:absolute;right:14px;top:44px;width:180px;height:180px;
   display:none;align-items:center;justify-content:center;
 }
 @media(min-width:820px){.selo{display:flex}}
-.selo img{width:100%;height:auto;filter:drop-shadow(0 10px 12px rgba(0,0,0,.5));animation:girar 14s linear infinite}
-@media(prefers-reduced-motion:reduce){.selo img{animation:none}}
-@keyframes girar{to{transform:rotate(360deg)}}
+.selo img{width:100%;height:auto;filter:drop-shadow(0 10px 12px rgba(0,0,0,.5))}
 
 /* faixa de letreiro — agora é a chama atravessando a página */
 /* faixa inclinada SEM rotacionar o elemento: a faixa é reta e recortada
