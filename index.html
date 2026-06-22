@@ -128,12 +128,10 @@ header{
 .btn-cheio:hover{filter:brightness(1.12);transform:translateY(-2px)}
 .btn-vazio:hover{border-color:var(--mostarda);color:var(--mostarda)}
 
-/* hero: texto à esquerda, disco à direita */
-.hero-grid{display:flex;align-items:center;justify-content:space-between;gap:36px}
-.hero-texto{flex:1;min-width:0}
-.selo{flex:0 0 auto;width:clamp(220px,30vw,360px)}
+/* disco sobreposto à direita do texto */
+.selo{position:absolute;right:9%;top:53%;transform:translateY(-50%);width:clamp(280px,35vw,450px);z-index:1}
 .selo img{width:100%;height:auto;filter:drop-shadow(0 12px 14px rgba(0,0,0,.5))}
-@media(max-width:820px){.hero-grid{flex-direction:column;text-align:center}.hero-acoes{justify-content:center}.selo{width:240px;order:-1}}
+@media(max-width:900px){.selo{display:none}}
 
 /* faixa de letreiro — agora é a chama atravessando a página */
 /* faixa inclinada SEM rotacionar o elemento: a faixa é reta e recortada
@@ -451,18 +449,16 @@ section{scroll-margin-top:92px}
       <svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 3v3.6c0 1.6 1.4 3 3.1 3v2.6c-1.1 0-2.2-.3-3.1-.9V16a5 5 0 1 1-5-5c.2 0 .4 0 .6.05v2.7a2.4 2.4 0 1 0 1.9 2.35V3H14z"/></svg>
     </a>
   </div>
-  <div class="container hero-grid">
-    <div class="hero-texto">
-      <span class="eyebrow">Estúdio · Artistas · Música · Culinária — Presidente Prudente, SP</span>
-      <h1 class="fogo-titulo">Preparado em<br>fogo baixo<br>e grave alto!</h1>
-      <div class="hero-acoes">
-        <a class="btn btn-cheio" href="#gravacoes">Assistir aos sets</a>
-        <a class="btn btn-vazio" href="participar.html">Quero participar</a>
-      </div>
+  <div class="container">
+    <span class="eyebrow">Estúdio · Artistas · Música · Culinária — Presidente Prudente, SP</span>
+    <h1 class="fogo-titulo">Preparado em<br>fogo baixo<br>e grave alto!</h1>
+    <div class="hero-acoes">
+      <a class="btn btn-cheio" href="#gravacoes">Assistir aos sets</a>
+      <a class="btn btn-vazio" href="participar.html">Quero participar</a>
     </div>
-    <div class="selo" aria-hidden="true">
-      <img src="disco.png?v=1" alt="">
-    </div>
+  </div>
+  <div class="selo" aria-hidden="true">
+    <img src="disco.png?v=1" alt="">
   </div>
 </section>
 
