@@ -178,7 +178,7 @@ async function carregarPromos(){
   const ids = Array.from(new Set(proms.map(function(p){ return p.user_id; })));
   const mapa = {};
   if (ids.length) {
-    const rp = await sb.from("profiles").select("id,nome").in("id", ids);
+    const rp = await sb.from("profiles").select("id,nome,telefone,email").in("id", ids);
     (rp.data || []).forEach(function(p){ mapa[p.id] = p; });
   }
   const caixa = $("lista-promos");
@@ -191,7 +191,10 @@ async function carregarPromos(){
     }).join("");
     caixa.innerHTML +=
       '<div class="cad"><div class="topo"><span><b>' + esc(perf.nome || "Artista") + '</b></span>' +
-      '<span class="quando">' + dataBr(p.created_at) + '</span></div>' + linhas +
+      '<span class="quando">' + dataBr(p.created_at) + '</span></div>' +
+      (perf.email ? '<p>📧 ' + esc(perf.email) + '</p>' : '') +
+      (perf.telefone ? '<p>📱 ' + esc(perf.telefone) + '</p>' : '') +
+      linhas +
       '<div class="acoes"><button data-id="' + p.id + '">apagar</button></div></div>';
   });
   caixa.querySelectorAll("button").forEach(function(b){

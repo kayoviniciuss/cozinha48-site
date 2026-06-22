@@ -14,8 +14,12 @@ create table public.profiles (
 );
 alter table public.profiles enable row level security;
 
--- Se a tabela JÁ existe (banco antigo), rode esta linha UMA vez:
+-- Se a tabela JÁ existe (banco antigo), rode estas linhas UMA vez:
 alter table public.profiles add column if not exists telefone text;
+alter table public.profiles add column if not exists email text;
+-- preenche o e-mail dos perfis que já existem
+update public.profiles p set email = u.email
+  from auth.users u where p.id = u.id and p.email is null;
 
 -- função que diz se quem está logado é dono/mestre
 create or replace function public.is_admin()
@@ -24,8 +28,8 @@ set search_path = public as $$
   select coalesce((select is_admin from public.profiles where id = auth.uid()), false);
 $$;
 
-create policy "perfis visiveis a todos" on public.profiles
-  for select using (true);
+create policy "ver o proprio perfil ou ser mestre" on public.profiles
+  for select using (auth.uid() = id or public.is_admin());
 create policy "cada um edita o proprio perfil" on public.profiles
   for update using (auth.uid() = id) with check (auth.uid() = id and is_admin = (select p.is_admin from public.profiles p where p.id = auth.uid()));
 
@@ -34,10 +38,11 @@ create or replace function public.handle_new_user()
 returns trigger language plpgsql security definer
 set search_path = public as $$
 begin
-  insert into public.profiles (id, nome, telefone)
+  insert into public.profiles (id, nome, telefone, email)
   values (new.id,
           coalesce(new.raw_user_meta_data->>'nome', 'Fã da Cozinha'),
-          new.raw_user_meta_data->>'telefone');
+          new.raw_user_meta_data->>'telefone',
+          new.email);
   return new;
 end; $$;
 
