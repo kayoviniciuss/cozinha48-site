@@ -129,9 +129,14 @@ header{
 .btn-vazio:hover{border-color:var(--mostarda);color:var(--mostarda)}
 
 /* disco sobreposto à direita do texto */
-.selo{position:absolute;right:14%;top:46%;transform:translateY(-50%);width:clamp(300px,38vw,500px);z-index:1}
+.selo{position:absolute;right:9%;top:46%;transform:translateY(-50%);width:clamp(300px,38vw,500px);z-index:1}
 .selo img{width:100%;height:auto;filter:drop-shadow(0 12px 14px rgba(0,0,0,.5))}
 @media(max-width:900px){.selo{display:none}}
+/* desloca o bloco (texto + disco) um pouco pra esquerda em telas largas */
+@media(min-width:1000px){
+  .hero .container{transform:translateX(-3vw)}
+  .selo{transform:translate(-3vw,-50%)}
+}
 
 /* faixa de letreiro — agora é a chama atravessando a página */
 /* faixa inclinada SEM rotacionar o elemento: a faixa é reta e recortada
