@@ -87,8 +87,8 @@ header{
 .nav-social a{color:var(--creme);display:flex;transition:color .15s}
 .nav-social a:hover{color:var(--brasa)}
 .nav-social svg{width:22px;height:22px}
-.logo img{height:46px;width:auto}
-@media(max-width:560px){.logo img{height:36px}}
+.logo img{height:80px;width:auto}
+@media(max-width:560px){.logo img{height:58px}}
 .nav-conta{flex:1;display:flex;align-items:center;justify-content:flex-end;gap:14px;white-space:nowrap}
 .nav-conta #link-conta{font-family:'Space Mono',monospace;font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;text-decoration:none;padding:6px 11px;color:var(--mostarda);border:1px solid var(--mostarda);transition:all .15s}
 .nav-conta #link-conta:hover{background:var(--fogo);color:#0D0C09;border-color:transparent;font-weight:700}
@@ -128,15 +128,15 @@ header{
 .btn-cheio:hover{filter:brightness(1.12);transform:translateY(-2px)}
 .btn-vazio:hover{border-color:var(--mostarda);color:var(--mostarda)}
 
-/* disco sobreposto à direita do texto */
-.selo{position:absolute;right:9%;top:46%;transform:translateY(-50%);width:clamp(300px,38vw,500px);z-index:1}
-.selo img{width:100%;height:auto;filter:drop-shadow(0 12px 14px rgba(0,0,0,.5))}
-@media(max-width:900px){.selo{display:none}}
-/* desloca o bloco (texto + disco) um pouco pra esquerda em telas largas */
-@media(min-width:1000px){
-  .hero .container{transform:translateX(-3vw)}
-  .selo{transform:translate(-3vw,-50%)}
+/* fita "ao vivo" girando no canto do hero */
+.selo{
+  position:absolute;right:24px;top:50px;width:130px;height:130px;
+  display:none;align-items:center;justify-content:center;
 }
+@media(min-width:820px){.selo{display:flex}}
+.selo svg{width:100%;height:100%;animation:girar 14s linear infinite}
+@media(prefers-reduced-motion:reduce){.selo svg{animation:none}}
+@keyframes girar{to{transform:rotate(360deg)}}
 
 /* faixa de letreiro — agora é a chama atravessando a página */
 /* faixa inclinada SEM rotacionar o elemento: a faixa é reta e recortada
@@ -420,7 +420,7 @@ section{scroll-margin-top:92px}
 <header id="topo">
   <nav class="nav" aria-label="Menu principal">
     <div class="nav-esq">
-      <a class="logo" href="#topo"><img src="logo-texto.png?v=3" alt="Cozinha 48"></a>
+      <a class="logo" href="#topo"><img src="logo.png" alt="Cozinha 48"></a>
     </div>
     <ul>
       <li><a href="#quem-somos">Quem Somos</a></li>
@@ -463,7 +463,14 @@ section{scroll-margin-top:92px}
     </div>
   </div>
   <div class="selo" aria-hidden="true">
-    <img src="disco.png?v=2" alt="">
+    <svg viewBox="0 0 130 130">
+      <defs><path id="circulo" d="M65,65 m-48,0 a48,48 0 1,1 96,0 a48,48 0 1,1 -96,0"/></defs>
+      <circle cx="65" cy="65" r="56" fill="none" stroke="#FFB40C" stroke-width="2"/>
+      <text font-family="Space Mono, monospace" font-size="13" letter-spacing="3" fill="#F6EFE0">
+        <textPath href="#circulo">AO VIVO · DA COZINHA · AO VIVO · DA COZINHA ·</textPath>
+      </text>
+      <circle cx="65" cy="65" r="8" fill="#E8380D"/>
+    </svg>
   </div>
 </section>
 
