@@ -198,7 +198,7 @@ section{padding:84px 0}
 .seta-carrossel{display:none}
 @media(min-width:820px){
   /* abre uma folga lateral pras setas não ficarem em cima das fotos */
-  .carrossel{padding:0 60px}
+  .carrossel{padding:0 84px}
   .seta-carrossel{
     display:flex;align-items:center;justify-content:center;
     position:absolute;top:50%;transform:translateY(-50%);
@@ -206,12 +206,13 @@ section{padding:84px 0}
     background:var(--carbono);color:var(--creme);
     border:2px solid var(--borda);border-radius:50%;
     font-size:1.7rem;line-height:1;padding-bottom:3px;
+    box-shadow:0 0 0 8px var(--carvao); /* tampa as linhas da grade atrás, deixa a bolinha redonda e limpa */
     transition:background .15s,color .15s,border-color .15s,transform .15s;
   }
   .seta-carrossel:hover{background:var(--fogo);color:#0D0C09;border-color:transparent}
   .seta-carrossel:active{transform:translateY(-50%) scale(.9)}
-  .seta-esq{left:4px}
-  .seta-dir{right:4px}
+  .seta-esq{left:6px}
+  .seta-dir{right:6px}
 }
 .comandas{
   display:flex;gap:24px;overflow-x:auto;
