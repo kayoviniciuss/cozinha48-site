@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#0D0C09">
 <meta name="robots" content="noindex">
-<title>Área dos mestres — Cozinha 48</title>
-<meta name="description" content="Área dos mestres da casa: cadastros do site e promos enviadas.">
+<title>Cadastros do site — Cozinha 48</title>
+<meta name="description" content="Área dos mestres da casa: cadastros do site.">
 <link rel="icon" type="image/png" href="favicon.png?v=5">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -91,7 +91,6 @@ h1.fogo-titulo{font-size:clamp(2.2rem,7vw,3.6rem);margin-bottom:10px}
 .cad .acoes{margin-top:10px}
 .cad button{background:none;border:1px solid var(--borda);color:var(--inox);font-family:'Space Mono',monospace;font-size:.65rem;text-transform:uppercase;padding:3px 8px;cursor:pointer}
 .cad button:hover{border-color:var(--pimenta);color:var(--pimenta)}
-.busca{margin-bottom:18px}
 </style>
 </head>
 <body>
@@ -117,30 +116,21 @@ h1.fogo-titulo{font-size:clamp(2.2rem,7vw,3.6rem);margin-bottom:10px}
 <main>
   <div class="container">
     <a class="voltar" href="conta.html">← Voltar pra Minha conta</a>
-    <h1 class="fogo-titulo">Área dos mestres</h1>
+    <h1 class="fogo-titulo">Cadastros do site</h1>
 
     <!-- bloqueio: não logado / não mestre -->
     <div class="cartao oculto" id="bloco-negado">
       <h2>Acesso restrito</h2>
-      <p style="color:#CFC7B4">Esta área é só pros <b>mestres da casa</b>. Entre com uma conta de mestre pra ver os cadastros e as promos.</p>
+      <p style="color:#CFC7B4">Esta área é só pros <b>mestres da casa</b>. Entre com uma conta de mestre pra ver os cadastros.</p>
       <a class="btn btn-cheio" href="conta.html">Ir pra Minha conta</a>
     </div>
 
-    <!-- área dos mestres -->
     <div id="area-mestres" class="oculto">
-
-      <section id="cadastros" class="cartao">
+      <section class="cartao">
         <h2>Cadastros do site</h2>
         <p style="color:var(--inox);font-size:.85rem;margin-bottom:14px">Quem se cadastrou pra tocar na Cozinha.</p>
         <div id="lista-cadastros"></div>
       </section>
-
-      <section id="promos" class="cartao">
-        <h2>Promos enviadas</h2>
-        <p style="color:var(--inox);font-size:.85rem;margin-bottom:14px">Links de promo que os artistas enviaram.</p>
-        <div id="lista-promos"></div>
-      </section>
-
     </div>
   </div>
 </main>
@@ -178,14 +168,10 @@ async function iniciar(){
 
   $("area-mestres").classList.remove("oculto");
   await carregarCadastros();
-  await carregarPromos();
-  // rola até a seção pedida (#cadastros / #promos), agora que já está visível
-  if (location.hash) { const alvo = document.getElementById(location.hash.slice(1)); if (alvo) alvo.scrollIntoView({ behavior: "smooth", block: "start" }); }
 }
 
 function negar(){ $("bloco-negado").classList.remove("oculto"); $("area-mestres").classList.add("oculto"); }
 
-/* ---------- cadastros do site ---------- */
 function tipoLabel(t){ return ({dj:"DJ", chef:"Chef", ambos:"DJ + Chef"})[t] || ""; }
 function linkSocial(plat, valor){
   if(!valor) return "";
@@ -237,37 +223,6 @@ async function carregarCadastros(){
     b.addEventListener("click", async function(){
       await sb.from("candidaturas").delete().eq("id", b.dataset.id);
       carregarCadastros();
-    });
-  });
-}
-
-/* ---------- promos enviadas ---------- */
-async function carregarPromos(){
-  const r = await sb.from("promos").select("*").order("created_at", { ascending: false });
-  const proms = r.data || [];
-  const ids = Array.from(new Set(proms.map(function(p){ return p.user_id; })));
-  const mapa = {};
-  if (ids.length) {
-    const rp = await sb.from("profiles").select("id,nome").in("id", ids);
-    (rp.data || []).forEach(function(p){ mapa[p.id] = p; });
-  }
-  const caixa = $("lista-promos");
-  caixa.innerHTML = proms.length ? "" : '<p style="color:var(--inox)">Nenhuma promo por enquanto.</p>';
-  proms.forEach(function(p){
-    const perf = mapa[p.user_id] || {};
-    const linhas = String(p.links || "").split("\n").filter(Boolean).map(function(l){
-      const u = /^https?:\/\//i.test(l) ? l : "https://" + l.replace(/^\/+/, "");
-      return '<p><a href="' + esc(u) + '" target="_blank" rel="noopener">' + esc(l) + ' ↗</a></p>';
-    }).join("");
-    caixa.innerHTML +=
-      '<div class="cad"><div class="topo"><span><b>' + esc(perf.nome || "Artista") + '</b></span>' +
-      '<span class="quando">' + dataBr(p.created_at) + '</span></div>' + linhas +
-      '<div class="acoes"><button data-id="' + p.id + '">apagar</button></div></div>';
-  });
-  caixa.querySelectorAll("button").forEach(function(b){
-    b.addEventListener("click", async function(){
-      await sb.from("promos").delete().eq("id", b.dataset.id);
-      carregarPromos();
     });
   });
 }

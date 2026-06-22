@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0D0C09">
+<meta name="robots" content="noindex">
+<title>Promos enviadas — Cozinha 48</title>
+<meta name="description" content="Área dos mestres da casa: promos enviadas pelos artistas.">
+<link rel="icon" type="image/png" href="favicon.png?v=5">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --carvao:#0D0C09;--grelha:#1B1812;--carbono:#16130E;--borda:#2B2619;
+  --creme:#F6EFE0;--pimenta:#E8380D;--brasa:#FF7A1A;--mostarda:#FFB40C;
+  --inox:#97907F;
+  --fogo:linear-gradient(100deg, #E8380D 0%, #FF7A1A 52%, #FFB40C 100%);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scrollbar-gutter:stable}
+body{
+  font-family:'Archivo',sans-serif;color:var(--creme);background-color:var(--carvao);
+  background-image:linear-gradient(var(--grelha) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grelha) 1px, transparent 1px);
+  background-size:72px 72px;line-height:1.6;
+}
+h1,h2,h3{font-family:'Anton',sans-serif;font-weight:400;line-height:1.05}
+a{color:var(--mostarda)}
+img{max-width:100%;display:block}
+:focus-visible{outline:3px solid var(--mostarda);outline-offset:3px}
+.container{max-width:760px;margin:0 auto;padding:0 24px}
+
+header{position:sticky;top:0;z-index:50;background:rgba(13,12,9,.92);backdrop-filter:blur(6px);border-bottom:3px solid transparent;border-image:var(--fogo) 1}
+.nav{display:flex;align-items:center;padding:16px 64px;gap:28px}
+.logo{display:flex;align-items:center;text-decoration:none;flex:1}
+.logo img{height:80px;width:auto}
+.nav ul{display:flex;gap:0;list-style:none;flex-wrap:wrap;align-items:center}
+.nav ul li:not(:first-child){border-left:1px solid var(--borda)}
+.nav ul a{text-decoration:none;font-family:'Space Mono',monospace;font-size:.95rem;text-transform:uppercase;letter-spacing:.08em;color:var(--creme);padding:8px 12px;border:1px solid transparent;transition:all .15s}
+.nav ul a:hover{border-color:var(--pimenta);color:var(--mostarda)}
+.nav ul a[href="estudio.html"]{font-weight:700;background:var(--fogo);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
+.nav-conta{flex:1;display:flex;align-items:center;justify-content:flex-end;gap:14px;white-space:nowrap}
+.nav-conta #link-conta{font-family:'Space Mono',monospace;font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;text-decoration:none;padding:6px 11px;color:var(--mostarda);border:1px solid var(--mostarda);transition:all .15s}
+.nav-conta #link-conta:hover{background:var(--fogo);color:#0D0C09;border-color:transparent;font-weight:700}
+.nav-sair{cursor:pointer;font-family:'Space Mono',monospace;font-size:.68rem;text-transform:uppercase;letter-spacing:.06em;color:var(--creme);background:none;border:1px solid var(--borda);padding:6px 10px;transition:all .15s}
+.nav-sair:hover{border-color:var(--pimenta);color:var(--pimenta)}
+@media(max-width:560px){.logo img{height:58px}}
+@media(max-width:700px){
+  .nav{flex-wrap:wrap;justify-content:center;padding:10px 12px 4px;gap:2px}
+  .logo{flex:0 0 auto;margin-left:0}
+  .nav-conta{flex:0 0 auto;width:100%;justify-content:center;margin-top:4px}
+  .nav ul{width:100%;flex-wrap:nowrap;justify-content:flex-start;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding:2px 4px 8px}
+  .nav ul::-webkit-scrollbar{display:none}
+  .nav ul a{padding:10px 12px;white-space:nowrap}
+}
+
+main{padding:56px 0 90px}
+.fogo-titulo{
+  font-style:italic;text-transform:uppercase;
+  background:var(--fogo);-webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent;color:transparent;
+  filter:drop-shadow(3px 3px 0 #000);
+  line-height:1.25;padding:.14em .18em .18em 0;
+}
+h1.fogo-titulo{font-size:clamp(2.2rem,7vw,3.6rem);margin-bottom:10px}
+.sub{color:#CFC7B4;margin-bottom:34px}
+
+.cartao{background:var(--carbono);border:2px solid var(--borda);box-shadow:6px 6px 0 var(--pimenta);padding:26px;margin-bottom:34px}
+.cartao h2{font-size:1.3rem;text-transform:uppercase;font-style:italic;color:var(--mostarda);margin-bottom:16px}
+.oculto{display:none !important}
+.voltar{display:inline-block;margin-bottom:26px;font-family:'Space Mono',monospace;font-size:.8rem;text-transform:uppercase;letter-spacing:.06em;color:var(--inox);text-decoration:none}
+.voltar:hover{color:var(--mostarda)}
+.btn{
+  display:inline-block;margin-top:18px;cursor:pointer;text-decoration:none;
+  font-family:'Space Mono',monospace;font-size:.85rem;text-transform:uppercase;
+  letter-spacing:.08em;padding:13px 24px;border:2px solid var(--creme);
+  background:none;color:var(--creme);transition:all .15s;
+}
+.btn-cheio{background:var(--fogo);color:#0D0C09;border-color:transparent;font-weight:700}
+.btn-cheio:hover{filter:brightness(1.12)}
+
+.cad{border:1px solid var(--borda);padding:14px;margin-bottom:12px}
+.cad .topo{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}
+.cad b{color:var(--creme)}
+.cad .quando{color:var(--inox);font-size:.72rem;font-family:'Space Mono',monospace}
+.cad p{font-size:.92rem;color:#CFC7B4;margin-top:6px}
+.cad .acoes{margin-top:10px}
+.cad button{background:none;border:1px solid var(--borda);color:var(--inox);font-family:'Space Mono',monospace;font-size:.65rem;text-transform:uppercase;padding:3px 8px;cursor:pointer}
+.cad button:hover{border-color:var(--pimenta);color:var(--pimenta)}
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="nav" aria-label="Menu principal">
+    <a class="logo" href="index.html"><img src="logo.png" alt="Cozinha 48"></a>
+    <ul>
+      <li><a href="index.html#quem-somos">Quem Somos</a></li>
+      <li><a href="index.html#artistas">Artistas</a></li>
+      <li><a href="index.html#gravacoes">Gravações</a></li>
+      <li><a href="participar.html">Quero participar</a></li>
+      <li><a href="promo.html">Enviar promo</a></li>
+      <li><a href="estudio.html">Contratar estúdio</a></li>
+    </ul>
+    <div class="nav-conta">
+      <a href="conta.html" id="link-conta">Login</a>
+      <a class="nav-sair" id="nav-sair" style="display:none">Sair</a>
+    </div>
+  </nav>
+</header>
+
+<main>
+  <div class="container">
+    <a class="voltar" href="conta.html">← Voltar pra Minha conta</a>
+    <h1 class="fogo-titulo">Promos enviadas</h1>
+
+    <!-- bloqueio: não logado / não mestre -->
+    <div class="cartao oculto" id="bloco-negado">
+      <h2>Acesso restrito</h2>
+      <p style="color:#CFC7B4">Esta área é só pros <b>mestres da casa</b>. Entre com uma conta de mestre pra ver as promos.</p>
+      <a class="btn btn-cheio" href="conta.html">Ir pra Minha conta</a>
+    </div>
+
+    <div id="area-mestres" class="oculto">
+      <section class="cartao">
+        <h2>Promos enviadas</h2>
+        <p style="color:var(--inox);font-size:.85rem;margin-bottom:14px">Links de promo que os artistas enviaram.</p>
+        <div id="lista-promos"></div>
+      </section>
+    </div>
+  </div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>
+const SUPABASE_URL = "https://fobduihqyeuetrxpbntk.supabase.co";
+const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZvYmR1aWhxeWV1ZXRyeHBibnRrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEyMzE0OTMsImV4cCI6MjA5NjgwNzQ5M30.FnDyuGvQt-iLcXThqZCxiAWWvA4DVwyx4NIqwFO-oK0";
+
+const $ = function(id){ return document.getElementById(id); };
+function esc(t){ return String(t).replace(/[&<>"']/g, function(m){ return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[m]; }); }
+function dataBr(iso){ return new Date(iso).toLocaleDateString("pt-BR", {day:"2-digit", month:"short", year:"numeric"}); }
+
+let sb = null, usuario = null;
+
+if (SUPABASE_URL.indexOf("https://") === 0 && window.supabase) {
+  sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+  iniciar();
+}
+
+async function iniciar(){
+  const sessao = await sb.auth.getSession();
+  usuario = sessao.data.session ? sessao.data.session.user : null;
+  const btnSair = $("nav-sair");
+  if (btnSair) btnSair.addEventListener("click", async function(){ await sb.auth.signOut(); location.href = "conta.html"; });
+
+  if (!usuario) { negar(); return; }
+
+  const r = await sb.from("profiles").select("nome,is_admin").eq("id", usuario.id).single();
+  const perfil = r.data || { is_admin: false };
+  $("link-conta").textContent = "Minha conta · " + (perfil.nome || "Mestre");
+  if (btnSair) btnSair.style.display = "inline-block";
+
+  if (!perfil.is_admin) { negar(); return; }
+
+  $("area-mestres").classList.remove("oculto");
+  await carregarPromos();
+}
+
+function negar(){ $("bloco-negado").classList.remove("oculto"); $("area-mestres").classList.add("oculto"); }
+
+async function carregarPromos(){
+  const r = await sb.from("promos").select("*").order("created_at", { ascending: false });
+  const proms = r.data || [];
+  const ids = Array.from(new Set(proms.map(function(p){ return p.user_id; })));
+  const mapa = {};
+  if (ids.length) {
+    const rp = await sb.from("profiles").select("id,nome").in("id", ids);
+    (rp.data || []).forEach(function(p){ mapa[p.id] = p; });
+  }
+  const caixa = $("lista-promos");
+  caixa.innerHTML = proms.length ? "" : '<p style="color:var(--inox)">Nenhuma promo por enquanto.</p>';
+  proms.forEach(function(p){
+    const perf = mapa[p.user_id] || {};
+    const linhas = String(p.links || "").split("\n").filter(Boolean).map(function(l){
+      const u = /^https?:\/\//i.test(l) ? l : "https://" + l.replace(/^\/+/, "");
+      return '<p><a href="' + esc(u) + '" target="_blank" rel="noopener">' + esc(l) + ' ↗</a></p>';
+    }).join("");
+    caixa.innerHTML +=
+      '<div class="cad"><div class="topo"><span><b>' + esc(perf.nome || "Artista") + '</b></span>' +
+      '<span class="quando">' + dataBr(p.created_at) + '</span></div>' + linhas +
+      '<div class="acoes"><button data-id="' + p.id + '">apagar</button></div></div>';
+  });
+  caixa.querySelectorAll("button").forEach(function(b){
+    b.addEventListener("click", async function(){
+      await sb.from("promos").delete().eq("id", b.dataset.id);
+      carregarPromos();
+    });
+  });
+}
+</script>
+
+</body>
+</html>
