@@ -465,27 +465,31 @@ section{scroll-margin-top:92px}
   <div class="selo" aria-hidden="true">
     <svg viewBox="0 0 130 130">
       <defs>
-        <path id="circulo" d="M65,65 m-52,0 a52,52 0 1,1 104,0 a52,52 0 1,1 -104,0"/>
-        <linearGradient id="rotulo" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stop-color="#E8380D"/><stop offset=".55" stop-color="#FF7A1A"/><stop offset="1" stop-color="#FFB40C"/>
+        <linearGradient id="rim" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#E8380D"/><stop offset=".5" stop-color="#FF7A1A"/><stop offset="1" stop-color="#FFB40C"/>
         </linearGradient>
       </defs>
-      <!-- corpo do vinil -->
-      <circle cx="65" cy="65" r="62" fill="#100E0A" stroke="#FFB40C" stroke-width="2"/>
+      <!-- borda de fogo -->
+      <circle cx="65" cy="65" r="63" fill="url(#rim)"/>
+      <!-- corpo preto do disco -->
+      <circle cx="65" cy="65" r="57" fill="#0E0C09"/>
       <!-- sulcos -->
-      <circle cx="65" cy="65" r="47" fill="none" stroke="#221d15" stroke-width="1"/>
-      <circle cx="65" cy="65" r="42" fill="none" stroke="#221d15" stroke-width="1"/>
-      <circle cx="65" cy="65" r="37" fill="none" stroke="#221d15" stroke-width="1"/>
-      <circle cx="65" cy="65" r="32" fill="none" stroke="#221d15" stroke-width="1"/>
-      <!-- texto na borda -->
-      <text font-family="Space Mono, monospace" font-size="11" letter-spacing="2.5" fill="#F6EFE0">
-        <textPath href="#circulo">AO VIVO · DA COZINHA · AO VIVO · DA COZINHA ·</textPath>
-      </text>
-      <!-- rótulo central -->
-      <circle cx="65" cy="65" r="22" fill="url(#rotulo)"/>
-      <circle cx="65" cy="65" r="22" fill="none" stroke="#0D0C09" stroke-width="1.5"/>
-      <!-- furo -->
-      <circle cx="65" cy="65" r="3.2" fill="#0D0C09"/>
+      <circle cx="65" cy="65" r="50" fill="none" stroke="#241e16" stroke-width="1"/>
+      <circle cx="65" cy="65" r="45" fill="none" stroke="#241e16" stroke-width="1"/>
+      <circle cx="65" cy="65" r="40" fill="none" stroke="#241e16" stroke-width="1"/>
+      <!-- garfo + faca (como na logo) -->
+      <g fill="#E8380D" transform="rotate(-18 65 65)">
+        <rect x="51.5" y="29" width="2.6" height="15" rx="1.3"/>
+        <rect x="56.2" y="29" width="2.6" height="15" rx="1.3"/>
+        <rect x="60.9" y="29" width="2.6" height="15" rx="1.3"/>
+        <path d="M50.5 43 H62 V47 a5.75 5.75 0 0 1 -11.5 0 Z"/>
+        <rect x="54.2" y="51" width="4" height="34" rx="2"/>
+        <path d="M76 28 C 71.5 37, 71.5 51, 76 57 C 80.5 51, 80.5 37, 76 28 Z"/>
+        <rect x="74" y="55" width="4" height="30" rx="2"/>
+      </g>
+      <!-- furo central -->
+      <circle cx="65" cy="65" r="8.5" fill="#F2ECDD"/>
+      <circle cx="65" cy="65" r="2.6" fill="#0D0C09"/>
     </svg>
   </div>
 </section>
