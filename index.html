@@ -4,13 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#0D0C09">
-<title>Cozinha 48 — Estúdio de Lives e Sets na Cozinha</title>
+<title>Cozinha 48 - Estúdio de Lives e Sets na Cozinha</title>
 <meta name="description" content="Cozinha 48: estúdio de gravação e lives de sets de música eletrônica dentro de uma cozinha. Enquanto o set rola, um prato nasce ao lado do DJ.">
 <link rel="icon" type="image/png" href="favicon.png?v=6">
 <meta name="google-site-verification" content="3xN1X3wCshRaDdisLUhW14OqpdfNiV2qheB48JZKmwg">
 
 <!-- ============================================================
-     COZINHA 48 — site de página única
+     COZINHA 48 - site de página única
      Identidade visual baseada na logo: fundo preto carvão +
      degradê de fogo (vermelho → laranja → amarelo) + itálico.
      COMO EDITAR: procure pelos comentários "EDITE AQUI"
@@ -138,7 +138,7 @@ header{
 @media(prefers-reduced-motion:reduce){.selo svg{animation:none}}
 @keyframes girar{to{transform:rotate(360deg)}}
 
-/* faixa de letreiro — agora é a chama atravessando a página */
+/* faixa de letreiro - agora é a chama atravessando a página */
 /* faixa inclinada SEM rotacionar o elemento: a faixa é reta e recortada
    em diagonal (clip-path), que o navegador desenha com bordas lisas.
    Só o texto gira 1 grau pra acompanhar. */
@@ -191,10 +191,10 @@ section{padding:84px 0}
 .receita li b{color:var(--brasa)}
 .receita li.final{justify-content:center;text-align:center;border-bottom:none;color:var(--brasa);font-weight:700;padding-top:14px}
 
-/* ARTISTAS — cards estilo comanda, versão noturna, em carrossel */
+/* ARTISTAS - cards estilo comanda, versão noturna, em carrossel */
 .carrossel{position:relative}
 
-/* setas laterais — só no desktop, ficam FORA do quadro das comandas */
+/* setas laterais - só no desktop, ficam FORA do quadro das comandas */
 .seta-carrossel{display:none}
 @media(min-width:820px){
   /* abre uma folga lateral pras setas não ficarem em cima das fotos */
@@ -273,7 +273,7 @@ section{padding:84px 0}
 }
 .comanda .links a:hover{background:var(--fogo);color:#0D0C09;border-color:transparent;font-weight:700}
 
-/* GRAVAÇÕES — um tom acima do fundo, com a grade avermelhada */
+/* GRAVAÇÕES - um tom acima do fundo, com a grade avermelhada */
 #gravacoes{background:#12100B;
   background-image:
     linear-gradient(#221A10 1px, transparent 1px),
@@ -515,9 +515,9 @@ section{scroll-margin-top:92px}
     <div class="grade">
       <div>
         <!-- ===== EDITE AQUI: texto de apresentação do projeto ===== -->
-        <p>A Cozinha 48 é um hub criativo onde música eletrônica, gastronomia e audiovisual se encontram na mesma bancada. A ideia nasceu simples: transformar uma cozinha de verdade em palco — enquanto o set rola, um prato nasce logo ao lado.</p>
+        <p>A Cozinha 48 é um hub criativo onde música eletrônica, gastronomia e audiovisual se encontram na mesma bancada. A ideia nasceu simples: transformar uma cozinha de verdade em palco - enquanto o set rola, um prato nasce logo ao lado.</p>
         <p>Mas a gente vai além da festa: somos a base de quem tá começando. Cuidamos de identidade visual, redes sociais, produção de conteúdo e agenda de shows pros artistas da casa.</p>
-        <p>E não ficamos só na cozinha — levamos nossa energia pra bares, restaurantes e eventos, em colabs que valorizam o público e os parceiros.</p>
+        <p>E não ficamos só na cozinha - levamos nossa energia pra bares, restaurantes e eventos, em colabs que valorizam o público e os parceiros.</p>
         <p>No Resenha 48, nosso podcast, sentamos com DJs, chefs e convidados pra conversar sobre os mais diversos assuntos.</p>
         <p>No fim, é isso: a família Cozinha 48 junta música, imagem e experiência pra dar voz a novos talentos e transformar cada projeto em algo memorável.</p>
       </div>
@@ -627,7 +627,7 @@ section{scroll-margin-top:92px}
       <div class="moldura">
         <iframe id="player" src="https://www.youtube.com/embed/videoseries?list=PLYD5r5GrqVQgnbFJIJt5sXQ533_b4jnDp&enablejsapi=1" title="DJ Sets da Cozinha 48" loading="lazy" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
       </div>
-      <p class="player-legenda">▶ No ar: a playlist COZINHA 48 — DJ Sets — clique numa miniatura abaixo pra trocar o set</p>
+      <p class="player-legenda">▶ No ar: a playlist COZINHA 48 - DJ Sets - clique numa miniatura abaixo pra trocar o set</p>
     </div>
 
     <!-- Grade preenchida automaticamente com os últimos vídeos do canal -->
@@ -746,15 +746,15 @@ section{scroll-margin-top:92px}
 
 <script>
 /* ============================================================
-   GRAVAÇÕES — busca automática dos últimos vídeos do canal
+   GRAVAÇÕES - busca automática dos últimos vídeos do canal
    Canal: youtube.com/@Cozinha48
    Não precisa editar nada aqui: ao postar um vídeo novo no
    canal, ele aparece sozinho no site.
 
    Estratégia: TUDO em paralelo, pra carregar o mais rápido possível.
-   — Os 3 intermediários do feed são consultados ao mesmo tempo;
+   - Os 3 intermediários do feed são consultados ao mesmo tempo;
      o primeiro que responder preenche a grade (com título e data).
-   — A API oficial do player do YouTube também começa junto, sem
+   - A API oficial do player do YouTube também começa junto, sem
      esperar ninguém falhar. Se ela terminar primeiro, a grade já
      aparece (sem data) e é atualizada quando o feed chegar.
    ============================================================ */
@@ -831,7 +831,7 @@ function mostrarErro(){
 
 /* ---------- CAMINHO 1: feed do YouTube via intermediários ---------- */
 // O navegador não consegue ler o feed do YouTube diretamente (bloqueio de
-// segurança chamado CORS), então usamos intermediários gratuitos — os três
+// segurança chamado CORS), então usamos intermediários gratuitos - os três
 // ao mesmo tempo, e o primeiro que responder vence:
 const INTERMEDIARIOS = [
   function(u){ return "https://api.allorigins.win/raw?url=" + encodeURIComponent(u); },
@@ -946,7 +946,7 @@ if (location.protocol === "file:") {
   lista.innerHTML = '<p class="erro-videos">A lista dos últimos sets aparece automaticamente quando o site estiver no ar.</p>';
 } else {
   caminhoPlayer(); // dispara já
-  caminhoFeed();   // dispara junto — quem chegar primeiro preenche
+  caminhoFeed();   // dispara junto - quem chegar primeiro preenche
 }
 </script>
 
@@ -954,11 +954,11 @@ if (location.protocol === "file:") {
 <script>
 /* ============================================================
    Carrossel de artistas: infinito, automático e com destaque
-   — as comandas são clonadas pra fila nunca acabar;
-   — anda sozinho devagar (sempre, sem depender de hover);
-   — setas (desktop): cada clique passa um artista;
-   — mouse sobre uma comanda (ou dedo na tela): pausa pra ler/clicar;
-   — a comanda mais perto do centro cresce (destaque).
+   - as comandas são clonadas pra fila nunca acabar;
+   - anda sozinho devagar (sempre, sem depender de hover);
+   - setas (desktop): cada clique passa um artista;
+   - mouse sobre uma comanda (ou dedo na tela): pausa pra ler/clicar;
+   - a comanda mais perto do centro cresce (destaque).
    ============================================================ */
 (function(){
   const trilho = document.getElementById("trilho-artistas");
@@ -1155,7 +1155,7 @@ if (location.protocol === "file:") {
 
   // Checa se o canal esta AO VIVO (sem credencial, via pagina publica).
   // Se a checagem falhar por bloqueio do navegador, mostramos o player
-  // assim mesmo — quando offline ele aparece como "offline" da Twitch.
+  // assim mesmo - quando offline ele aparece como "offline" da Twitch.
   function checaAoVivo(){
     fetch('https://www.twitch.tv/'+CANAL, {mode:'cors'})
       .then(function(r){return r.text()})
