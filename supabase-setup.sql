@@ -87,6 +87,22 @@ create policy "mestres mudam o status" on public.candidaturas
 create policy "mestres apagam candidaturas" on public.candidaturas
   for delete using (public.is_admin());
 
+-- ---------- PROMOS (links enviados pelos artistas) ----------
+create table public.promos (
+  id bigint generated always as identity primary key,
+  user_id uuid not null references auth.users(id) on delete cascade,
+  links text not null,
+  created_at timestamptz not null default now()
+);
+alter table public.promos enable row level security;
+
+create policy "enviar a propria promo" on public.promos
+  for insert with check (auth.uid() = user_id);
+create policy "ver a propria promo ou ser mestre" on public.promos
+  for select using (auth.uid() = user_id or public.is_admin());
+create policy "mestres apagam promos" on public.promos
+  for delete using (public.is_admin());
+
 -- ---------- MURAL DE RECADOS ----------
 create table public.recados (
   id bigint generated always as identity primary key,

@@ -124,6 +124,7 @@ input:disabled{color:var(--inox);cursor:not-allowed}
       <li><a href="index.html#gravacoes">Gravações</a></li>
       <!-- <li><a href="index.html#loja">Loja</a></li> oculto temporariamente -->
       <li><a href="participar.html">Quero participar</a></li>
+      <li><a href="promo.html">Mande sua promo</a></li>
     </ul>
     <div class="nav-conta">
       <a href="conta.html" id="link-conta">Login</a>
@@ -227,6 +228,13 @@ input:disabled{color:var(--inox);cursor:not-allowed}
         <p style="color:var(--inox);font-size:.85rem;margin-bottom:14px">Quem se cadastrou pra tocar na Cozinha. Só os mestres veem este bloco.</p>
         <div id="lista-cadastros"></div>
       </div>
+
+      <!-- PROMOS ENVIADAS (só mestres) -->
+      <div class="cartao oculto" id="bloco-promos">
+        <h2>Promos enviadas</h2>
+        <p style="color:var(--inox);font-size:.85rem;margin-bottom:14px">Links de promo que os artistas enviaram. Só os mestres veem este bloco.</p>
+        <div id="lista-promos"></div>
+      </div>
     </div>
 
   </div>
@@ -299,6 +307,7 @@ async function desenhar(){
   if ($("nav-sair")) $("nav-sair").style.display = "inline-block";
   $("selo-mestre").classList.toggle("oculto", !perfil.is_admin);
   $("bloco-cadastros").classList.toggle("oculto", !perfil.is_admin);
+  $("bloco-promos").classList.toggle("oculto", !perfil.is_admin);
 
   $("d-nome").value = perfil.nome || "";
   $("d-email").value = usuario.email || "";
@@ -306,7 +315,7 @@ async function desenhar(){
   $("d-ddd").value = tdig.slice(0, 2);
   $("d-celular").value = tdig.slice(2);
 
-  if (perfil.is_admin) carregarCadastros();
+  if (perfil.is_admin) { carregarCadastros(); carregarPromos(); }
 }
 
 /* ---------- entrar / criar conta (deslogado) ---------- */
@@ -448,6 +457,37 @@ async function carregarCadastros(){
     b.addEventListener("click", async function(){
       await sb.from("candidaturas").delete().eq("id", b.dataset.id);
       carregarCadastros();
+    });
+  });
+}
+
+/* ---------- promos enviadas (mestres) ---------- */
+async function carregarPromos(){
+  const r = await sb.from("promos").select("*").order("created_at", { ascending: false });
+  const proms = r.data || [];
+  const ids = Array.from(new Set(proms.map(function(p){ return p.user_id; })));
+  const mapa = {};
+  if (ids.length) {
+    const rp = await sb.from("profiles").select("id,nome").in("id", ids);
+    (rp.data || []).forEach(function(p){ mapa[p.id] = p; });
+  }
+  const caixa = $("lista-promos");
+  caixa.innerHTML = proms.length ? "" : '<p style="color:var(--inox)">Nenhuma promo por enquanto.</p>';
+  proms.forEach(function(p){
+    const perf = mapa[p.user_id] || {};
+    const linhas = String(p.links || "").split("\n").filter(Boolean).map(function(l){
+      const u = /^https?:\/\//i.test(l) ? l : "https://" + l.replace(/^\/+/, "");
+      return '<p><a href="' + esc(u) + '" target="_blank" rel="noopener">' + esc(l) + ' ↗</a></p>';
+    }).join("");
+    caixa.innerHTML +=
+      '<div class="cad"><div class="topo"><span><b>' + esc(perf.nome || "Artista") + '</b></span>' +
+      '<span class="quando">' + dataBr(p.created_at) + '</span></div>' + linhas +
+      '<div class="acoes"><button data-id="' + p.id + '">apagar</button></div></div>';
+  });
+  caixa.querySelectorAll("button").forEach(function(b){
+    b.addEventListener("click", async function(){
+      await sb.from("promos").delete().eq("id", b.dataset.id);
+      carregarPromos();
     });
   });
 }
