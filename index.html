@@ -202,11 +202,10 @@ section{padding:84px 0}
   .seta-carrossel{
     display:flex;align-items:center;justify-content:center;
     position:absolute;top:50%;transform:translateY(-50%);
-    width:46px;height:46px;z-index:40;cursor:pointer;
+    width:46px;height:46px;box-sizing:border-box;z-index:40;cursor:pointer;
     background:var(--carbono);color:var(--creme);
     border:2px solid var(--borda);border-radius:50%;
-    font-size:1.7rem;line-height:1;padding-bottom:3px;
-    box-shadow:0 0 0 8px var(--carvao); /* tampa as linhas da grade atrás, deixa a bolinha redonda e limpa */
+    font-size:1.6rem;line-height:1;padding:0;
     transition:background .15s,color .15s,border-color .15s,transform .15s;
   }
   .seta-carrossel:hover{background:var(--fogo);color:#0D0C09;border-color:transparent}
@@ -972,7 +971,7 @@ if (location.protocol === "file:") {
   window.addEventListener("resize", function(){ larguraConjunto = trilho.scrollWidth / 3; });
   trilho.scrollLeft = larguraConjunto; // começa no conjunto do meio
 
-  const VEL = 0.45; // pixels por quadro: passeio devagar, mas perceptível
+  const VEL = 0.25; // pixels por quadro: passeio bem devagar
   let pausado = false;
   let sobra = 0; // acumula frações de pixel
 
