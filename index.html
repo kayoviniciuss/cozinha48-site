@@ -954,9 +954,9 @@ if (location.protocol === "file:") {
 /* ============================================================
    Carrossel de artistas: infinito, automático e com destaque
    — as comandas são clonadas pra fila nunca acabar;
-   — anda sozinho bem devagar;
-   — mouse sobre a seta: acelera naquela direção;
-   — mouse sobre uma comanda (ou dedo na tela): pausa;
+   — anda sozinho devagar (sempre, sem depender de hover);
+   — setas (desktop): cada clique passa um artista;
+   — mouse sobre uma comanda (ou dedo na tela): pausa pra ler/clicar;
    — a comanda mais perto do centro cresce (destaque).
    ============================================================ */
 (function(){
@@ -971,26 +971,11 @@ if (location.protocol === "file:") {
   window.addEventListener("resize", function(){ larguraConjunto = trilho.scrollWidth / 3; });
   trilho.scrollLeft = larguraConjunto; // começa no conjunto do meio
 
-  const VEL_PASSEIO = 0.12; // pixels por quadro: bem devagarinho mesmo
-  const VEL_BORDA = 0.8;    // com o mouse na faixa lateral: um empurrãozinho suave
-  let vel = VEL_PASSEIO;
-  let acelerando = false;
+  const VEL = 0.45; // pixels por quadro: passeio devagar, mas perceptível
   let pausado = false;
   let sobra = 0; // acumula frações de pixel
-  const reduzMovimento = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  // aceleradores invisíveis: mouse na faixa direita corre pra frente,
-  // na faixa esquerda corre pra trás; no meio, passeio normal
-  trilho.addEventListener("mousemove", function(e){
-    const caixa = trilho.getBoundingClientRect();
-    const posicao = (e.clientX - caixa.left) / caixa.width; // 0 = esquerda, 1 = direita
-    if (posicao > 0.82)      { vel = VEL_BORDA;  acelerando = true; }
-    else if (posicao < 0.18) { vel = -VEL_BORDA; acelerando = true; }
-    else                     { vel = VEL_PASSEIO; acelerando = false; }
-  });
-  trilho.addEventListener("mouseleave", function(){ vel = VEL_PASSEIO; acelerando = false; });
-
-  // pausa pra leitura/clique (só no miolo; nas bordas a aceleração manda)
+  // pausa pra leitura/clique ao passar o mouse numa comanda (ou tocar)
   trilho.addEventListener("mouseover", function(e){ if (e.target.closest(".comanda")) pausado = true; });
   trilho.addEventListener("mouseout", function(e){ if (e.target.closest(".comanda")) pausado = false; });
   trilho.addEventListener("touchstart", function(){ pausado = true; }, { passive: true });
@@ -1017,13 +1002,13 @@ if (location.protocol === "file:") {
     if (alvo !== null) {
       // indo até o artista clicado: anda rápido e suave até encostar no destino
       const dif = alvo - trilho.scrollLeft;
-      const passo = Math.sign(dif) * Math.min(Math.abs(dif), Math.max(6, Math.abs(dif) * 0.18));
+      const passo = Math.sign(dif) * Math.min(Math.abs(dif), Math.max(7, Math.abs(dif) * 0.2));
       trilho.scrollLeft += passo;
       if (Math.abs(alvo - trilho.scrollLeft) < 1) { trilho.scrollLeft = Math.round(alvo); alvo = null; }
-    } else if (!reduzMovimento && (!pausado || acelerando)) {
-      // anda sozinho
-      sobra += vel;
-      const passo = sobra > 0 ? Math.floor(sobra) : Math.ceil(sobra);
+    } else if (!pausado) {
+      // anda sozinho (sempre)
+      sobra += VEL;
+      const passo = Math.floor(sobra);
       if (passo !== 0) { trilho.scrollLeft += passo; sobra -= passo; }
     }
     // truque do infinito: voltar um conjunto sem ninguém perceber
