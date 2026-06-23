@@ -104,9 +104,23 @@ h1.fogo-titulo{font-size:clamp(2.2rem,7vw,3.6rem);margin-bottom:10px}
 .cad .acoes{margin-top:10px}
 .cad button{background:none;border:1px solid var(--borda);color:var(--inox);font-family:'Space Mono',monospace;font-size:.65rem;text-transform:uppercase;padding:3px 8px;cursor:pointer}
 .cad button:hover{border-color:var(--pimenta);color:var(--pimenta)}
+#girar{display:none}
+@media (orientation:landscape) and (max-height:500px){
+  #girar{display:flex;position:fixed;inset:0;z-index:100002;background-color:var(--carvao);background-image:linear-gradient(var(--grelha) 1px,transparent 1px),linear-gradient(90deg,var(--grelha) 1px,transparent 1px);background-size:72px 72px;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:8px;padding:16px 24px}
+  #girar img{height:44px;width:auto}
+  #girar .g-ico{width:32px;height:32px;color:var(--mostarda)}
+  #girar .g-t{font-family:'Anton',sans-serif;font-style:italic;text-transform:uppercase;font-size:1.3rem;color:var(--mostarda)}
+  #girar .g-s{font-family:'Space Mono',monospace;font-size:.74rem;color:var(--inox)}
+}
 </style>
 </head>
 <body>
+<div id="girar" aria-hidden="true">
+  <img src="logo.png" alt="Cozinha 48">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="g-ico"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 19h2"/></svg>
+  <p class="g-t">Vire o celular na vertical</p>
+  <p class="g-s">Assim a Cozinha 48 fica perfeita</p>
+</div>
 
 <header>
   <nav class="nav" aria-label="Menu principal">
