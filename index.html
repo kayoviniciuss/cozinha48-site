@@ -373,22 +373,27 @@ footer li{padding:4px 0;font-size:.92rem}
    atrás da barra fixa do topo */
 section{scroll-margin-top:92px}
 
+.nav-toggle{display:none;background:none;border:1.5px solid var(--mostarda);color:var(--mostarda);font-size:1.5rem;line-height:1;padding:2px 12px;border-radius:8px;cursor:pointer;transition:all .15s}
+.nav-toggle:hover{background:var(--fogo);color:#0D0C09;border-color:transparent}
+
 @media(max-width:700px){
   section{scroll-margin-top:122px}
 
-  /* menu: logo em cima, links numa fileira deslizável embaixo,
-     com área de toque maior */
-  .nav{flex-wrap:wrap;justify-content:center;padding:10px 12px 4px;gap:2px}
+  /* menu hambúrguer: 1ª linha = logo + ícone ☰; ao tocar abre a lista vertical */
+  .nav{flex-wrap:wrap;align-items:center;justify-content:space-between;padding:8px 14px;gap:8px}
+  .nav-esq{flex:0 0 auto}
   .logo{flex:0 0 auto;margin-left:0}
-  .nav-esq{flex:0 0 auto;flex-wrap:wrap;justify-content:center}
-  .nav-conta{flex:0 0 auto;width:100%;justify-content:center;margin-top:4px}
+  .nav-toggle{display:block;order:1;margin-left:auto}
   .nav ul{
-    width:100%;flex-wrap:nowrap;justify-content:flex-start;
-    overflow-x:auto;-webkit-overflow-scrolling:touch;
-    scrollbar-width:none;padding:2px 4px 8px;
+    display:none;order:3;width:100%;flex-direction:column;gap:0;
+    border-top:1px solid var(--borda);margin-top:4px;padding:4px 0;
   }
-  .nav ul::-webkit-scrollbar{display:none}
-  .nav ul a{padding:10px 12px;white-space:nowrap}
+  .nav.aberto ul{display:flex}
+  .nav ul li{border-left:none !important}
+  .nav ul li:not(:last-child){border-bottom:1px solid var(--borda)}
+  .nav ul a{display:block;padding:13px 8px;white-space:nowrap;font-size:1rem}
+  .nav-conta{display:none;order:4;width:100%;justify-content:center;margin-top:6px;padding-bottom:6px}
+  .nav.aberto .nav-conta{display:flex}
 
   /* respiros mais compactos: menos rolagem até o conteúdo */
   .hero{padding:52px 0 46px}
@@ -443,6 +448,7 @@ section{scroll-margin-top:92px}
     <div class="nav-esq">
       <a class="logo" href="#topo"><img src="logo.png" alt="Cozinha 48"></a>
     </div>
+    <button class="nav-toggle" id="nav-toggle" type="button" aria-label="Abrir menu" aria-expanded="false">☰</button>
     <ul>
       <li><a href="#quem-somos">Quem Somos</a></li>
       <li><a href="#artistas">Artistas</a></li>
@@ -1088,6 +1094,7 @@ if (location.protocol === "file:") {
   }
   /* botões flutuantes (canto inferior direito) */
   #flutua{position:fixed;right:18px;bottom:10px;z-index:9998;display:flex;gap:10px;align-items:center}
+  @media(max-width:700px){#flutua{display:none}}
   #live-btn{
     display:none;align-items:center;gap:7px;cursor:pointer;
     background:var(--pimenta);color:var(--creme);border:none;
@@ -1193,6 +1200,24 @@ if (location.protocol === "file:") {
   }
   pinta();
   sb.auth.onAuthStateChange(function(){ pinta(); });
+})();
+</script>
+
+<!-- menu hambúrguer (mobile): abre/fecha a lista -->
+<script>
+(function(){
+  var nav = document.querySelector('.nav');
+  var botao = document.getElementById('nav-toggle');
+  if(!nav || !botao) return;
+  function fechar(){ nav.classList.remove('aberto'); botao.setAttribute('aria-expanded','false'); }
+  botao.addEventListener('click', function(){
+    var abriu = nav.classList.toggle('aberto');
+    botao.setAttribute('aria-expanded', abriu ? 'true' : 'false');
+  });
+  // ao tocar num link do menu, fecha
+  nav.querySelectorAll('ul a, .nav-conta a').forEach(function(a){
+    a.addEventListener('click', fechar);
+  });
 })();
 </script>
 
