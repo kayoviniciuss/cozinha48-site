@@ -356,7 +356,7 @@ footer .lista-rede{list-style:none}
 footer .lista-rede li{padding:4px 0;line-height:1.6}
 footer .lista-rede a{display:inline-flex;align-items:center;gap:9px;font-size:.92rem;vertical-align:middle;line-height:1.2}
 footer .lista-rede svg{width:20px;height:20px;flex:0 0 20px}
-footer .selos{display:flex;flex-direction:column;gap:12px;align-items:stretch;flex:1 1 auto;min-width:0}
+footer .selos{display:flex;flex-direction:column;gap:12px;align-items:stretch;flex:0 1 auto;min-width:0}
 footer .selo-badge{display:inline-flex;align-items:center;gap:11px;background:#100E0A;border:1.5px solid var(--borda);border-radius:12px;padding:9px 14px 9px 10px;text-decoration:none;transition:border-color .15s,transform .15s}
 footer a.selo-badge:hover{border-color:var(--brasa);transform:translateY(-2px)}
 footer .selo-badge .ico{width:36px;height:36px;flex:0 0 36px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--fogo);color:#0D0C09}
@@ -378,6 +378,7 @@ footer .selo-google img{width:84px;height:auto;display:block}
   footer .selo-badge .t2{font-size:.5rem;white-space:nowrap}
   footer .selo-google img{width:70px}
 }
+@media(max-width:700px){.copy .c-sep{display:none}.copy .c1,.copy .c2{display:block}}
 @media(max-width:700px){.rodape-menu{display:none}}
 footer h3{font-size:1.2rem;text-transform:uppercase;margin-bottom:12px;font-style:italic}
 footer a{color:var(--mostarda);text-decoration:none}
@@ -803,7 +804,7 @@ section{scroll-margin-top:92px}
       </div>
     </div>
   </div>
-  <div class="container copy">© 2026 Cozinha 48 · Todos os direitos reservados.</div>
+  <div class="container copy"><span class="c1">© 2026 Cozinha 48</span><span class="c-sep"> · </span><span class="c2">Todos os direitos reservados.</span></div>
 </footer>
 
 <script>
