@@ -396,13 +396,20 @@ section{scroll-margin-top:92px}
   .nav ul a{display:block;padding:13px 8px;white-space:nowrap;font-size:1rem}
 
   /* respiros mais compactos: menos rolagem até o conteúdo */
-  .hero{padding:52px 0 46px}
+  .hero{padding:52px 0 34px;display:flex;flex-direction:column}
   section{padding:54px 0}
   .sec-titulo{margin-bottom:28px}
 
   /* botões do topo ocupam a largura toda: alvo de toque generoso */
   .hero-acoes{flex-direction:column;align-items:stretch}
   .hero-acoes .btn{text-align:center}
+
+  /* redes sociais em linha, entre os botões e a faixa de palavras */
+  .hero .container{order:1}
+  .hero-social{
+    order:2;display:flex;position:static;transform:none;left:auto;top:auto;
+    flex-direction:row;justify-content:center;gap:14px;margin:24px 0 0;
+  }
 
   /* carrossel: mostra um card inteiro + um pedaço do próximo,
      o convite visual de que dá pra deslizar */
