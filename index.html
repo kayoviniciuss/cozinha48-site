@@ -388,6 +388,7 @@ section{scroll-margin-top:92px}
   .nav-conta{order:3;flex:0 0 auto;width:auto;justify-content:flex-end;margin-top:0}
   .nav-conta #link-conta{font-size:.66rem;padding:5px 8px;letter-spacing:.03em}
   .nav-sair{display:none !important}
+  .mc-nome{display:none}
   .nav ul{
     display:none;order:4;width:100%;flex-direction:column;gap:0;
     border-top:1px solid var(--borda);margin-top:4px;padding:4px 0;
@@ -1227,7 +1228,7 @@ if (location.protocol === "file:") {
     if (!u){ els().forEach(function(e){ e.textContent = "Login"; }); return; }
     let nome = (u.user_metadata && u.user_metadata.nome) || "";
     try { const r = await sb.from("profiles").select("nome").eq("id", u.id).single(); if (r.data && r.data.nome) nome = r.data.nome; } catch(e){}
-    els().forEach(function(e){ e.textContent = nome ? ("Minha conta · " + nome.split(" ")[0]) : "Minha conta"; });
+    els().forEach(function(e){ e.innerHTML = nome ? ('Minha conta<span class="mc-nome"> · ' + nome.split(" ")[0] + '</span>') : 'Minha conta'; });
   }
   pinta();
   sb.auth.onAuthStateChange(function(){ pinta(); });

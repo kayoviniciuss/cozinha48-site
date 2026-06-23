@@ -58,6 +58,7 @@ header{position:sticky;top:0;z-index:50;background:rgba(13,12,9,.92);backdrop-fi
   .nav-conta{order:3;flex:0 0 auto;width:auto;justify-content:flex-end;margin-top:0}
   .nav-conta #link-conta{font-size:.66rem;padding:5px 8px;letter-spacing:.03em}
   .nav-sair{display:none !important}
+  .mc-nome{display:none}
   .nav ul{display:none;order:4;width:100%;flex-direction:column;gap:0;border-top:1px solid var(--borda);margin-top:4px;padding:4px 0}
   .nav.aberto ul{display:flex}
   .nav ul li{border-left:none !important}
@@ -169,7 +170,7 @@ async function iniciar(){
 
   const r = await sb.from("profiles").select("nome,is_admin").eq("id", usuario.id).single();
   const perfil = r.data || { is_admin: false };
-  $("link-conta").textContent = "Minha conta · " + (perfil.nome ? perfil.nome.split(" ")[0] : "Mestre");
+  $("link-conta").innerHTML = perfil.nome ? ('Minha conta<span class="mc-nome"> · ' + perfil.nome.split(" ")[0] + '</span>') : 'Minha conta';
   if (btnSair) btnSair.style.display = "inline-block";
 
   if (!perfil.is_admin) { negar(); return; }

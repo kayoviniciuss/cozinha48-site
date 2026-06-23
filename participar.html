@@ -57,6 +57,7 @@ header{position:sticky;top:0;z-index:50;background:rgba(13,12,9,.92);backdrop-fi
   .nav-conta{order:3;flex:0 0 auto;width:auto;justify-content:flex-end;margin-top:0}
   .nav-conta #link-conta{font-size:.66rem;padding:5px 8px;letter-spacing:.03em}
   .nav-sair{display:none !important}
+  .mc-nome{display:none}
   .nav ul{display:none;order:4;width:100%;flex-direction:column;gap:0;border-top:1px solid var(--borda);margin-top:4px;padding:4px 0}
   .nav.aberto ul{display:flex}
   .nav ul li{border-left:none !important}
@@ -306,7 +307,7 @@ async function desenhar(){
   const r = await sb.from("profiles").select("*").eq("id", usuario.id).single();
   perfil = r.data || { nome: "" };
   $("ola").textContent = "Olá, " + (perfil.nome || "artista") + "!";
-  $("link-conta").textContent = "Minha conta · " + (perfil.nome ? perfil.nome.split(" ")[0] : "");
+  $("link-conta").innerHTML = perfil.nome ? ('Minha conta<span class="mc-nome"> · ' + perfil.nome.split(" ")[0] + '</span>') : 'Minha conta';
   if ($("nav-sair")) $("nav-sair").style.display = "inline-block";
 
   // já se cadastrou antes? então mostra só o agradecimento
