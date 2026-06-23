@@ -51,14 +51,14 @@ header{position:sticky;top:0;z-index:50;background:rgba(13,12,9,.92);backdrop-fi
 .nav-toggle{display:none;background:none;border:1.5px solid var(--mostarda);color:var(--mostarda);font-size:1.5rem;line-height:1;padding:2px 12px;border-radius:8px;cursor:pointer}
 @media(max-width:700px){
   .nav{position:relative;flex-wrap:wrap;align-items:center;justify-content:space-between;padding:8px 12px;gap:6px;min-height:68px}
-  .nav-toggle{display:block;order:1;flex:0 0 auto}
+  .nav-toggle{display:flex;align-items:center;justify-content:center;order:1;flex:0 0 auto;width:62px;height:38px;padding:0;font-size:1.35rem}
   .logo{position:absolute;left:50%;top:34px;transform:translate(-50%,-50%);margin:0;z-index:1}
   .logo img{height:54px}
   .nav-conta{order:2;flex:0 0 auto;width:auto;justify-content:flex-end;margin-top:0}
-  .nav-conta #link-conta{font-size:.62rem;padding:6px 6px;letter-spacing:.02em;white-space:normal;text-align:center;line-height:1.15;width:62px;border-radius:8px;border-width:1.5px}
+  .nav-conta #link-conta{display:flex;align-items:center;justify-content:center;width:62px;height:38px;padding:0;font-size:.62rem;letter-spacing:.02em;white-space:normal;text-align:center;line-height:1.1;border-radius:8px;border-width:1.5px}
   .nav-sair{display:none !important}
   .mc-nome{display:none}
-  .sair-mobile{display:block !important;width:100%;text-align:center}
+  .sair-titulo:not(.oculto){display:inline-flex !important}
   .nav ul{display:none;order:4;width:100%;flex-direction:column;gap:0;border-top:1px solid var(--borda);margin-top:4px;padding:4px 0}
   .nav.aberto ul{display:flex}
   .nav ul li{border-left:none !important}
@@ -99,7 +99,9 @@ input:disabled{color:var(--inox);cursor:not-allowed}
 .mensagem.erro{display:block;border-left:4px solid var(--pimenta);color:#FFB4A0;background:#1d0f0a}
 .mensagem.ok{display:block;border-left:4px solid var(--mostarda);color:#FFE3A0;background:#1d160a}
 .oculto{display:none !important}
-.sair-mobile{display:none}
+.topo-conta{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.sair-titulo{display:none;cursor:pointer;font-family:'Space Mono',monospace;font-size:.66rem;text-transform:uppercase;letter-spacing:.06em;color:var(--creme);background:none;border:1.5px solid var(--borda);border-radius:8px;padding:7px 14px}
+.sair-titulo:hover{border-color:var(--pimenta);color:var(--pimenta)}
 .troca{font-family:'Space Mono',monospace;font-size:.8rem;margin-top:16px;color:var(--inox)}
 .troca a{cursor:pointer}
 .em-breve{color:var(--inox);font-family:'Space Mono',monospace;font-size:.85rem;letter-spacing:.04em}
@@ -155,7 +157,10 @@ input:disabled{color:var(--inox);cursor:not-allowed}
 
 <main>
   <div class="container">
-    <h1 class="fogo-titulo">Minha conta</h1>
+    <div class="topo-conta">
+      <h1 class="fogo-titulo">Minha conta</h1>
+      <button class="sair-titulo oculto" id="sair-conta" type="button">Sair</button>
+    </div>
 
     <!-- aviso de configuração pendente -->
     <div class="cartao oculto" id="aviso-config">
@@ -252,8 +257,6 @@ input:disabled{color:var(--inox);cursor:not-allowed}
         <div class="cl-topo"><h2>Promos enviadas</h2><span class="cl-seta">→</span></div>
         <p class="cl-desc">Links de promo que os artistas enviaram. <b id="qtd-promos"></b></p>
       </a>
-
-      <button class="btn sair-mobile" id="sair-conta" type="button">Sair da conta</button>
     </div>
 
   </div>
@@ -310,6 +313,7 @@ async function desenhar(){
   if (!usuario) {
     $("link-conta").textContent = "Login";
     if ($("nav-sair")) $("nav-sair").style.display = "none";
+    if ($("sair-conta")) $("sair-conta").classList.add("oculto");
     $("bloco-entrar").classList.remove("oculto");
     $("bloco-criar").classList.remove("oculto");
     $("area-logada").classList.add("oculto");
@@ -324,6 +328,7 @@ async function desenhar(){
   $("ola").textContent = "Olá, " + (perfil.nome || "Fã da Cozinha") + "!";
   $("link-conta").innerHTML = perfil.nome ? ('Minha conta<span class="mc-nome"> · ' + perfil.nome.split(" ")[0] + '</span>') : 'Minha conta';
   if ($("nav-sair")) $("nav-sair").style.display = "inline-block";
+  if ($("sair-conta")) $("sair-conta").classList.remove("oculto");
   $("selo-mestre").classList.toggle("oculto", !perfil.is_admin);
   $("link-cadastros").classList.toggle("oculto", !perfil.is_admin);
   $("link-promos").classList.toggle("oculto", !perfil.is_admin);
