@@ -780,14 +780,24 @@ let dadosCompletos = false; // a grade na tela já tem título + data?
 let planoBFalhou = false;   // controle pra só mostrar erro se tudo falhar
 
 /* ---------- montagem da grade (usada pelos dois caminhos) ---------- */
+let listaVideos = [];   // todos os vídeos da playlist
+let videoAtual = null;  // id do vídeo que está tocando no player
+
 function montarGrade(videos, completo){
   // nunca trocar dados completos por dados incompletos
   if (dadosCompletos && !completo) return;
   gradePronta = true;
   dadosCompletos = completo;
+  listaVideos = videos;
+  // o player começa no 1º vídeo (mais recente); marca ele como "no ar"
+  if (videoAtual === null && videos.length) videoAtual = videos[0].id;
+  desenharGrade();
+}
 
+function desenharGrade(){
   lista.innerHTML = "";
-  videos.forEach(function(v){
+  listaVideos.forEach(function(v){
+    if (v.id === videoAtual) return; // não repete na grade o que já está no player
     const botao = document.createElement("button");
     botao.className = "thumb";
     botao.setAttribute("data-id", v.id);
@@ -821,6 +831,8 @@ function montarGrade(videos, completo){
       } else {
         playerFrame.src = "https://www.youtube.com/embed/" + v.id + "?autoplay=1";
       }
+      videoAtual = v.id;     // o que entrou no player
+      desenharGrade();       // esconde ele da grade e revela o anterior
       document.querySelector(".player-principal").scrollIntoView({behavior:"smooth", block:"center"});
     });
 
