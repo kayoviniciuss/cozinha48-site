@@ -95,6 +95,9 @@ input:focus{border-color:var(--mostarda);outline:none}
 .btn-mais{margin-top:10px;font-size:.75rem;padding:9px 14px;border-color:var(--borda);color:var(--mostarda)}
 .btn-mais:hover{border-color:var(--mostarda)}
 .troca{font-family:'Space Mono',monospace;font-size:.8rem;margin-top:16px;color:var(--inox)}
+.criar-linha{display:flex;align-items:center;gap:20px;flex-wrap:wrap;margin:40px 0 4px}
+.criar-linha .btn{margin-top:0}
+.criar-tit{font-family:'Anton',sans-serif;font-style:italic;text-transform:uppercase;font-size:clamp(1.4rem,4.5vw,2.2rem);color:var(--creme);line-height:1;transform:translateY(.06em)}
 .mensagem{font-family:'Space Mono',monospace;font-size:.8rem;margin-top:14px;padding:10px 12px;display:none}
 .mensagem.erro{display:block;border-left:4px solid var(--pimenta);color:#FFB4A0;background:#1d0f0a}
 .mensagem.ok{display:block;border-left:4px solid var(--mostarda);color:#FFE3A0;background:#1d160a}
@@ -140,18 +143,27 @@ input:focus{border-color:var(--mostarda);outline:none}
       <p style="color:#CFC7B4">Esta página precisa das chaves do Supabase. Abra <b>promo.html</b>, procure por <b>EDITE AQUI</b> e cole a URL e a chave "anon public".</p>
     </div>
 
-    <!-- ENTRAR (deslogado) -->
+    <!-- ENTRAR / CRIAR CONTA (deslogado) -->
     <div class="cartao oculto" id="bloco-entrar">
-      <h2>Entrar</h2>
+      <h2 id="titulo-auth">Criar conta</h2>
       <form id="form-auth">
+        <div id="campo-nome">
+          <label for="nome">Seu nome completo</label>
+          <input id="nome" type="text" maxlength="60" autocomplete="name">
+        </div>
         <label for="email">E-mail</label>
         <input id="email" type="email" required autocomplete="email">
         <label for="senha">Senha</label>
         <input id="senha" type="password" required minlength="6" autocomplete="current-password">
-        <button class="btn btn-cheio" type="submit">Entrar</button>
-        <p class="troca">Ainda não tem conta? <a href="conta.html">Criar conta</a></p>
+        <button class="btn btn-cheio" type="submit" id="botao-auth">Criar minha conta</button>
         <p class="mensagem" id="msg-auth"></p>
       </form>
+    </div>
+
+    <!-- alternar criar/entrar (só deslogado) -->
+    <div class="criar-linha oculto" id="bloco-criar">
+      <span class="criar-tit" id="criar-tit">Já tem conta?</span>
+      <button class="btn btn-cheio" id="btn-criar-conta" type="button">Entrar</button>
     </div>
 
     <!-- ÁREA LOGADA -->
@@ -199,7 +211,7 @@ const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZ
 const $ = function(id){ return document.getElementById(id); };
 function aviso(el, tipo, texto){ el.className = "mensagem " + tipo; el.textContent = texto; }
 
-let sb = null, usuario = null, perfil = null;
+let sb = null, usuario = null, perfil = null, modoCriar = true;
 
 if (SUPABASE_URL.indexOf("https://") === 0) {
   sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
@@ -223,10 +235,12 @@ async function desenhar(){
     $("link-conta").textContent = "Login";
     if ($("nav-sair")) $("nav-sair").style.display = "none";
     $("bloco-entrar").classList.remove("oculto");
+    $("bloco-criar").classList.remove("oculto");
     $("area-logada").classList.add("oculto");
     return;
   }
   $("bloco-entrar").classList.add("oculto");
+  $("bloco-criar").classList.add("oculto");
   $("area-logada").classList.remove("oculto");
   const r = await sb.from("profiles").select("nome").eq("id", usuario.id).single();
   perfil = r.data || { nome: "" };
@@ -235,18 +249,38 @@ async function desenhar(){
   if ($("nav-sair")) $("nav-sair").style.display = "inline-block";
 }
 
-/* ---------- login ---------- */
+/* ---------- entrar / criar conta ---------- */
+function setModo(criar){
+  modoCriar = criar;
+  $("titulo-auth").textContent = criar ? "Criar conta" : "Entrar";
+  $("botao-auth").textContent = criar ? "Criar minha conta" : "Entrar";
+  $("campo-nome").classList.toggle("oculto", !criar);
+  $("criar-tit").textContent = criar ? "Já tem conta?" : "Ainda não possui?";
+  $("btn-criar-conta").textContent = criar ? "Entrar" : "Criar conta";
+}
+$("btn-criar-conta").addEventListener("click", function(){ setModo(!modoCriar); });
+
 $("form-auth").addEventListener("submit", async function(e){
   e.preventDefault();
+  const email = $("email").value.trim(), senha = $("senha").value;
   const msg = $("msg-auth");
   aviso(msg, "ok", "Um instante…");
-  const r = await sb.auth.signInWithPassword({ email: $("email").value.trim(), password: $("senha").value });
-  if (r.error) return aviso(msg, "erro", traduzir(r.error.message));
+  if (modoCriar) {
+    const r = await sb.auth.signUp({ email: email, password: senha, options: { data: { nome: $("nome").value.trim() } } });
+    if (r.error) return aviso(msg, "erro", traduzir(r.error.message));
+    if (r.data.session) aviso(msg, "ok", "Conta criada! Agora é só mandar suas promos aqui embaixo.");
+    else aviso(msg, "ok", "Conta criada! Confira seu e-mail pra confirmar o cadastro e depois entre por aqui.");
+  } else {
+    const r = await sb.auth.signInWithPassword({ email: email, password: senha });
+    if (r.error) return aviso(msg, "erro", traduzir(r.error.message));
+  }
 });
 if ($("nav-sair")) $("nav-sair").addEventListener("click", async function(){ await sb.auth.signOut(); location.reload(); });
 
 function traduzir(m){
   if (/Invalid login credentials/i.test(m)) return "E-mail ou senha incorretos.";
+  if (/already registered/i.test(m)) return "Esse e-mail já tem conta. É só entrar.";
+  if (/at least 6/i.test(m)) return "A senha precisa ter pelo menos 6 caracteres.";
   if (/Email not confirmed/i.test(m)) return "Confirme seu e-mail antes de entrar (veja sua caixa de entrada).";
   return "Algo deu errado: " + m;
 }
