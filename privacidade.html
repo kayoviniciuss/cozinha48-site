@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0D0C09">
+<title>Política de Privacidade - Cozinha 48</title>
+<meta name="description" content="Como a Cozinha 48 coleta, usa e protege seus dados (LGPD).">
+<link rel="icon" type="image/png" href="favicon.png?v=6">
+<link rel="apple-touch-icon" href="icon-180.png?v=2">
+<link rel="manifest" href="manifest.json">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Cozinha 48">
+<meta name="mobile-web-app-capable" content="yes">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --carvao:#0D0C09;--grelha:#1B1812;--carbono:#16130E;--borda:#2B2619;
+  --creme:#F6EFE0;--pimenta:#E8380D;--brasa:#FF7A1A;--mostarda:#FFB40C;
+  --inox:#97907F;
+  --fogo:linear-gradient(100deg, #E8380D 0%, #FF7A1A 52%, #FFB40C 100%);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scrollbar-gutter:stable}
+body{
+  font-family:'Archivo',sans-serif;color:var(--creme);background-color:var(--carvao);
+  background-image:linear-gradient(var(--grelha) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grelha) 1px, transparent 1px);
+  background-size:72px 72px;line-height:1.6;
+}
+h1,h2,h3{font-family:'Anton',sans-serif;font-weight:400;line-height:1.05}
+a{color:var(--mostarda)}
+img{max-width:100%;display:block}
+:focus-visible{outline:3px solid var(--mostarda);outline-offset:3px}
+.container{max-width:760px;margin:0 auto;padding:0 24px}
+
+header{position:sticky;top:0;z-index:50;background:rgba(13,12,9,.92);backdrop-filter:blur(6px);border-bottom:3px solid transparent;border-image:var(--fogo) 1}
+.nav{display:flex;align-items:center;padding:12px 64px;gap:28px}
+.logo{display:flex;align-items:center;text-decoration:none;flex:1}
+.logo img{height:88px;width:auto}
+.nav ul{display:flex;gap:0;list-style:none;flex-wrap:wrap;align-items:center}
+.nav ul li:not(:first-child){border-left:1px solid var(--borda)}
+.nav ul a{text-decoration:none;font-family:'Space Mono',monospace;font-size:.95rem;text-transform:uppercase;letter-spacing:.08em;color:var(--creme);padding:8px 12px;border:1px solid transparent;transition:all .15s}
+.nav ul a:hover{border-color:var(--pimenta);color:var(--mostarda)}
+.nav ul a[href="estudio.html"]{font-weight:700;background:var(--fogo);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
+.nav-conta{flex:1;display:flex;align-items:center;justify-content:flex-end;gap:14px;white-space:nowrap}
+.nav-conta #link-conta{font-family:'Space Mono',monospace;font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;text-decoration:none;padding:6px 11px;color:var(--mostarda);border:1px solid var(--mostarda);transition:all .15s}
+.nav-conta #link-conta:hover{background:var(--fogo);color:#0D0C09;border-color:transparent;font-weight:700}
+.nav-sair{cursor:pointer;font-family:'Space Mono',monospace;font-size:.68rem;text-transform:uppercase;letter-spacing:.06em;color:var(--creme);background:none;border:1px solid var(--borda);padding:6px 10px;transition:all .15s}
+.nav-sair:hover{border-color:var(--pimenta);color:var(--pimenta)}
+@media(max-width:560px){.logo img{height:58px}}
+.nav-toggle{display:none;background:none;border:1.5px solid var(--mostarda);color:var(--mostarda);font-size:1.5rem;line-height:1;padding:2px 12px;border-radius:8px;cursor:pointer}
+@media(max-width:700px){
+  .nav{position:relative;flex-wrap:wrap;align-items:center;justify-content:space-between;padding:8px 12px;gap:6px;min-height:76px}
+  .nav-toggle{display:flex;align-items:center;justify-content:center;order:1;flex:0 0 auto;width:62px;height:42px;padding:0;font-size:1.35rem}
+  .logo{position:absolute;left:50%;top:38px;transform:translate(-50%,-50%);margin:0;z-index:1}
+  .logo img{height:60px}
+  .nav-conta{order:2;flex:0 0 auto;width:auto;justify-content:flex-end;margin-top:0}
+  .nav-conta #link-conta{display:flex;align-items:center;justify-content:center;width:62px;height:42px;padding:0;font-size:.62rem;letter-spacing:.02em;white-space:normal;text-align:center;line-height:1.1;border-radius:8px;border-width:1.5px}
+  .nav-sair{display:none !important}
+  .mc-nome{display:none}
+  .nav ul{display:none;position:absolute;top:100%;left:0;right:0;flex-direction:column;gap:0;background:var(--carvao);border-style:solid;border-width:3px 0;border-color:transparent;border-image:var(--fogo) 1;padding:6px 14px 12px;z-index:5}
+  .nav.aberto ul{display:flex}
+  .nav ul li{border-left:none !important}
+  .nav ul li:not(:last-child){border-bottom:1px solid var(--borda)}
+  .nav ul a{display:block;padding:13px 8px;white-space:nowrap;font-size:1rem}
+}
+
+main{padding:56px 0 90px}
+.voltar{display:inline-block;margin-bottom:22px;font-family:'Space Mono',monospace;font-size:.8rem;text-transform:uppercase;letter-spacing:.06em;color:var(--inox);text-decoration:none}
+.voltar:hover{color:var(--mostarda)}
+.fogo-titulo{
+  font-style:italic;text-transform:uppercase;
+  background:var(--fogo);-webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent;color:transparent;
+  filter:drop-shadow(3px 3px 0 #000);
+  line-height:1.25;padding:.14em .18em .18em 0;
+}
+h1.fogo-titulo{font-size:clamp(2.2rem,7vw,3.4rem);margin-bottom:8px}
+.atualizado{font-family:'Space Mono',monospace;font-size:.72rem;color:var(--inox);text-transform:uppercase;letter-spacing:.08em;margin-bottom:30px}
+.doc h2{font-size:1.25rem;text-transform:uppercase;font-style:italic;color:var(--mostarda);margin:30px 0 10px}
+.doc p{color:#D8D0BE;margin-bottom:10px}
+.doc ul{color:#D8D0BE;margin:0 0 10px 20px}
+.doc li{margin-bottom:6px}
+.doc b{color:var(--creme)}
+.doc a{word-break:break-word}
+.copy{border-top:1px solid var(--borda);margin-top:40px;padding-top:18px;font-family:'Space Mono',monospace;font-size:.72rem;color:var(--inox);text-transform:uppercase;letter-spacing:.08em}
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="nav" aria-label="Menu principal">
+    <a class="logo" href="index.html"><img src="logo.png" alt="Cozinha 48"></a>
+    <button class="nav-toggle" id="nav-toggle" type="button" aria-label="Abrir menu" aria-expanded="false">☰</button>
+    <ul>
+      <li><a href="index.html#quem-somos">Quem Somos</a></li>
+      <li><a href="index.html#artistas">Artistas</a></li>
+      <li><a href="index.html#gravacoes">Gravações</a></li>
+      <li><a href="participar.html">Quero participar</a></li>
+      <li><a href="promo.html">Enviar promo</a></li>
+      <li><a href="estudio.html">Contratar estúdio</a></li>
+    </ul>
+    <div class="nav-conta">
+      <a href="conta.html" id="link-conta">Login</a>
+      <a class="nav-sair" id="nav-sair" style="display:none">Sair</a>
+    </div>
+  </nav>
+</header>
+
+<main>
+  <div class="container doc">
+    <a class="voltar" href="index.html">← Voltar pro site</a>
+    <h1 class="fogo-titulo">Política de Privacidade</h1>
+    <p class="atualizado">Atualizada em 23 de junho de 2026</p>
+
+    <p>A <b>Cozinha 48</b> respeita a sua privacidade. Esta página explica, de forma simples, quais dados a gente coleta, pra que usa e como protege — de acordo com a <b>LGPD</b> (Lei Geral de Proteção de Dados, nº 13.709/2018).</p>
+
+    <h2>Quais dados coletamos</h2>
+    <p>Coletamos apenas o que você mesmo nos informa ao usar o site:</p>
+    <ul>
+      <li><b>Ao criar uma conta:</b> nome, e-mail, telefone e senha (a senha fica <b>criptografada</b> — nem nós conseguimos vê-la).</li>
+      <li><b>Ao se candidatar (Quero participar):</b> nome artístico, idade, gêneros musicais, links de redes sociais, cidade/estado e a mensagem que você escreve.</li>
+      <li><b>Ao enviar uma promo:</b> os links que você cola.</li>
+    </ul>
+
+    <h2>Pra que usamos</h2>
+    <ul>
+      <li>Gerenciar a sua conta e o seu acesso ao site.</li>
+      <li>Avaliar cadastros e promos e <b>entrar em contato</b> com você.</li>
+      <li>Melhorar a experiência da Cozinha 48.</li>
+    </ul>
+    <p>Não usamos seus dados pra propaganda de terceiros nem mandamos spam.</p>
+
+    <h2>Onde os dados ficam guardados</h2>
+    <p>Seus dados ficam armazenados em um servidor seguro (Supabase), e toda a comunicação com o site é feita por <b>conexão criptografada (HTTPS/SSL)</b>. O acesso aos cadastros é restrito à equipe da Cozinha 48.</p>
+
+    <h2>Compartilhamento</h2>
+    <p>A gente <b>não vende</b> e <b>não compartilha</b> seus dados com terceiros. Eles são usados só internamente, pelo time da casa.</p>
+
+    <h2>Cookies</h2>
+    <p>Usamos apenas o necessário pra manter você conectado (sua sessão de login). Não usamos cookies de rastreamento de propaganda.</p>
+
+    <h2>Seus direitos (LGPD)</h2>
+    <p>Você pode, a qualquer momento:</p>
+    <ul>
+      <li><b>Acessar e corrigir</b> seus dados — em <a href="conta.html">Minha conta</a>.</li>
+      <li><b>Excluir</b> sua conta e seus dados — é só pedir pelo e-mail abaixo que a gente apaga.</li>
+    </ul>
+
+    <h2>Contato</h2>
+    <p>Dúvidas sobre privacidade ou pedidos sobre seus dados? Fale com a gente:</p>
+    <ul>
+      <li>E-mail: <a href="mailto:48cozinha@gmail.com">48cozinha@gmail.com</a></li>
+      <li>WhatsApp: <a href="https://wa.me/5518996477231" target="_blank" rel="noopener">(18) 99647-7231</a></li>
+    </ul>
+
+    <div class="copy">© 2026 Cozinha 48 · Preparado em fogo baixo e grave alto</div>
+  </div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>
+(function(){
+  const SUPABASE_URL = "https://fobduihqyeuetrxpbntk.supabase.co";
+  const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZvYmR1aWhxeWV1ZXRyeHBibnRrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEyMzE0OTMsImV4cCI6MjA5NjgwNzQ5M30.FnDyuGvQt-iLcXThqZCxiAWWvA4DVwyx4NIqwFO-oK0";
+  if (SUPABASE_URL.indexOf("https://") !== 0 || !window.supabase) return;
+  const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+  const linkConta = document.getElementById("link-conta");
+  const btnSair = document.getElementById("nav-sair");
+  if (btnSair) btnSair.addEventListener("click", async function(){ await sb.auth.signOut(); location.reload(); });
+  async function pintar(){
+    const s = await sb.auth.getSession();
+    const u = s.data.session ? s.data.session.user : null;
+    if (!u) { linkConta.textContent = "Login"; if (btnSair) btnSair.style.display = "none"; return; }
+    const r = await sb.from("profiles").select("nome").eq("id", u.id).single();
+    const nome = (r.data && r.data.nome) ? r.data.nome : "";
+    linkConta.innerHTML = nome ? ('Minha conta<span class="mc-nome"> · ' + nome.split(" ")[0] + '</span>') : 'Minha conta';
+    if (btnSair) btnSair.style.display = "inline-block";
+  }
+  pintar();
+  sb.auth.onAuthStateChange(function(){ pintar(); });
+})();
+</script>
+<script>
+(function(){var nav=document.querySelector('.nav');var b=document.getElementById('nav-toggle');if(!nav||!b)return;b.addEventListener('click',function(){var a=nav.classList.toggle('aberto');b.setAttribute('aria-expanded',a?'true':'false');});nav.querySelectorAll('ul a').forEach(function(a){a.addEventListener('click',function(){nav.classList.remove('aberto');b.setAttribute('aria-expanded','false');});});})();
+</script>
+</body>
+</html>

@@ -348,7 +348,7 @@ section{padding:84px 0}
 /* RODAPÉ */
 footer{background:#0A0907;color:var(--creme);padding:54px 0 40px;border-top:3px solid transparent;border-image:var(--fogo) 1}
 footer .grade{display:grid;gap:48px;grid-template-columns:1fr}
-@media(min-width:720px){footer .grade{grid-template-columns:2.4fr 1fr 1fr 1.3fr}}
+@media(min-width:720px){footer .grade{grid-template-columns:2fr 1fr 1fr 1.3fr 1.3fr}}
 footer .logo-rodape{height:96px;width:auto;display:block;margin:0 auto 14px}
 .rodape-marca{text-align:center;padding-right:64px;margin-top:-16px}
 .rodape-marca p{max-width:360px;margin:0 auto;font-size:.92rem;color:#97907F}
@@ -356,7 +356,9 @@ footer .lista-rede{list-style:none}
 footer .lista-rede li{padding:4px 0;line-height:1.6}
 footer .lista-rede a{display:inline-flex;align-items:center;gap:9px;font-size:.92rem;vertical-align:middle;line-height:1.2}
 footer .lista-rede svg{width:20px;height:20px;flex:0 0 20px}
-@media(max-width:720px){footer .grade{text-align:center}footer .lista-rede a{justify-content:center}.rodape-marca{padding-right:0;margin-top:0}}
+footer .selo-info{display:inline-flex;align-items:center;gap:9px;font-size:.92rem;color:var(--inox);vertical-align:middle;line-height:1.2}
+footer .selo-info svg{color:var(--brasa)}
+@media(max-width:720px){footer .grade{text-align:center}footer .lista-rede a,footer .selo-info{justify-content:center}.rodape-marca{padding-right:0;margin-top:0}}
 @media(max-width:700px){.rodape-menu{display:none}}
 footer h3{font-size:1.2rem;text-transform:uppercase;margin-bottom:12px;font-style:italic}
 footer a{color:var(--mostarda);text-decoration:none}
@@ -761,6 +763,17 @@ section{scroll-margin-top:92px}
         <li><a href="mailto:48cozinha@gmail.com">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="4.5" width="19" height="15" rx="2.5"/><path d="M3.5 6.5 L12 13 L20.5 6.5"/></svg>
           <span>48cozinha@gmail.com</span></a></li>
+      </ul>
+    </div>
+    <div>
+      <h3>Segurança</h3>
+      <ul class="lista-rede">
+        <li><span class="selo-info">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+          <span>Conexão segura · SSL</span></span></li>
+        <li><a href="privacidade.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 L19 6 V11 c0 4.5 -3 8 -7 10 c-4 -2 -7 -5.5 -7 -10 V6 Z"/></svg>
+          <span>Política de Privacidade</span></a></li>
       </ul>
     </div>
   </div>
