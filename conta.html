@@ -48,13 +48,18 @@ header{position:sticky;top:0;z-index:50;background:rgba(13,12,9,.92);backdrop-fi
 .nav-sair{cursor:pointer;font-family:'Space Mono',monospace;font-size:.68rem;text-transform:uppercase;letter-spacing:.06em;color:var(--creme);background:none;border:1px solid var(--borda);padding:6px 10px;transition:all .15s}
 .nav-sair:hover{border-color:var(--pimenta);color:var(--pimenta)}
 @media(max-width:560px){.logo img{height:58px}}
+.nav-toggle{display:none;background:none;border:1.5px solid var(--mostarda);color:var(--mostarda);font-size:1.5rem;line-height:1;padding:2px 12px;border-radius:8px;cursor:pointer}
 @media(max-width:700px){
-  .nav{flex-wrap:wrap;justify-content:center;padding:10px 12px 4px;gap:2px}
-  .logo{flex:0 0 auto;margin-left:0}
-  .nav-conta{flex:0 0 auto;width:100%;justify-content:center;margin-top:4px}
-  .nav ul{width:100%;flex-wrap:nowrap;justify-content:flex-start;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding:2px 4px 8px}
-  .nav ul::-webkit-scrollbar{display:none}
-  .nav ul a{padding:10px 12px;white-space:nowrap}
+  .nav{flex-wrap:wrap;align-items:center;padding:8px 12px;gap:6px}
+  .nav-toggle{display:block;order:1;flex:0 0 auto}
+  .logo{order:2;flex:1;justify-content:center;margin:0}
+  .logo img{height:54px}
+  .nav-conta{order:3;flex:0 0 auto;width:auto;justify-content:flex-end;margin-top:0}
+  .nav ul{display:none;order:4;width:100%;flex-direction:column;gap:0;border-top:1px solid var(--borda);margin-top:4px;padding:4px 0}
+  .nav.aberto ul{display:flex}
+  .nav ul li{border-left:none !important}
+  .nav ul li:not(:last-child){border-bottom:1px solid var(--borda)}
+  .nav ul a{display:block;padding:13px 8px;white-space:nowrap;font-size:1rem}
 }
 
 main{padding:56px 0 90px}
@@ -126,6 +131,7 @@ input:disabled{color:var(--inox);cursor:not-allowed}
 <header>
   <nav class="nav" aria-label="Menu principal">
     <a class="logo" href="index.html"><img src="logo.png" alt="Cozinha 48"></a>
+    <button class="nav-toggle" id="nav-toggle" type="button" aria-label="Abrir menu" aria-expanded="false">☰</button>
     <ul>
       <li><a href="index.html#quem-somos">Quem Somos</a></li>
       <li><a href="index.html#artistas">Artistas</a></li>
@@ -420,5 +426,8 @@ $("form-dados").addEventListener("submit", async function(e){
 });
 </script>
 
+<script>
+(function(){var nav=document.querySelector('.nav');var b=document.getElementById('nav-toggle');if(!nav||!b)return;b.addEventListener('click',function(){var a=nav.classList.toggle('aberto');b.setAttribute('aria-expanded',a?'true':'false');});nav.querySelectorAll('ul a').forEach(function(a){a.addEventListener('click',function(){nav.classList.remove('aberto');b.setAttribute('aria-expanded','false');});});})();
+</script>
 </body>
 </html>
