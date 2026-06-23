@@ -379,21 +379,21 @@ section{scroll-margin-top:92px}
 @media(max-width:700px){
   section{scroll-margin-top:122px}
 
-  /* menu hambúrguer: 1ª linha = logo + ícone ☰; ao tocar abre a lista vertical */
-  .nav{flex-wrap:wrap;align-items:center;justify-content:space-between;padding:8px 14px;gap:8px}
-  .nav-esq{flex:0 0 auto}
-  .logo{flex:0 0 auto;margin-left:0}
-  .nav-toggle{display:block;order:1;margin-left:auto}
+  /* mobile: [☰ esquerda] · [logo centro] · [Login direita]; menu abre embaixo */
+  .nav{flex-wrap:wrap;align-items:center;padding:8px 12px;gap:6px}
+  .nav-toggle{display:block;order:1;flex:0 0 auto}
+  .nav-esq{order:2;flex:1;display:flex;justify-content:center;min-width:0}
+  .logo{flex:0 0 auto;margin:0}
+  .logo img{height:54px}
+  .nav-conta{order:3;flex:0 0 auto;width:auto;justify-content:flex-end;margin-top:0}
   .nav ul{
-    display:none;order:3;width:100%;flex-direction:column;gap:0;
+    display:none;order:4;width:100%;flex-direction:column;gap:0;
     border-top:1px solid var(--borda);margin-top:4px;padding:4px 0;
   }
   .nav.aberto ul{display:flex}
   .nav ul li{border-left:none !important}
   .nav ul li:not(:last-child){border-bottom:1px solid var(--borda)}
   .nav ul a{display:block;padding:13px 8px;white-space:nowrap;font-size:1rem}
-  .nav-conta{display:none;order:4;width:100%;justify-content:center;margin-top:6px;padding-bottom:6px}
-  .nav.aberto .nav-conta{display:flex}
 
   /* respiros mais compactos: menos rolagem até o conteúdo */
   .hero{padding:52px 0 46px}
