@@ -224,7 +224,7 @@ section{padding:84px 0}
 .comanda{flex:0 0 270px;will-change:transform}
 .arraste{
   font-family:'Space Mono',monospace;font-size:.72rem;color:var(--inox);
-  text-transform:uppercase;letter-spacing:.1em;margin-top:6px;
+  text-transform:uppercase;letter-spacing:.1em;margin-top:6px;text-align:center;
 }
 @media(min-width:820px){.arraste{display:none}}
 .comanda{
@@ -380,13 +380,12 @@ section{scroll-margin-top:92px}
   section{scroll-margin-top:28px}
   .so-desk{display:none}
 
-  /* mobile: [☰ esquerda] · [logo centro] · [Login direita]; menu abre embaixo */
-  .nav{flex-wrap:wrap;align-items:center;padding:8px 12px;gap:6px}
+  /* mobile: ☰ esquerda · logo centralizada (absoluta) · Login direita; menu abre embaixo */
+  .nav{position:relative;flex-wrap:wrap;align-items:center;justify-content:space-between;padding:8px 12px;gap:6px;min-height:68px}
   .nav-toggle{display:block;order:1;flex:0 0 auto}
-  .nav-esq{order:2;flex:1;display:flex;justify-content:center;min-width:0}
-  .logo{flex:0 0 auto;margin:0}
+  .nav-esq{position:absolute;left:50%;top:34px;transform:translate(-50%,-50%);margin:0;z-index:1}
   .logo img{height:54px}
-  .nav-conta{order:3;flex:0 0 auto;width:auto;justify-content:flex-end;margin-top:0}
+  .nav-conta{order:2;flex:0 0 auto;width:auto;justify-content:flex-end;margin-top:0}
   .nav-conta #link-conta{font-size:.66rem;padding:5px 8px;letter-spacing:.03em}
   .nav-sair{display:none !important}
   .mc-nome{display:none}
