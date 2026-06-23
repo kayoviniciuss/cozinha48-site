@@ -377,7 +377,7 @@ section{scroll-margin-top:92px}
 .nav-toggle:hover{background:var(--fogo);color:#0D0C09;border-color:transparent}
 
 @media(max-width:700px){
-  section{scroll-margin-top:122px}
+  section{scroll-margin-top:84px}
 
   /* mobile: [☰ esquerda] · [logo centro] · [Login direita]; menu abre embaixo */
   .nav{flex-wrap:wrap;align-items:center;padding:8px 12px;gap:6px}
@@ -386,6 +386,8 @@ section{scroll-margin-top:92px}
   .logo{flex:0 0 auto;margin:0}
   .logo img{height:54px}
   .nav-conta{order:3;flex:0 0 auto;width:auto;justify-content:flex-end;margin-top:0}
+  .nav-conta #link-conta{font-size:.66rem;padding:5px 8px;letter-spacing:.03em}
+  .nav-sair{display:none}
   .nav ul{
     display:none;order:4;width:100%;flex-direction:column;gap:0;
     border-top:1px solid var(--borda);margin-top:4px;padding:4px 0;
@@ -408,8 +410,10 @@ section{scroll-margin-top:92px}
   .hero .container{order:1}
   .hero-social{
     order:2;display:flex;position:static;transform:none;left:auto;top:auto;
-    flex-direction:row;justify-content:center;gap:14px;margin:24px 0 0;
+    flex-direction:row;justify-content:center;gap:14px;margin:38px 0 0;
   }
+  /* abaixa a faixa de palavras no mobile */
+  .letreiro{margin-top:14px}
 
   /* carrossel: mostra um card inteiro + um pedaço do próximo,
      o convite visual de que dá pra deslizar */

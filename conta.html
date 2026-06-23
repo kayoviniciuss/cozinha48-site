@@ -55,6 +55,9 @@ header{position:sticky;top:0;z-index:50;background:rgba(13,12,9,.92);backdrop-fi
   .logo{order:2;flex:1;justify-content:center;margin:0}
   .logo img{height:54px}
   .nav-conta{order:3;flex:0 0 auto;width:auto;justify-content:flex-end;margin-top:0}
+  .nav-conta #link-conta{font-size:.66rem;padding:5px 8px;letter-spacing:.03em}
+  .nav-sair{display:none}
+  .sair-mobile{display:block;width:100%;text-align:center}
   .nav ul{display:none;order:4;width:100%;flex-direction:column;gap:0;border-top:1px solid var(--borda);margin-top:4px;padding:4px 0}
   .nav.aberto ul{display:flex}
   .nav ul li{border-left:none !important}
@@ -95,6 +98,7 @@ input:disabled{color:var(--inox);cursor:not-allowed}
 .mensagem.erro{display:block;border-left:4px solid var(--pimenta);color:#FFB4A0;background:#1d0f0a}
 .mensagem.ok{display:block;border-left:4px solid var(--mostarda);color:#FFE3A0;background:#1d160a}
 .oculto{display:none !important}
+.sair-mobile{display:none}
 .troca{font-family:'Space Mono',monospace;font-size:.8rem;margin-top:16px;color:var(--inox)}
 .troca a{cursor:pointer}
 .em-breve{color:var(--inox);font-family:'Space Mono',monospace;font-size:.85rem;letter-spacing:.04em}
@@ -247,6 +251,8 @@ input:disabled{color:var(--inox);cursor:not-allowed}
         <div class="cl-topo"><h2>Promos enviadas</h2><span class="cl-seta">→</span></div>
         <p class="cl-desc">Links de promo que os artistas enviaram. <b id="qtd-promos"></b></p>
       </a>
+
+      <button class="btn sair-mobile" id="sair-conta" type="button">Sair da conta</button>
     </div>
 
   </div>
@@ -400,6 +406,7 @@ $("form-auth").addEventListener("submit", async function(e){
 });
 
 if ($("nav-sair")) $("nav-sair").addEventListener("click", async function(){ await sb.auth.signOut(); location.reload(); });
+if ($("sair-conta")) $("sair-conta").addEventListener("click", async function(){ await sb.auth.signOut(); location.reload(); });
 
 function traduzir(m){
   if (/Invalid login credentials/i.test(m)) return "E-mail ou senha incorretos.";
