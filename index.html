@@ -356,9 +356,15 @@ footer .lista-rede{list-style:none}
 footer .lista-rede li{padding:4px 0;line-height:1.6}
 footer .lista-rede a{display:inline-flex;align-items:center;gap:9px;font-size:.92rem;vertical-align:middle;line-height:1.2}
 footer .lista-rede svg{width:20px;height:20px;flex:0 0 20px}
-footer .selo-info{display:inline-flex;align-items:center;gap:9px;font-size:.92rem;color:var(--inox);vertical-align:middle;line-height:1.2}
-footer .selo-info svg{color:var(--brasa)}
-@media(max-width:720px){footer .grade{text-align:center}footer .lista-rede a,footer .selo-info{justify-content:center}.rodape-marca{padding-right:0;margin-top:0}}
+footer .selos{display:flex;flex-direction:column;gap:12px;align-items:flex-start}
+footer .selo-badge{display:inline-flex;align-items:center;gap:11px;background:#100E0A;border:1.5px solid var(--borda);border-radius:12px;padding:9px 14px 9px 10px;text-decoration:none;transition:border-color .15s,transform .15s}
+footer a.selo-badge:hover{border-color:var(--brasa);transform:translateY(-2px)}
+footer .selo-badge .ico{width:36px;height:36px;flex:0 0 36px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--fogo);color:#0D0C09}
+footer .selo-badge .ico svg{width:20px;height:20px;flex:0 0 20px}
+footer .selo-badge .txt{display:flex;flex-direction:column;line-height:1.15}
+footer .selo-badge .t1{font-family:'Space Mono',monospace;font-size:.74rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--creme)}
+footer .selo-badge .t2{font-family:'Space Mono',monospace;font-size:.6rem;text-transform:uppercase;letter-spacing:.06em;color:var(--inox)}
+@media(max-width:720px){footer .grade{text-align:center}footer .lista-rede a{justify-content:center}footer .selos{align-items:center}.rodape-marca{padding-right:0;margin-top:0}}
 @media(max-width:700px){.rodape-menu{display:none}}
 footer h3{font-size:1.2rem;text-transform:uppercase;margin-bottom:12px;font-style:italic}
 footer a{color:var(--mostarda);text-decoration:none}
@@ -767,17 +773,19 @@ section{scroll-margin-top:92px}
     </div>
     <div>
       <h3>Segurança</h3>
-      <ul class="lista-rede">
-        <li><span class="selo-info">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
-          <span>Conexão segura · SSL</span></span></li>
-        <li><a href="privacidade.html">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 L19 6 V11 c0 4.5 -3 8 -7 10 c-4 -2 -7 -5.5 -7 -10 V6 Z"/></svg>
-          <span>Política de Privacidade</span></a></li>
-      </ul>
+      <div class="selos">
+        <span class="selo-badge">
+          <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg></span>
+          <span class="txt"><span class="t1">Site Seguro</span><span class="t2">Conexão SSL</span></span>
+        </span>
+        <a class="selo-badge" href="privacidade.html">
+          <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 L19 6 V11 c0 4.5 -3 8 -7 10 c-4 -2 -7 -5.5 -7 -10 V6 Z"/><path d="M9 12 l2 2 l4 -4"/></svg></span>
+          <span class="txt"><span class="t1">LGPD</span><span class="t2">Dados protegidos</span></span>
+        </a>
+      </div>
     </div>
   </div>
-  <div class="container copy">© 2026 Cozinha 48 · Preparado em fogo baixo e grave alto</div>
+  <div class="container copy">© 2026 Cozinha 48 · Todos os direitos reservados.</div>
 </footer>
 
 <script>
