@@ -434,18 +434,10 @@ section{scroll-margin-top:92px}
 .sem-intro #intro{display:none}
 @media(prefers-reduced-motion:reduce){#intro img{animation:none}}
 
-/* rastro de fogo do cursor */
-#pintura{position:fixed;inset:0;z-index:9996;pointer-events:none;mix-blend-mode:screen}
-@media(max-width:700px){#pintura{display:none}}
-@media(prefers-reduced-motion:reduce){#pintura{display:none}}
-
 </style>
 <script>try{if(sessionStorage.getItem('cz48_intro'))document.documentElement.className+=' sem-intro';}catch(e){}</script>
 </head>
 <body>
-
-<!-- rastro de fogo do cursor (desktop) -->
-<canvas id="pintura" aria-hidden="true"></canvas>
 
 <!-- ================= INTRO ================= -->
 <div id="intro"><img src="logo.png" alt="Cozinha 48"></div>
@@ -1228,48 +1220,6 @@ if (location.protocol === "file:") {
   }
   pinta();
   sb.auth.onAuthStateChange(function(){ pinta(); });
-})();
-</script>
-
-<!-- rastro de fogo do cursor (só desktop, não atrapalha cliques) -->
-<script>
-(function(){
-  if (window.matchMedia("(max-width:700px)").matches) return;
-  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-  var c = document.getElementById("pintura");
-  if (!c) return;
-  var ctx = c.getContext("2d");
-  function tam(){ c.width = window.innerWidth; c.height = window.innerHeight; }
-  tam();
-  window.addEventListener("resize", tam);
-
-  var cores = ["#E8380D", "#FF7A1A", "#FFB40C"];
-  var fila = [];
-  var i = 0;
-  window.addEventListener("mousemove", function(e){
-    fila.push({ x: e.clientX, y: e.clientY, cor: cores[(i++ >> 1) % cores.length] });
-  });
-
-  function quadro(){
-    // apaga aos poucos (preto sob "screen" = invisível, então some suave)
-    ctx.globalCompositeOperation = "source-over";
-    ctx.fillStyle = "rgba(0,0,0,0.10)";
-    ctx.fillRect(0, 0, c.width, c.height);
-    // pinta os pontos novos com brilho de brasa
-    ctx.globalCompositeOperation = "lighter";
-    while (fila.length){
-      var p = fila.shift();
-      var g = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, 26);
-      g.addColorStop(0, p.cor);
-      g.addColorStop(1, "rgba(0,0,0,0)");
-      ctx.fillStyle = g;
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, 26, 0, Math.PI * 2);
-      ctx.fill();
-    }
-    requestAnimationFrame(quadro);
-  }
-  requestAnimationFrame(quadro);
 })();
 </script>
 
