@@ -763,7 +763,7 @@ section{scroll-margin-top:92px}
      aparece (sem data) e é atualizada quando o feed chegar.
    ============================================================ */
 const CANAL_ID = "UCLoK1Xvg0soEGg7huKE2R7w";
-const QTD_VIDEOS = 8; // quantas miniaturas mostrar na grade
+const QTD_VIDEOS = 9; // quantos vídeos buscar (1 a mais, pois o que está no player é escondido da grade)
 
 // Playlist específica "COZINHA 48 - DJ SETs". Tanto o player quanto a grade
 // de miniaturas usam só os vídeos desta playlist, na ordem montada nela.
@@ -796,8 +796,11 @@ function montarGrade(videos, completo){
 
 function desenharGrade(){
   lista.innerHTML = "";
-  listaVideos.forEach(function(v){
-    if (v.id === videoAtual) return; // não repete na grade o que já está no player
+  const mobile = window.matchMedia("(max-width:700px)").matches;
+  const visiveis = listaVideos
+    .filter(function(v){ return v.id !== videoAtual; }) // tira o que está no player
+    .slice(0, mobile ? 4 : 8);                          // 4 no celular, 8 no desktop
+  visiveis.forEach(function(v){
     const botao = document.createElement("button");
     botao.className = "thumb";
     botao.setAttribute("data-id", v.id);
@@ -839,6 +842,11 @@ function desenharGrade(){
     lista.appendChild(botao);
   });
 }
+
+// ao alternar entre celular/desktop, redesenha a grade (4 vs 8 miniaturas)
+window.matchMedia("(max-width:700px)").addEventListener("change", function(){
+  if (gradePronta) desenharGrade();
+});
 
 function mostrarErro(){
   if (gradePronta) return; // se algum caminho já preencheu, não há erro
